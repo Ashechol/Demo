@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,14 +15,11 @@ namespace Inputs
 
         private void Awake()
         {
-            Initialize();
+            _playerInput = Functions.GetComponentSafe<PlayerInput>(gameObject);
         }
 
-        private void Initialize()
+        private void Start()
         {
-            _playerInput = GetComponent<PlayerInput>();
-            if (!_playerInput) _playerInput = gameObject.AddComponent<PlayerInput>();
-            
             _playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
             _playerInput.actions = actions;
             _playerInput.defaultActionMap = actions.actionMaps[0].name;
