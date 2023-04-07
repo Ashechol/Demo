@@ -5,7 +5,8 @@ namespace Framework.Core
     public class SingletonMono<T> : MonoBehaviour where T: MonoBehaviour 
     {
         private static T _instance;
-
+        private SingletonMono() {}
+        
         public static T Instance
         {
             get

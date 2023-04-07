@@ -39,7 +39,7 @@ public class DebugLogType : MonoBehaviour
                 break;
             case Verbose.Error:
                 Debug.Log($"<color=#{labelColor.ToHexString()}>#{label}: </color>" + 
-                          $"<color=#{color.ToHexString()}>{message}</color>");
+                          $"<color=#              >{message}</color>");
                 break;
         }
     }

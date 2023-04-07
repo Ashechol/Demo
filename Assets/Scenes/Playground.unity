@@ -346,15 +346,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507602813}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.817, z: 0}
+  m_LocalRotation: {x: -0, y: 0.000105641084, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1626242492555142799}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0.012, z: 0}
 --- !u!143 &507602819
 CharacterController:
   m_ObjectHideFlags: 0
@@ -370,7 +370,7 @@ CharacterController:
   m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.2
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: -0.05, z: 0}
 --- !u!114 &507602820
@@ -385,6 +385,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd5f8be222b5504686663b4824fd884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 0
+  runSpeed: 6
+  angularSpeed: 500
+  gravity: 9.8
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,11 +553,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.1
+  far clip plane: 5000
   field of view: 60
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -576,8 +580,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.000004018075, y: 0.998341, z: -0.05757798, w: -0.000017002225}
-  m_LocalPosition: {x: 0.042264137, y: 1.1715114, z: 2.374356}
+  m_LocalRotation: {x: -0.073128715, y: 0.011364967, z: -0.0008329265, w: -0.9972575}
+  m_LocalPosition: {x: -0.14818719, y: 1.0972652, z: -2.5417519}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1660,7 +1664,7 @@ RotationConstraint:
   m_Enabled: 1
   m_Weight: 0.5
   m_RotationAtRest: {x: 46.730045, y: 6.6543117, z: -142.57558}
-  m_RotationOffset: {x: -46.63115, y: -8.536631, z: 38.586224}
+  m_RotationOffset: {x: -46.63116, y: -8.536622, z: 38.58623}
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1
@@ -5822,7 +5826,7 @@ RotationConstraint:
   m_Enabled: 1
   m_Weight: 0.5
   m_RotationAtRest: {x: 0, y: 0.00010890928, z: 90}
-  m_RotationOffset: {x: -0.000090126436, y: -1.0371594, z: -89.19684}
+  m_RotationOffset: {x: -0.0000901798, y: -1.0371491, z: -89.19684}
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1
@@ -6068,7 +6072,7 @@ RotationConstraint:
   m_Enabled: 1
   m_Weight: 0.5
   m_RotationAtRest: {x: 89.19592, y: -88.961586, z: -179.99939}
-  m_RotationOffset: {x: 88.943855, y: -90.031395, z: 179.99834}
+  m_RotationOffset: {x: 88.943855, y: -90.0313, z: 179.99844}
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1
@@ -7155,7 +7159,7 @@ RotationConstraint:
   m_Enabled: 1
   m_Weight: 0.5
   m_RotationAtRest: {x: -0.0011909178, y: 0.0015265887, z: -90.00001}
-  m_RotationOffset: {x: 0.000065760425, y: 0, z: -90.00003}
+  m_RotationOffset: {x: 0.00006911833, y: 0, z: -90.00002}
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1
@@ -8788,7 +8792,7 @@ RotationConstraint:
   m_Enabled: 1
   m_Weight: 0.5
   m_RotationAtRest: {x: 57.488117, y: -2.8118827, z: 177.6291}
-  m_RotationOffset: {x: -57.518757, y: 0.5148071, z: -0.8769816}
+  m_RotationOffset: {x: -57.518757, y: 0.5148173, z: -0.8769816}
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1

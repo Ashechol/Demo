@@ -1,6 +1,8 @@
 using System;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 namespace Inputs
 {
@@ -16,7 +18,14 @@ namespace Inputs
         #region Values
 
         private Vector2 _rawMoveInput;
-        
+        private Vector2 _rawLookInput;
+
+        public Vector2 MoveInput => _rawMoveInput;
+        public float MoveInputX => _rawMoveInput.x;
+        public float MoveInputY => _rawMoveInput.y;
+        public float YawInput => _rawLookInput.x;
+        public float PitchInput => _rawLookInput.y;
+
         #endregion
 
         private void Awake()
@@ -56,7 +65,13 @@ namespace Inputs
             if (context.action.name != "Move") return;
 
             _rawMoveInput = context.ReadValue<Vector2>();
-            Debug.Log(_rawMoveInput);
+        }
+
+        private void OnLookAction(InputAction.CallbackContext context)
+        {
+            if (context.action.name != "Look") return;
+
+            _rawLookInput = context.ReadValue<Vector2>();
         }
         
     }
