@@ -53,7 +53,7 @@ public class MissingScriptsHelper : EditorWindow
             int cnt = 0;
             foreach (var go in _gameObjects)
                 cnt += GameObjectUtility.RemoveMonoBehavioursWithMissingScript(go);
-            Debug.Log($"Removed {cnt} missing scripts!");
+            DebugLogType.Editor($"Removed {cnt} missing scripts!", Color.white);
             _gameObjects.Clear();
         }
         
