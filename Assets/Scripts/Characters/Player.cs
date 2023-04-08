@@ -1,5 +1,6 @@
 using System;
 using Inputs;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -21,13 +22,13 @@ public class Player : MonoBehaviour
     [Header("Movement")]
     public float walkSpeed = 3;
     public float runSpeed = 6;
-    public float angularSpeed = 500;
+    public float angularSpeed = 1000;
 
     [Header("Jump")] 
     public float gravity;
     
     #endregion
-
+    
     private void Awake()
     {
         _controller = Functions.GetComponentSafe<CharacterController>(gameObject);
@@ -36,12 +37,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Rotation();
         Locomotion();
     }
 
     private void Locomotion()
     {
+        Rotation();
+        
         _velocity = _direction * runSpeed;
         
         if (!_controller.isGrounded)

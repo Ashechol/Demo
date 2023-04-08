@@ -38,8 +38,8 @@ public class DebugLogType : MonoBehaviour
                                  $"<color=#{color.ToHexString()}>{message}</color>");
                 break;
             case Verbose.Error:
-                Debug.Log($"<color=#{labelColor.ToHexString()}>#{label}: </color>" + 
-                          $"<color=#              >{message}</color>");
+                Debug.LogError($"<color=#{labelColor.ToHexString()}>#{label}: </color>" + 
+                                $"<color=#{color.ToHexString()}>{message}</color>");
                 break;
         }
     }

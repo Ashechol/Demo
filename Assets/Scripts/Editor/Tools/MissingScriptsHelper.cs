@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditorInternal;
@@ -43,6 +44,7 @@ public class MissingScriptsHelper : EditorWindow
         if (GUILayout.Button("Find Missing Scripts"))
         {
             _gameObjects.Clear();
+            Debug.Log(_missingScripts.onSelectCallback.GetInvocationList().Length);
             FindMissingScripts();
         }
 
