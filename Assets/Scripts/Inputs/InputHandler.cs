@@ -1,8 +1,11 @@
 using System;
+using Framework;
+using Unity.VisualScripting;
 using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Serialization;
 
 namespace Inputs
 {
@@ -11,9 +14,9 @@ namespace Inputs
     /// </summary>
     public class InputHandler : MonoBehaviour
     {
-        private PlayerInput _playerInput;
+        private PlayerInput _playerInput = null;
 
-        public InputActionAsset actions;
+        private InputActionAsset _actions;
         
         #region Values
 
@@ -31,6 +34,7 @@ namespace Inputs
         private void Awake()
         {
             _playerInput = Functions.GetComponentSafe<PlayerInput>(gameObject);
+            _actions = Resources.Load("Settings/Input/GameInputActions") as InputActionAsset;
         }
 
         private void OnEnable()
@@ -46,17 +50,21 @@ namespace Inputs
         private void Start()
         {
             _playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
-            _playerInput.actions = actions;
-            _playerInput.defaultActionMap = actions.actionMaps[0].name;
+            _playerInput.actions = _actions;
+            _playerInput.defaultActionMap = _actions.actionMaps[0].name;
+            // 设置了 defaultActionMap 必须调用一次 ActivateInput
+            _playerInput.ActivateInput();
         }
 
         private void ActionBinding()
         {
             _playerInput.onActionTriggered += OnMoveAction;
+            _playerInput.onActionTriggered += OnLookAction;
         }
 
         private void ActionUnBinding()
         {
+            _playerInput.onActionTriggered -= OnMoveAction;
             _playerInput.onActionTriggered -= OnMoveAction;
         }
 

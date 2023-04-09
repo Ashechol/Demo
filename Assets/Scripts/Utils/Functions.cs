@@ -48,4 +48,12 @@ public struct Functions
         
         return res;
     }
+
+    public static float ClampAngle(float angle, float min, float max)
+    {
+        if (angle > max) angle -= max;
+        if (angle < min) angle += max;
+
+        return angle;
+    }
 }
