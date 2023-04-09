@@ -5,6 +5,7 @@ using Utils.Log;
 
 namespace Framework
 {
+    [ExecuteAlways]
     public class ResourceManager: SingletonMono<ResourceManager>
     {
         public ResourcesManagerSO settings;
@@ -20,33 +21,36 @@ namespace Framework
 
         private void Start()
         {
-            if (settings && settings.dontDestoryOnLoad) 
+            if (settings && settings.dontDestoryOnLoad && Application.isPlaying) 
                 DontDestroyOnLoad(gameObject);
         }
 
-        public GameObject LoadPrefab(string path)
+        public GameObject LoadPrefab(string path, string newName = null)
         {
             if (!settings) return null;
             
-            var go = Resources.Load(settings.prefabRoot + path);
-            if (!go)
+            var prefab = Resources.Load(settings.prefabRoot + path);
+            if (!prefab)
             {
                 DebugLog.LabelLog(_debugLabel, $"Cannot find object {settings.prefabRoot + path}", Verbose.Error);
                 return null;
             }
-            Instantiate(go);
+
+            var go = Instantiate(prefab);
+            if (newName != null) go.name = newName;
             return go as GameObject;
         }
-        
+
         /// <summary>
         /// Load and instantiate a prefab and return its component
         /// </summary>
         /// <param name="path">Prefab path in the Prefabs/</param>
+        /// <param name="newName">rename instantiated prefab</param>
         /// <typeparam name="T">Component Type</typeparam>
         /// <returns></returns>
-        public T GetPrefabComponent<T>(string path) where T: Component
+        public T GetPrefabComponent<T>(string path, string newName = null) where T: Component
         {
-            var go = LoadPrefab(path);
+            var go = LoadPrefab(path, newName);
             if (!go) return null;
             return go.GetComponent<T>();
         }

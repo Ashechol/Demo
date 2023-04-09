@@ -9,13 +9,19 @@ public struct Functions
         _vec2.Set(x, y);
         return _vec2 * scale;
     }
-
+    
+    /// <summary>
+    /// Get component, if it is null then attach it to gameObject
+    /// </summary>
+    /// <param name="go">component attach to</param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static T GetComponentSafe<T>(GameObject go) where T: Component
     {
         var component = go.GetComponent<T>();
         if (!component)
         {
-            DebugLog.Tips($"{go.name} Missing {typeof(T).Name} creating it.", Color.white);
+            DebugLog.Tips($"Attaching {typeof(T).Name} to {go.name}.", Color.white);
             component = go.AddComponent<T>();
         }
         return component;
@@ -35,7 +41,7 @@ public struct Functions
 
         if (!res)
         {
-            DebugLog.Tips($"Missing {name} adding it to {parent.name}", Color.white);
+            DebugLog.Tips($"Attaching {name} to {parent.name}.", Color.white);
             res = new GameObject(name).transform;
             res.SetParent(parent);
         }

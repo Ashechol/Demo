@@ -1,14 +1,15 @@
-using System;
+using Framework.Camera;
 using Inputs;
-using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(CameraHandler))]
 public class Player : MonoBehaviour
 {
     #region Components
     
     private CharacterController _controller;
     private InputHandler _input;
+    private CameraHandler _camera;
     
     #endregion
     
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
     {
         _controller = Functions.GetComponentSafe<CharacterController>(gameObject);
         _input = Functions.GetComponentSafe<InputHandler>(gameObject);
+        _camera = Functions.GetComponentSafe<CameraHandler>(gameObject);
     }
 
     private void Update()

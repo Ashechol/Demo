@@ -2,21 +2,40 @@ using System;
 using Cinemachine;
 using UnityEngine;
 
+using StateCamera = Cinemachine.CinemachineStateDrivenCamera;
+
 namespace Framework.Camera
 {
+    [ExecuteInEditMode]
     public class CameraHandler : MonoBehaviour
     {
-        private CinemachineStateDrivenCamera _stateCamera;
-        
-        [Header("Basic Settings")] 
+        [Header("Basic Settings")]
+        public CinemachineStateDrivenCamera stateCamera;
         public Transform cameraRoot;
-        
+
         private void Awake()
         {
-            if (!cameraRoot) 
-                cameraRoot = Functions.GetChildTransformSafe(transform, "CameraRoot", true);
+            Initialize();
+        }
+        
+        private void Start()
+        {
             
-            _stateCamera = ResourceManager.Instance.GetPrefabComponent<CinemachineStateDrivenCamera>("MotionCamera");
+        }
+
+        public void Initialize()
+        {
+            if (!cameraRoot)
+                cameraRoot = Functions.GetChildTransformSafe(transform, "CameraRoot", true);
+            if (!stateCamera)
+                stateCamera = ResourceManager.Instance.GetPrefabComponent<StateCamera>("MotionCamera", "MotionCamera");
+            
+            cameraRoot.localPosition = Vector3.zero;
+            stateCamera.Follow = cameraRoot;
+            stateCamera.transform.SetParent(transform);
+            
+            if (Application.isEditor && ResourceManager.HasInstance)
+                DestroyImmediate(ResourceManager.Instance.gameObject);
         }
     }
 }
