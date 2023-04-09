@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utils.Log;
 
 namespace Framework.Core
 {
@@ -16,6 +17,8 @@ namespace Framework.Core
                     _instance = FindObjectOfType<T>();
                     if (!_instance)
                     {
+                        DebugLog.CreateLog("SingletonMono", Color.magenta, 
+                            $"Creating {typeof(T).Name}.", Color.white, Verbose.Log);
                         var go = new GameObject{name = typeof(T).Name};
                         _instance = go.AddComponent<T>();
                     }

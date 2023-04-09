@@ -15,7 +15,8 @@ namespace Framework.Camera
         {
             if (!cameraRoot) 
                 cameraRoot = Functions.GetChildTransformSafe(transform, "CameraRoot", true);
-            _stateCamera = ResourcesManager.Instance.LoadPrefab("MotionCamera").GetComponent<CinemachineStateDrivenCamera>();
+            
+            _stateCamera = ResourceManager.Instance.GetPrefabComponent<CinemachineStateDrivenCamera>("MotionCamera");
         }
     }
 }

@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditorInternal;
 using UnityEngine;
+using Utils.Log;
 
 public struct Functions
 {
@@ -18,7 +15,7 @@ public struct Functions
         var component = go.GetComponent<T>();
         if (!component)
         {
-            DebugLogType.Tips($"Missing {typeof(T).Name} creating it", Color.white);
+            DebugLog.Tips($"{go.name} Missing {typeof(T).Name} creating it.", Color.white);
             component = go.AddComponent<T>();
         }
         return component;
@@ -38,7 +35,7 @@ public struct Functions
 
         if (!res)
         {
-            DebugLogType.Tips($"Missing {name} adding it to {parent.name}", Color.white);
+            DebugLog.Tips($"Missing {name} adding it to {parent.name}", Color.white);
             res = new GameObject(name).transform;
             res.SetParent(parent);
         }

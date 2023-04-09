@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using Utils.Log;
 
 public class MissingScriptsHelper : EditorWindow
 {
@@ -55,14 +55,14 @@ public class MissingScriptsHelper : EditorWindow
             int cnt = 0;
             foreach (var go in _gameObjects)
                 cnt += GameObjectUtility.RemoveMonoBehavioursWithMissingScript(go);
-            DebugLogType.Editor($"Removed {cnt} missing scripts!", Color.white);
+            DebugLog.Editor($"Removed {cnt} missing scripts!", Color.white);
             _gameObjects.Clear();
         }
         
         GUILayout.EndScrollView();
     }
 
-    void FindMissingScripts()
+    private void FindMissingScripts()
     {
         if (!rootGo) return;
         var goTrans = rootGo.transform.GetComponentsInChildren<Transform>();
