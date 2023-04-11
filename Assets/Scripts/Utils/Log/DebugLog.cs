@@ -74,5 +74,10 @@ namespace Utils.Log
         {
             CreateLog(label.name, label.labelColor, message, label.messageColor, verbose, condition);
         }
+
+        public static void VariableLog()
+        {
+            
+        }
     }
 }
