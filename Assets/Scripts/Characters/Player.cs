@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     public float angularSpeed = 1000;
 
     [Header("Jump")] 
-    public float gravity;
+    public float gravity = 20;
     
     #endregion
     
