@@ -2,12 +2,11 @@ using System;
 using Cinemachine;
 using Inputs;
 using UnityEngine;
-
+using Utils.Log;
 using StateCamera = Cinemachine.CinemachineStateDrivenCamera;
 
 namespace Framework.Camera
 {
-    [ExecuteInEditMode]
     public class CameraHandler : MonoBehaviour
     {
         private InputHandler _input;
@@ -26,47 +25,29 @@ namespace Framework.Camera
 
         private void Awake()
         {
-            // Initialize();
-#if UNITY_EDITOR
-            if (!Application.isPlaying) return;
-#endif
-            
             _input = Functions.GetComponentSafe<InputHandler>(gameObject);
+            Initialize();
         }
 
         private void Start()
         {
-#if UNITY_EDITOR
-            if (!Application.isPlaying) return;
-#endif
-            
             _yaw = cameraRoot.rotation.eulerAngles.y;
         }
 
         private void Update()
         {
-#if UNITY_EDITOR
-            if (!Application.isPlaying) return;
-#endif
-            
             CameraRotation();
         }
-        
-        private void OnValidate()
-        {
-            Initialize();
-        }
-        
+
         public void Initialize()
         {
             if (!cameraRoot)
-                cameraRoot = Functions.GetChildTransformSafe(transform, "CameraRoot", true);
+                cameraRoot = Functions.GetChildTransformSafe(transform, "CameraRoot");
             if (!stateCamera)
-                stateCamera = ResourceLoader.GetPrefabComponent<StateCamera>("MotionCamera", "MotionCamera");
-            
+                stateCamera = ResourceLoader.GetPrefabComponent<StateCamera>("MotionCamera", transform, "MotionCamera");
+
             cameraRoot.localPosition = Vector3.zero;
             stateCamera.Follow = cameraRoot;
-            stateCamera.transform.SetParent(transform);
         }
 
         private void CameraRotation()

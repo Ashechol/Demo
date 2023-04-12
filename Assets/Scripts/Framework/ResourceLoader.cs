@@ -17,7 +17,7 @@ namespace Framework
             DebugLog.LabelLog(DebugLabel, "Settings file not found!", Verbose.Assert, Settings);
         }
 
-        public static GameObject LoadPrefab(string path, string newName = null)
+        public static GameObject LoadPrefab(string path, Transform parent = null, string newName = null)
         {
             if (!Settings) return null;
             
@@ -27,8 +27,8 @@ namespace Framework
                 DebugLog.LabelLog(DebugLabel, $"Cannot find object {Settings.prefabRoot + path}", Verbose.Error);
                 return null;
             }
-
-            var go = Object.Instantiate(prefab);
+            
+            var go = Object.Instantiate(prefab, parent);
             if (newName != null) go.name = newName;
             return go as GameObject;
         }
@@ -40,9 +40,9 @@ namespace Framework
         /// <param name="newName">rename instantiated prefab</param>
         /// <typeparam name="T">Component Type</typeparam>
         /// <returns></returns>
-        public static T GetPrefabComponent<T>(string path, string newName = null) where T: Component
+        public static T GetPrefabComponent<T>(string path, Transform parent = null, string newName = null) where T: Component
         {
-            var go = LoadPrefab(path, newName);
+            var go = LoadPrefab(path, parent, newName);
             if (!go) return null;
             return go.GetComponent<T>();
         }
