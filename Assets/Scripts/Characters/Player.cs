@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     [Header("Movement")]
     public float walkSpeed = 3;
     public float runSpeed = 6;
-    public float angularSpeed = 1000;
+    public float angularSpeed = 800;
 
     [Header("Jump")] 
     public float gravity = 20;

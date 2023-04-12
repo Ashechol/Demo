@@ -33,7 +33,7 @@ public class CameraHandlerEditor : Editor
     {
         // OnDisable 会在每次 Inspector 组件内容更新的时候调用
         // 当 target 为 null 的时候 Component 才被真正的移除
-        if (target == null)
+        if (target == null && !Application.genuine)
         {
             DestroyImmediate(_camera.cameraRoot.gameObject);
             DestroyImmediate(_camera.stateCamera.gameObject);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Manager Settings/ResourcesManager", fileName = "ResourcesManager Settings")]
-public class ResourcesManagerSO : ScriptableObject
+public class ResourcesLoaderSO : ScriptableObject
 {
     public bool dontDestoryOnLoad = false;
 

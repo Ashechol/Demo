@@ -26,7 +26,7 @@ namespace Framework.Camera
         private void Awake()
         {
             _input = Functions.GetComponentSafe<InputHandler>(gameObject);
-            Initialize();
+            // Initialize();
         }
 
         private void Start()
