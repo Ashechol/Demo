@@ -73,23 +73,42 @@ namespace Utils
         }
     
         /// <summary>
-        /// Get bilinear Bezier curve points
+        /// Get bilinear Bezier curve local points' positions
         /// </summary>
-        /// <param name="start">Start Point</param>
-        /// <param name="end">End Point</param>
-        /// <param name="control">Control Point</param>
+        /// <param name="end">Local end point</param>
+        /// <param name="control">Local control point</param>
         /// <param name="resolution">Curve resolution</param>
         /// <returns></returns>
-        public static Vector3[] BezierCurveBilinear(Vector3 start, Vector3 end, Vector3 control, int resolution)
+        public static Vector3[] BezierCurveBilinearLocal(Vector3 end, Vector3 control, int resolution)
         {
             var points = new Vector3[resolution];
         
             for (var i = 0; i < resolution; ++i)
             {
                 var t = (float)(i + 1) / resolution;
-                points[i] = BezierPointBilinear(start, end, control, t);
+                points[i] = BezierPointBilinear(Vector3.zero, end, control, t);
             }
         
+            return points;
+        }
+        
+        /// <summary>
+        /// Get bilinear Bezier curve world space points' positions
+        /// </summary>
+        /// <param name="start">Start point</param>
+        /// <param name="end">End point</param>
+        /// <param name="control">Control point</param>
+        /// <param name="resolution">Curve resolution</param>
+        /// <returns>World space points' positions</returns>
+        public static Vector3[] BezierCurveBilinear(Vector3 start, Vector3 end, Vector3 control, int resolution)
+        {
+            var points = new Vector3[resolution];
+            for (var i = 0; i < resolution; ++i)
+            {
+                var t = (float)(i + 1) / resolution;
+                points[i] = BezierPointBilinear(start, end, control, t);
+            }
+
             return points;
         }
     }
