@@ -1,8 +1,7 @@
-using System;
 using Cinemachine;
 using Inputs;
 using UnityEngine;
-using Utils.Log;
+using Utils;
 using StateCamera = Cinemachine.CinemachineStateDrivenCamera;
 
 namespace Framework.Camera

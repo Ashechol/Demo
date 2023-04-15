@@ -1,6 +1,7 @@
 using Framework.Camera;
 using Inputs;
 using UnityEngine;
+using Utils;
 
 [RequireComponent(typeof(CameraHandler))]
 public class Player : MonoBehaviour

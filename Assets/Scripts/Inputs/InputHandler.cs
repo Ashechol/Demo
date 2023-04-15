@@ -1,11 +1,6 @@
-using System;
-using Framework;
-using Unity.VisualScripting;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.Serialization;
+using Utils;
 
 namespace Inputs
 {
