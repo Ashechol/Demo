@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Rendering;
 using UnityEngine;
+using Utils.Log;
 
 [CustomEditor(typeof(DoTweenTest))]
 public class DoTweenTestEditor : Editor
@@ -27,7 +24,6 @@ public class DoTweenTestEditor : Editor
 
         var transform = _doTest.transform;
         var position = transform.position;
-        var rotation = transform.rotation;
 
         EditorGUI.BeginChangeCheck();
         
@@ -39,7 +35,7 @@ public class DoTweenTestEditor : Editor
         var newEnd = Handles.Slider2D(_doTest.End, 
             transform.right, transform.up, transform.forward, 
             0.05f, Handles.DotHandleCap, Vector2.one * 0.1f);
-        Handles.DrawLine(position, _doTest.Control);
+        
         
         if (EditorGUI.EndChangeCheck())
         {
@@ -47,6 +43,8 @@ public class DoTweenTestEditor : Editor
             _doTest.Control = newControl;
             _doTest.End = newEnd;
         }
+        
+        Handles.DrawLine(position, _doTest.Control);
     }
 
     public override void OnInspectorGUI()
@@ -57,14 +55,21 @@ public class DoTweenTestEditor : Editor
         if (_doTest.isEditMode)
         {
             _doTest.end = EditorGUILayout.Vector2Field("End Point", _doTest.end);
-            _doTest.control = EditorGUILayout.Vector2Field("control Point", _doTest.control);
+            _doTest.control = EditorGUILayout.Vector2Field("Control Point", _doTest.control);
             _doTest.resolution = EditorGUILayout.IntField("Resolution", _doTest.resolution);
-            EditorGUILayout.PropertyField(_points);   
+            
+            EditorGUI.BeginDisabledGroup(true);
+            EditorGUILayout.PropertyField(_points);
+            EditorGUI.EndDisabledGroup();
+            
+            // 没有使用 EditorGUILayout.PropertyField 的属性拖动改值的情况
+            // 不会刷新场景的 GUI 组件，所以需要 RepaintAll
+            SceneView.RepaintAll();
         }
 
         _doTest.duration = EditorGUILayout.FloatField("Duration", _doTest.duration);
         _doTest.curve = EditorGUILayout.CurveField("Ease Curve", _doTest.curve);
-
+        
         serializedObject.ApplyModifiedProperties();
     }
 }

@@ -21,10 +21,12 @@ public class DoTweenTest : MonoBehaviour
     /// </summary>
     public Vector3 Control
     {
-        get => transform.rotation * new Vector3(0, control.y, control.x) + transform.position;
+        // get => transform.rotation * new Vector3(0, control.y, control.x) + transform.position;
+        get => transform.TransformDirection(0, control.y, control.x);
         set
         {
-            value = Quaternion.Inverse(transform.rotation) * (value - transform.position);
+            // value = Quaternion.Inverse(transform.rotation) * (value - transform.position);
+            value = transform.InverseTransformDirection(value);
             control.x = value.z; control.y = value.y;
         }
     }
@@ -34,10 +36,11 @@ public class DoTweenTest : MonoBehaviour
     /// </summary>
     public Vector3 End
     {
-        get => transform.rotation * new Vector3(0, end.y, end.x) + transform.position;
+        // get => transform.rotation * new Vector3(0, end.y, end.x) + transform.position;
+        get => transform.TransformDirection(0, end.y, end.x);
         set
         {
-            value = Quaternion.Inverse(transform.rotation) * (value - transform.position);
+            value = transform.InverseTransformDirection(value);
             end.x = value.z; end.y = value.y;
         }
     }
@@ -47,14 +50,9 @@ public class DoTweenTest : MonoBehaviour
     private void Start()
     {
         transform
-            .DOPath(points, duration, PathType.Linear)
+            .DOPath(points, duration, PathType.CatmullRom)
             .SetEase(curve)
             .SetLookAt(0);
-    }
-
-    private void Update()
-    {
-        
     }
 
     public void EditCurve()
@@ -65,6 +63,14 @@ public class DoTweenTest : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        DrawGizmos.DrawCurve(points);
+        if (isEditMode)
+            DrawGizmos.DrawCurve(points);
+        else
+        {
+            var localControl = new Vector3(0, control.y, control.x);
+            var localEnd = new Vector3(0, end.y, end.x);
+            var localPoints = Functions.BezierCurveBilinearLocal(localEnd, localControl, resolution);
+            DrawGizmos.DrawCurve(transform, localPoints);
+        }
     }
 }
