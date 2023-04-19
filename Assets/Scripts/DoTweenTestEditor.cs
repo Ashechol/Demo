@@ -42,8 +42,8 @@ public class DoTweenTestEditor : Editor
             Undo.RecordObject(_doTest, "Change Bezier curve");
             _doTest.Control = newControl;
             _doTest.End = newEnd;
-        }
         
+        }
         Handles.DrawLine(position, _doTest.Control);
     }
 

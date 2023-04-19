@@ -24,7 +24,7 @@ namespace Framework.Camera
 
         private void Awake()
         {
-            _input = Functions.GetComponentSafe<InputHandler>(gameObject);
+            _input = this.GetComponentSafe<InputHandler>();
             // Initialize();
         }
 
@@ -41,7 +41,7 @@ namespace Framework.Camera
         public void Initialize()
         {
             if (!cameraRoot)
-                cameraRoot = Functions.GetChildTransformSafe(transform, "CameraRoot");
+                cameraRoot = transform.GetChildTransformSafe("CameraRoot");
             if (!stateCamera)
                 stateCamera = ResourceLoader.GetPrefabComponent<StateCamera>("MotionCamera", transform, "MotionCamera");
 

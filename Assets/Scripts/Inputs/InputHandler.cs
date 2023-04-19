@@ -28,7 +28,7 @@ namespace Inputs
 
         private void Awake()
         {
-            _playerInput = Functions.GetComponentSafe<PlayerInput>(gameObject);
+            _playerInput = gameObject.GetComponentSafe<PlayerInput>();
             _actions = Resources.Load("Settings/Input/GameInputActions") as InputActionAsset;
         }
 

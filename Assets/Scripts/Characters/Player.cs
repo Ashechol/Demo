@@ -33,9 +33,9 @@ public class Player : MonoBehaviour
     
     private void Awake()
     {
-        _controller = Functions.GetComponentSafe<CharacterController>(gameObject);
-        _input = Functions.GetComponentSafe<InputHandler>(gameObject);
-        _camera = Functions.GetComponentSafe<CameraHandler>(gameObject);
+        _controller = this.GetComponentSafe<CharacterController>();
+        _input = this.GetComponentSafe<InputHandler>();
+        _camera = this.GetComponentSafe<CameraHandler>();
     }
 
     private void Update()

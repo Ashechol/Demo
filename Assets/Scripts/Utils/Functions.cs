@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Utils.Log;
 
@@ -18,6 +19,7 @@ namespace Utils
         /// <param name="go">component attach to</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
+        [Obsolete("This method is obsolete. Use ExtendMethods.GetComponentSafe instead.", true)]
         public static T GetComponentSafe<T>(GameObject go) where T: Component
         {
             var component = go.GetComponent<T>();
@@ -47,7 +49,7 @@ namespace Utils
                 res = new GameObject(name).transform;
                 res.SetParent(parent);
             }
-        
+            
             return res;
         }
 
