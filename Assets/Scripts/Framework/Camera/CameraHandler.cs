@@ -12,6 +12,9 @@ namespace Framework.Camera
         private float _yaw;
         private float _pitch;
 
+        public float Yaw => cameraRoot.eulerAngles.y;
+        public float Pitch => cameraRoot.eulerAngles.x;
+
         [Header("Basic Settings")]
         public CinemachineStateDrivenCamera stateCamera;
         public Transform cameraRoot;
@@ -31,11 +34,12 @@ namespace Framework.Camera
         private void Start()
         {
             _yaw = cameraRoot.rotation.eulerAngles.y;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
-        private void Update()
+        private void LateUpdate()
         {
-            CameraRotation();
+            CameraRotation();   
         }
 
         public void Initialize()
@@ -51,9 +55,10 @@ namespace Framework.Camera
 
         private void CameraRotation()
         {
-            _yaw += _input.YawInput * Time.deltaTime * mouseXSpeed;
-            _yaw = Functions.ClampAngle(_yaw, 0, 360);
-            _pitch += _input.PitchInput * Time.deltaTime * mouseYSpeed;
+            // 处理鼠标输入不能乘以 Time.deltaTime
+            _yaw += _input.YawInput * mouseXSpeed;
+            _yaw = Functions.ClampAngle(_yaw, float.MinValue, float.MaxValue);
+            _pitch += _input.PitchInput * mouseYSpeed;
             _pitch = Mathf.Clamp(_pitch, pitchMin, pitchMax);
             
             // 必须是 global rotation 才能解绑子物体的旋转和父物体

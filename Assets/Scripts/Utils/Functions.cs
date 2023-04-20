@@ -6,13 +6,6 @@ namespace Utils
 {
     public struct Functions
     {
-        private static Vector2 _vec2;
-        public static Vector2 TempVec2(float x, float y, float scale = 1)
-        {
-            _vec2.Set(x, y);
-            return _vec2 * scale;
-        }
-    
         /// <summary>
         /// Get component, if it is null then attach it to gameObject
         /// </summary>
@@ -55,10 +48,10 @@ namespace Utils
 
         public static float ClampAngle(float angle, float min, float max)
         {
-            if (angle > max) angle -= max;
-            if (angle < min) angle += max;
+            if (angle > 360) angle -= 360;
+            if (angle < -360) angle += 360;
 
-            return angle;
+            return Mathf.Clamp(angle, min, max);
         }
     
         /// <summary>

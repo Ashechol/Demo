@@ -66,7 +66,7 @@ namespace Inputs
         private void OnMoveAction(InputAction.CallbackContext context)
         {
             if (context.action.name != "Move") return;
-
+            
             _rawMoveInput = context.ReadValue<Vector2>();
         }
 
