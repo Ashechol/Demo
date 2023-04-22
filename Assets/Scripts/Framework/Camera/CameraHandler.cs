@@ -56,10 +56,11 @@ namespace Framework.Camera
         private void CameraRotation()
         {
             // 处理鼠标输入不能乘以 Time.deltaTime
-            _yaw += _input.YawInput * mouseXSpeed;
+            // _yaw += _input.YawInput * mouseXSpeed;
+            _yaw += _input.YawInputFixed * mouseXSpeed;
             _yaw = Functions.ClampAngle(_yaw, float.MinValue, float.MaxValue);
-            _pitch += _input.PitchInput * mouseYSpeed;
-            _pitch = Mathf.Clamp(_pitch, pitchMin, pitchMax);
+            _pitch += _input.PitchInputFixed * mouseYSpeed;
+            _pitch = Functions.ClampAngle(_pitch, pitchMin, pitchMax);
             
             // 必须是 global rotation 才能解绑子物体的旋转和父物体
             cameraRoot.rotation = Quaternion.Euler(_pitch, _yaw, 0);

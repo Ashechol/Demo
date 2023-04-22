@@ -23,9 +23,16 @@ namespace Inputs
         public float MoveInputX => _rawMoveInput.x;
         public float MoveInputY => _rawMoveInput.y;
         public float YawInput => _rawLookInput.x;
+        // 处理鼠标输入不能乘以 Time.deltaTime
+        /// Fixed YawInput: do not multiply delta time
+        public float YawInputFixed => IsCurrentDeviceMouse ? YawInput : YawInput * Time.deltaTime;
         public float PitchInput => _rawLookInput.y;
+        /// Fixed PitchInput: do not multiply delta time
+        public float PitchInputFixed => IsCurrentDeviceMouse ? PitchInput : PitchInput * Time.deltaTime;
 
         #endregion
+
+        public bool IsCurrentDeviceMouse => _playerInput.currentControlScheme == "KeyboardMouse";
 
         private void Awake()
         {

@@ -82,8 +82,7 @@ public class Player : MonoBehaviour
         if (_input.IsMoveInput)
         {
             _directionAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _camera.Yaw;
-            _forwardAngle = Mathf.SmoothDampAngle(_forwardAngle,  _directionAngle, ref _refAngle,
-                angularTime);
+            _forwardAngle = Mathf.SmoothDampAngle(_forwardAngle,  _directionAngle, ref _refAngle, angularTime);
             _forward = Quaternion.Euler(0, _forwardAngle, 0) * Vector3.forward;
         }
 
