@@ -19,6 +19,7 @@ namespace Inputs
         private Vector2 _rawLookInput;
 
         public Vector2 MoveInput => _rawMoveInput;
+        public bool IsMoveInput => _rawMoveInput != Vector2.zero;
         public float MoveInputX => _rawMoveInput.x;
         public float MoveInputY => _rawMoveInput.y;
         public float YawInput => _rawLookInput.x;
