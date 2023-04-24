@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
-using Utils.Log;
 
-namespace Utils
+namespace Demo.Utils
 {
     public struct Functions
     {
@@ -105,6 +104,11 @@ namespace Utils
             }
 
             return points;
+        }
+
+        public static float HorizontalMagnitude(float x, float z)
+        {
+            return Mathf.Sqrt(x * x + z * z);
         }
     }
 }

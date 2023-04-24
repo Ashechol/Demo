@@ -1,9 +1,8 @@
 using System;
+using Demo.Utils;
 using Framework.Camera;
 using UnityEditor;
 using UnityEngine;
-using Utils.Log;
-
 using StateCamera = Cinemachine.CinemachineStateDrivenCamera;
 
 [CustomEditor(typeof(CameraHandler))]

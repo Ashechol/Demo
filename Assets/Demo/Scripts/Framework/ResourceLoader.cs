@@ -1,5 +1,5 @@
+using Demo.Utils;
 using UnityEngine;
-using Utils.Log;
 using Object = UnityEngine.Object;
 
 namespace Framework

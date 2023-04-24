@@ -1,6 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-using Utils.Log;
 
 [CustomEditor(typeof(DoTweenTest))]
 public class DoTweenTestEditor : Editor

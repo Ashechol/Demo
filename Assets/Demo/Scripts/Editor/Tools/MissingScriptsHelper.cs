@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using Demo.Utils;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
-using Utils.Log;
 
 public class MissingScriptsHelper : EditorWindow
 {

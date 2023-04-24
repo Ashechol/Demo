@@ -1,6 +1,6 @@
+using Demo.Utils;
 using UnityEngine;
 using UnityEngine.Animations;
-using Utils.Log;
 
 namespace Utils
 {

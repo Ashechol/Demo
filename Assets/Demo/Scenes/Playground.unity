@@ -322,6 +322,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &476499525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 476499527}
+  - component: {fileID: 476499526}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &476499526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476499525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07ce4ce34586ea48a34838c49539768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: []
+--- !u!4 &476499527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476499525}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -13.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &507602813
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +379,7 @@ GameObject:
   - component: {fileID: 507602819}
   - component: {fileID: 507602821}
   - component: {fileID: 507602820}
+  - component: {fileID: 507602822}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -390,11 +436,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd5f8be222b5504686663b4824fd884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 3
   runSpeed: 5
-  angularTime: 0.1
+  accelerateTime: 10
+  angularTime: 0.12
   gravity: 20
-  _forwardAngle: 0
 --- !u!114 &507602821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,6 +458,18 @@ MonoBehaviour:
   mouseXSpeed: 5
   pitchMax: 60
   pitchMin: -30
+--- !u!114 &507602822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507602813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec829c4823dfb24c98eb0b46a7255e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

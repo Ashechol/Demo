@@ -1,8 +1,7 @@
-using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Utils.Log
+namespace Demo.Utils
 { 
     public enum Verbose
     {
@@ -14,14 +13,14 @@ namespace Utils.Log
 
     public struct DebugLabel
     {
-        public string name;
+        public readonly string name;
         public Color labelColor;
         public Color messageColor;
-        public DebugLabel(string name, Color labelColor, Color messageColor)
+        public DebugLabel(string name, Color? labelColor = null, Color? messageColor = null)
         {
             this.name = name;
-            this.labelColor = labelColor;
-            this.messageColor = messageColor;
+            this.labelColor = labelColor ?? Color.yellow;
+            this.messageColor = messageColor?? Color.white;
         }
     }
 
