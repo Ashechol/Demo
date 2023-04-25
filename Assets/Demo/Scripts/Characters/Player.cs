@@ -72,9 +72,9 @@ public class Player : MonoBehaviour
         else
             _motionY -= gravity * Time.deltaTime;
         
-        _curSpeed = Mathf.Lerp(_curSpeed, _input.IsMoveInput ? runSpeed : 0, accelerateTime * Time.deltaTime);
+        _curSpeed = Mathf.Lerp(_curSpeed, _input.IsMoveInput ? runSpeed * _input.MoveInput.magnitude : 0, accelerateTime * Time.deltaTime);
         if (_curSpeed < 0.1f) _curSpeed = 0;
-
+        
         _motion = Quaternion.AngleAxis(_directionAngle, transform.up) * Vector3.forward * (_curSpeed * Time.deltaTime);
 
         _motion.y = _motionY * Time.deltaTime;
