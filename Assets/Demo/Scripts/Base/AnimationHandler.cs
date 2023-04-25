@@ -22,8 +22,7 @@ public abstract class AnimationHandler : MonoBehaviour
     protected virtual void Start()
     {
         RegisterAnimID();
-        var sp = GetComponent<Spline>();
-        
+
     }
 
     protected abstract void RegisterAnimID();
