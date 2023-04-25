@@ -1,5 +1,7 @@
 using Demo.Utils;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public abstract class AnimationHandler : MonoBehaviour
 {
@@ -20,6 +22,8 @@ public abstract class AnimationHandler : MonoBehaviour
     protected virtual void Start()
     {
         RegisterAnimID();
+        var sp = GetComponent<Spline>();
+        
     }
 
     protected abstract void RegisterAnimID();
