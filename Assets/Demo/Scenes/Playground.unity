@@ -391,7 +391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runSpeed: 5
-  accelerateTime: 10
+  acceleration: 15
   angularTime: 0.12
   gravity: 20
 --- !u!114 &507602821
@@ -433,9 +433,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 638805730}
-  - component: {fileID: 638805729}
   - component: {fileID: 638805728}
   - component: {fileID: 638805727}
+  - component: {fileID: 638805731}
+  - component: {fileID: 638805729}
   m_Layer: 0
   m_Name: SD Player
   m_TagString: Player
@@ -456,7 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runSpeed: 6
-  accelerateTime: 15
+  acceleration: 15
   angularTime: 0.1
   gravity: 20
 --- !u!143 &638805728
@@ -513,6 +514,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &638805731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638805726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec829c4823dfb24c98eb0b46a7255e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -11432,7 +11445,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5883594372602281839}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af276926b0db1c248a93ab3c1134a6c2, type: 3}
   m_Name: 

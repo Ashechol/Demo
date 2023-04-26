@@ -1,3 +1,4 @@
+using System;
 using Demo.Utils;
 using DG.Tweening;
 using UnityEngine;
@@ -8,8 +9,8 @@ public class PlayerAnim : AnimationHandler
     private int _lean;
     private Player _player;
 
-    private float _lastTurningAngle;
-    private float _leanAmount = 0;
+    private float _lastYaw;
+    private float _leanAmount;
 
     protected override void Awake()
     {
@@ -17,6 +18,12 @@ public class PlayerAnim : AnimationHandler
         
         if (!TryGetComponent(out _player))
             DebugLog.LabelLog(debugLabel, $"Missing Player in {gameObject.name}!", Verbose.Error);
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        _lastYaw = _player.CurrentYaw;
     }
 
     protected override void RegisterAnimID()
@@ -30,14 +37,19 @@ public class PlayerAnim : AnimationHandler
         if (!hasAnimator) return;
 
         anim.SetFloat(_speedXZ, _player.CurSpeed);
-
-        CalculateLeanAmount();
+        
+        // 倾斜度计算，利用 Player SmoothDamp 的相对速度除以一定值
+        // 可以很轻松的求到倾斜度
+        _leanAmount = Mathf.Clamp(_player.RotationRef / 150, -1, 1);
         anim.SetFloat(_lean, _leanAmount);
     }
 
-    private void CalculateLeanAmount()
+    private void OnGUI()
     {
-        Debug.Log($"cur: {_player.CurrentTurningAngle}, tar: {_player.TurningAngle}");
-        _leanAmount = Mathf.Lerp(_leanAmount, _player.CurrentTurningAngle - _player.TurningAngle, Time.deltaTime);
+        var style = new GUIStyle
+        {
+            fontSize = 30
+        };
+        GUILayout.Label($"<color=yellow>Rotation speed reference：{_player.RotationRef}</color>\n", style);
     }
 }

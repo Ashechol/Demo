@@ -110,5 +110,19 @@ namespace Demo.Utils
         {
             return Mathf.Sqrt(x * x + z * z);
         }
+
+        public static float DeltaAngle(float prev, float cur)
+        {
+            var res = prev - cur;
+
+            if (res > 180) res -= 180;
+            if (res < -180) res += 180;
+            
+            
+            
+            return res;
+        }
+
+        public static bool NearlyEqual(float a, float b, float error) => Mathf.Abs(a - b) < error;
     }
 }

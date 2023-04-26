@@ -3,6 +3,7 @@ using Demo.Utils;
 using UnityEngine;
 using Framework.Camera;
 using Inputs;
+using UnityEngine.Serialization;
 using Utils;
 
 [RequireComponent(typeof(CameraHandler))]
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour
     
     [Header("Movement")]
     public float runSpeed = 6;
-    public float accelerateTime = 0;
+    public float acceleration = 15;
     public float angularTime = 0.5f;
 
     [Header("Jump")] 
@@ -32,20 +33,19 @@ public class Player : MonoBehaviour
     
     /// Local horizontal direction
     private Vector3 _forward;
-    private float _turningAngle
-        ;
-    private float _curTurningAngle;
+    private float _targetYaw;
+    private float _smoothYaw;
     // Local velocity
     private Vector3 _motion;
     private float _motionY;
     private Vector3 _rotation;
-    
+
     private float _curSpeed;
     
     public float CurSpeed => _curSpeed;
-    public float TurningAngle => _turningAngle;
-    public float CurrentTurningAngle => _curTurningAngle;
-    
+
+    public float CurrentYaw { get; private set; }
+
     private void Awake()
     {
         _controller = this.GetComponentSafe<CharacterController>();
@@ -56,13 +56,15 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        _forward = transform.forward;
-        _curTurningAngle = 0;
+        var trans = transform;
+        _forward = trans.forward;
+        CurrentYaw = trans.eulerAngles.y;
     }
 
     private void Update()
     {
         Locomotion();
+        CurrentYaw = transform.eulerAngles.y;
         _anim.UpdateAnimParams();
     }
     
@@ -75,10 +77,10 @@ public class Player : MonoBehaviour
         else
             _motionY -= gravity * Time.deltaTime;
         
-        _curSpeed = Mathf.Lerp(_curSpeed, _input.IsMoveInput ? runSpeed * _input.MoveInput.magnitude : 0, accelerateTime * Time.deltaTime);
+        _curSpeed = Mathf.Lerp(_curSpeed, _input.IsMoveInput ? runSpeed * _input.MoveInput.magnitude : 0, acceleration * Time.deltaTime);
         if (_curSpeed < 0.1f) _curSpeed = 0;
         
-        _motion = Quaternion.AngleAxis(_turningAngle, transform.up) * Vector3.forward * (_curSpeed * Time.deltaTime);
+        _motion = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward * (_curSpeed * Time.deltaTime);
 
         _motion.y = _motionY * Time.deltaTime;
             
@@ -86,14 +88,16 @@ public class Player : MonoBehaviour
     }
     
     
-    [NonSerialized] private float _refAngle;
+    [NonSerialized] private float _rotationRef;
+    public float RotationRef => _rotationRef;
     private void Rotation()
     {
         if (_input.IsMoveInput)
         {
-            _turningAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _camera.Yaw;
-            _curTurningAngle = Mathf.SmoothDampAngle(_curTurningAngle,  _turningAngle, ref _refAngle, angularTime);
-            _forward = Quaternion.Euler(0, _curTurningAngle, 0) * Vector3.forward;
+            _targetYaw = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _camera.Yaw;
+            _targetYaw = Functions.ClampAngle(_targetYaw, -360, 360);
+            _smoothYaw = Mathf.SmoothDampAngle(_smoothYaw,  _targetYaw, ref _rotationRef, angularTime);
+            _forward = Quaternion.Euler(0, _smoothYaw, 0) * Vector3.forward;
         }
 
         transform.forward = _forward;
