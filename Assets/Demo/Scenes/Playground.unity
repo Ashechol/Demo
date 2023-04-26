@@ -394,6 +394,7 @@ MonoBehaviour:
   acceleration: 15
   angularTime: 0.12
   gravity: 20
+  jumpHeight: 5
 --- !u!114 &507602821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,6 +461,7 @@ MonoBehaviour:
   acceleration: 15
   angularTime: 0.1
   gravity: 20
+  jumpHeight: 2
 --- !u!143 &638805728
 CharacterController:
   m_ObjectHideFlags: 0

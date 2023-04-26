@@ -7,6 +7,9 @@ public class PlayerAnim : AnimationHandler
 {
     private int _speedXZ;
     private int _lean;
+    private int _jump;
+    private int _speedY;
+    private int _grounded;
     private Player _player;
 
     private float _lastYaw;
@@ -30,6 +33,9 @@ public class PlayerAnim : AnimationHandler
     {
         _speedXZ = Animator.StringToHash("speedXZ");
         _lean = Animator.StringToHash("lean");
+        _jump = Animator.StringToHash("jump");
+        _speedY = Animator.StringToHash("speedY");
+        _grounded = Animator.StringToHash("grounded");
     }
 
     public override void UpdateAnimParams()
@@ -42,6 +48,10 @@ public class PlayerAnim : AnimationHandler
         // 可以很轻松的求到倾斜度
         _leanAmount = Mathf.Clamp(_player.RotationRef / 150, -1, 1);
         anim.SetFloat(_lean, _leanAmount);
+        
+        anim.SetBool(_jump, _player.IsJump);
+        anim.SetFloat(_speedY, _player.VelocityY);
+        anim.SetBool(_grounded, _player.IsGrounded);
     }
 
     private void OnGUI()

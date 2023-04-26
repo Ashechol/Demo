@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
 
     [Header("Jump")] 
     public float gravity = 20;
+    public float jumpHeight = 5;
 
     #endregion
     
@@ -41,8 +42,12 @@ public class Player : MonoBehaviour
     private Vector3 _rotation;
 
     private float _curSpeed;
-    
+
     public float CurSpeed => _curSpeed;
+    public bool IsJump { get; private set; }
+
+    public float VelocityY => _controller.velocity.y;
+    public bool IsGrounded => _controller.isGrounded;
 
     public float CurrentYaw { get; private set; }
 
@@ -72,10 +77,13 @@ public class Player : MonoBehaviour
     {
         Rotation();
 
-        if (_controller.isGrounded)
+        if (_controller.isGrounded && _motionY < 0)
             _motionY = -2;
         else
             _motionY -= gravity * Time.deltaTime;
+        IsJump = false;
+        
+        Jump();
         
         _curSpeed = Mathf.Lerp(_curSpeed, _input.IsMoveInput ? runSpeed * _input.MoveInput.magnitude : 0, acceleration * Time.deltaTime);
         if (_curSpeed < 0.1f) _curSpeed = 0;
@@ -101,5 +109,14 @@ public class Player : MonoBehaviour
         }
 
         transform.forward = _forward;
+    }
+
+    private void Jump()
+    {
+        if (_input.JumpInput && _controller.isGrounded)
+        {
+            _motionY = Mathf.Sqrt(2 * jumpHeight * gravity);
+            IsJump = true;
+        }
     }
 }

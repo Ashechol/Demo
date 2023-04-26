@@ -12,11 +12,12 @@ namespace Inputs
         private PlayerInput _playerInput = null;
 
         private InputActionAsset _actions;
-        
+
         #region Values
 
         private Vector2 _rawMoveInput;
         private Vector2 _rawLookInput;
+        private bool _jumpInput;
 
         public Vector2 MoveInput => _rawMoveInput;
         public bool IsMoveInput => _rawMoveInput != Vector2.zero;
@@ -29,6 +30,16 @@ namespace Inputs
         public float PitchInput => _rawLookInput.y;
         /// Fixed PitchInput: do not multiply delta time
         public float PitchInputFixed => IsCurrentDeviceMouse ? PitchInput : PitchInput * Time.deltaTime;
+
+        public bool JumpInput
+        {
+            get
+            {
+                var tmp = _jumpInput;
+                if (_jumpInput) _jumpInput = false;
+                return tmp;
+            }
+        }
 
         #endregion
 
@@ -63,12 +74,14 @@ namespace Inputs
         {
             _playerInput.onActionTriggered += OnMoveAction;
             _playerInput.onActionTriggered += OnLookAction;
+            _playerInput.onActionTriggered += OnJumpAction;
         }
 
         private void ActionUnBinding()
         {
             _playerInput.onActionTriggered -= OnMoveAction;
             _playerInput.onActionTriggered -= OnMoveAction;
+            _playerInput.onActionTriggered -= OnJumpAction;
         }
 
         private void OnMoveAction(InputAction.CallbackContext context)
@@ -83,6 +96,14 @@ namespace Inputs
             if (context.action.name != "Look") return;
 
             _rawLookInput = context.ReadValue<Vector2>();
+        }
+
+        private void OnJumpAction(InputAction.CallbackContext context)
+        {
+            if (context.action.name != "Jump") return;
+            
+            if (context.performed)
+                _jumpInput = true;
         }
         
     }
