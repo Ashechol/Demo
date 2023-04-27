@@ -4,9 +4,7 @@ using Utils;
 
 namespace Inputs
 {
-    /// <summary>
     /// Binding and process input action
-    /// </summary>
     public class InputHandler : MonoBehaviour
     {
         private PlayerInput _playerInput = null;
@@ -25,18 +23,17 @@ namespace Inputs
         public float MoveInputY => _rawMoveInput.y;
         public float YawInput => _rawLookInput.x;
         // 处理鼠标输入不能乘以 Time.deltaTime
-        /// Fixed YawInput: do not multiply delta time
+        /// Fixed YawInput: do not multiply delta time.
         public float YawInputFixed => IsCurrentDeviceMouse ? YawInput : YawInput * Time.deltaTime;
         public float PitchInput => _rawLookInput.y;
-        /// Fixed PitchInput: do not multiply delta time
+        /// Fixed PitchInput: do not multiply delta time.
         public float PitchInputFixed => IsCurrentDeviceMouse ? PitchInput : PitchInput * Time.deltaTime;
-
         public bool JumpInput
         {
             get
             {
                 var tmp = _jumpInput;
-                if (_jumpInput) _jumpInput = false;
+                if (_jumpInput) _jumpInput = false; // Consume jump input
                 return tmp;
             }
         }

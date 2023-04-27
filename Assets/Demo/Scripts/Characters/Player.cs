@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
             _smoothYaw = Mathf.SmoothDampAngle(_smoothYaw,  _targetYaw, ref _rotationRef, angularTime);
             _forward = Quaternion.Euler(0, _smoothYaw, 0) * Vector3.forward;
         }
-
+        
         transform.forward = _forward;
     }
 
