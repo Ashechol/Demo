@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     [Header("Jump")] 
     public float gravity = 20;
     public float jumpHeight = 5;
+    public float jumpTimeout = 0.2f;
 
     #endregion
     
@@ -44,12 +45,10 @@ public class Player : MonoBehaviour
     private float _curSpeed;
 
     public float CurSpeed => _curSpeed;
-    public bool IsJump { get; private set; }
+    public bool IsJump { get; set; }
 
     public float VelocityY => _controller.velocity.y;
     public bool IsGrounded => _controller.isGrounded;
-
-    public float CurrentYaw { get; private set; }
 
     private void Awake()
     {
@@ -63,13 +62,11 @@ public class Player : MonoBehaviour
     {
         var trans = transform;
         _forward = trans.forward;
-        CurrentYaw = trans.eulerAngles.y;
     }
 
     private void Update()
     {
         Locomotion();
-        CurrentYaw = transform.eulerAngles.y;
         _anim.UpdateAnimParams();
     }
     

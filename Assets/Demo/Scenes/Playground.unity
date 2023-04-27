@@ -395,6 +395,7 @@ MonoBehaviour:
   angularTime: 0.12
   gravity: 20
   jumpHeight: 5
+  jumpTimeout: 0.2
 --- !u!114 &507602821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,6 +463,7 @@ MonoBehaviour:
   angularTime: 0.1
   gravity: 20
   jumpHeight: 2
+  jumpTimeout: 0.2
 --- !u!143 &638805728
 CharacterController:
   m_ObjectHideFlags: 0
@@ -475,7 +477,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 1.05
   m_Radius: 0.25
-  m_SlopeLimit: 45
+  m_SlopeLimit: 30
   m_StepOffset: 0.3
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
@@ -1312,7 +1314,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 21ca8723c11d2d34abf1e9e595b0942a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1349,14 +1351,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140018742}
-  m_LocalRotation: {x: -0.30330774, y: -0, z: -0, w: 0.9528927}
-  m_LocalPosition: {x: 0, y: -0.23, z: 5.64}
-  m_LocalScale: {x: 7.6015, y: 1, z: 21.620892}
+  m_LocalRotation: {x: -0.17927027, y: -0, z: -0, w: 0.98379993}
+  m_LocalPosition: {x: 0, y: 2.99, z: 14.19}
+  m_LocalScale: {x: 7.6015, y: 1, z: 20.292215}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: -35.313, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -20.655, y: 0, z: 0}
 --- !u!4 &12120652082561303
 Transform:
   m_ObjectHideFlags: 0
@@ -11996,7 +11998,13 @@ SkinnedMeshRenderer:
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 2702065095120395984, guid: 207f23503b6a22448a7c7139ed5e8286, type: 3}
   m_Bones: []
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: -0.11298007, y: 0.037612103, z: 0.000000044703484}

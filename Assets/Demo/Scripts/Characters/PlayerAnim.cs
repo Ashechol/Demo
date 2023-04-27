@@ -1,6 +1,7 @@
 using System;
 using Demo.Utils;
 using DG.Tweening;
+using TreeEditor;
 using UnityEngine;
 
 public class PlayerAnim : AnimationHandler
@@ -16,7 +17,6 @@ public class PlayerAnim : AnimationHandler
     private float _leanAmount;
     private readonly RaycastHit[] _hit = new RaycastHit[1];
     private float _fallHeight;
-    private bool _landing;
 
     protected override void Awake()
     {
@@ -43,8 +43,6 @@ public class PlayerAnim : AnimationHandler
         
         GetFallHeight();
 
-        _landing = anim.GetCurrentAnimatorStateInfo(0).IsName("Land Recovery");
-
         anim.SetFloat(_animSpeedXZ, _player.CurSpeed);
         
         // 倾斜度计算，利用 Player SmoothDamp 的相对速度除以一定值
@@ -67,7 +65,7 @@ public class PlayerAnim : AnimationHandler
                 _fallHeight = Mathf.Max(_fallHeight, _hit[0].distance);
         }
 
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Locomotion"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Ground Locomotion"))
             _fallHeight = 0;
     }
 
@@ -77,6 +75,6 @@ public class PlayerAnim : AnimationHandler
         {
             fontSize = 30
         };
-        GUILayout.Label($"<color=yellow>Rotation speed reference：{_player.RotationRef}</color>\n", style);
+        GUILayout.Label($"<color=yellow>Rotation speed reference：{_player.RotationRef}</color>", style);
     }
 }
