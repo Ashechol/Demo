@@ -1,4 +1,5 @@
 using System;
+using Demo.Base;
 using Demo.Utils;
 using DG.Tweening;
 using TreeEditor;
@@ -15,8 +16,9 @@ public class PlayerAnim : AnimationHandler
     private Player _player;
     
     private float _leanAmount;
-    private readonly RaycastHit[] _hit = new RaycastHit[1];
     private float _fallHeight;
+
+    [SerializeField] private float _leanNormalizeAmount = 150;
 
     protected override void Awake()
     {
@@ -47,7 +49,7 @@ public class PlayerAnim : AnimationHandler
         
         // 倾斜度计算，利用 Player SmoothDamp 的相对速度除以一定值
         // 可以很轻松的求到倾斜度
-        _leanAmount = Mathf.Clamp(_player.RotationRef / 150, -1, 1);
+        _leanAmount = Mathf.Clamp(_player.RotationRef / _leanNormalizeAmount, -1, 1);
         anim.SetFloat(_animLean, _leanAmount);
         
         anim.SetBool(_animJump, _player.IsJump);
@@ -56,17 +58,24 @@ public class PlayerAnim : AnimationHandler
         anim.SetFloat(_animFallHeight, _fallHeight);
     }
 
+    private RaycastHit _prevHit;
     private void GetFallHeight()
     {
-        if (_player.VelocityY < 0)
+        if (!_player.IsGrounded)
         {
-            Physics.RaycastNonAlloc(_player.transform.position, Vector3.down, _hit, Mathf.Infinity);
-            if (_hit.Length > 0)
-                _fallHeight = Mathf.Max(_fallHeight, _hit[0].distance);
+            Physics.Raycast(_player.transform.position, Vector3.down, out var hit);
+            _fallHeight = Mathf.Max(_fallHeight, hit.distance);
+
+            if (_prevHit.colliderInstanceID != hit.colliderInstanceID)
+                _fallHeight = 0;
+
+            _prevHit = hit;
         }
 
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Ground Locomotion"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Ground Locomotion") && _player.IsGrounded)
             _fallHeight = 0;
+        
+        
     }
 
     private void OnGUI()

@@ -1,4 +1,5 @@
 using System;
+using Demo.Base;
 using Demo.Utils;
 using UnityEngine;
 using Framework.Camera;
@@ -16,8 +17,17 @@ public class Player : MonoBehaviour
     private InputHandler _input;
     private CameraHandler _camera;
     private PlayerAnim _anim;
+    private Detection _detection;
 
     #endregion
+    
+#if UNITY_EDITOR
+    private DebugLabel _debugLabel = new DebugLabel
+    {
+        labelColor = Color.yellow,
+        messageColor = Color.white
+    };
+#endif
 
     #region Locomotion
     
@@ -30,25 +40,23 @@ public class Player : MonoBehaviour
     public float gravity = 20;
     public float jumpHeight = 5;
     public float jumpTimeout = 0.2f;
-
-    #endregion
     
     /// Local horizontal direction
     private Vector3 _forward;
+    private float _curSpeed;
     private float _targetYaw;
     private float _smoothYaw;
     // Local velocity
     private Vector3 _motion;
     private float _motionY;
     private Vector3 _rotation;
-
-    private float _curSpeed;
-
+    
     public float CurSpeed => _curSpeed;
-    public bool IsJump { get; set; }
-
+    public bool IsJump { get; private set; }
     public float VelocityY => _controller.velocity.y;
-    public bool IsGrounded => _controller.isGrounded;
+    public bool IsGrounded => _detection.IsGrounded;
+
+    #endregion
 
     private void Awake()
     {
@@ -56,6 +64,12 @@ public class Player : MonoBehaviour
         _input = this.GetComponentSafe<InputHandler>();
         _camera = this.GetComponentSafe<CameraHandler>();
         _anim = this.GetComponentSafe<PlayerAnim>();
+        _detection = GetComponentInChildren<Detection>();
+        
+#if UNITY_EDITOR
+        if(!_detection) 
+            DebugLog.LabelLog(_debugLabel, "Missing Detection Component In Children!", Verbose.Error);
+#endif
     }
 
     private void Start()
@@ -74,13 +88,7 @@ public class Player : MonoBehaviour
     {
         Rotation();
 
-        if (_controller.isGrounded && _motionY < 0)
-            _motionY = -2;
-        else
-            _motionY -= gravity * Time.deltaTime;
-        IsJump = false;
-        
-        Jump();
+        JumpAndFall();
         
         _curSpeed = Mathf.Lerp(_curSpeed, _input.IsMoveInput ? runSpeed * _input.MoveInput.magnitude : 0, acceleration * Time.deltaTime);
         if (_curSpeed < 0.1f) _curSpeed = 0;
@@ -108,9 +116,15 @@ public class Player : MonoBehaviour
         transform.forward = _forward;
     }
 
-    private void Jump()
+    private void JumpAndFall()
     {
-        if (_input.JumpInput && _controller.isGrounded)
+        if (_detection.IsGrounded && _motionY < 0)
+            _motionY = -2;
+        else
+            _motionY -= gravity * Time.deltaTime;
+        IsJump = false;
+        
+        if (_input.JumpInput && _detection.IsGrounded)
         {
             _motionY = Mathf.Sqrt(2 * jumpHeight * gravity);
             IsJump = true;
