@@ -490,6 +490,7 @@ MonoBehaviour:
   runSpeed: 5
   acceleration: 15
   angularTime: 0.12
+  ledgeStuckAvoidForce: 0.5
   gravity: 20
   jumpHeight: 5
   jumpTimeout: 0.2
@@ -665,7 +666,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5944bd7fbc0614419277a50b5923e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkRadius: 0.12
+  checkRadius: 0.1
+  ledgeGroundCheckDistance: 0.3
   layerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -705,6 +707,7 @@ MonoBehaviour:
   runSpeed: 6
   acceleration: 10
   angularTime: 0.15
+  ledgeStuckAvoidForce: 0.5
   gravity: 20
   jumpHeight: 2
   jumpTimeout: 0.2
@@ -752,7 +755,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638805726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.62, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -970,7 +973,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.36, z: -4}
+  m_LocalPosition: {x: 0, y: 0.74, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

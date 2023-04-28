@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     #endregion
     
 #if UNITY_EDITOR
-    private DebugLabel _debugLabel = new DebugLabel
+    private readonly DebugLabel _debugLabel = new DebugLabel
     {
         labelColor = Color.yellow,
         messageColor = Color.white
@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     public float runSpeed = 6;
     public float acceleration = 15;
     public float angularTime = 0.5f;
+    public float ledgeStuckAvoidForce = 0.5f;
 
     [Header("Jump")] 
     public float gravity = 20;
@@ -96,7 +97,10 @@ public class Player : MonoBehaviour
         _motion = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward * (_curSpeed * Time.deltaTime);
 
         _motion.y = _motionY * Time.deltaTime;
-            
+
+        if (_detection.IsLedgeStuck)
+            _motion += AvoidLedgeStuck() * Time.deltaTime;
+        
         _controller.Move(_motion);
     }
     
@@ -129,5 +133,20 @@ public class Player : MonoBehaviour
             _motionY = Mathf.Sqrt(2 * jumpHeight * gravity);
             IsJump = true;
         }
+    }
+
+    private Vector3 AvoidLedgeStuck()
+    {
+
+        var avoidDirection = Vector3.zero;
+
+        foreach (var hit in _detection.Hits)
+        {
+            if (!hit.collider) continue;
+
+            avoidDirection += hit.normal;
+        }
+
+        return avoidDirection * ledgeStuckAvoidForce;
     }
 }
