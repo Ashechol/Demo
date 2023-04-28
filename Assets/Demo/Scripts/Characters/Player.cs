@@ -1,10 +1,10 @@
 using System;
+using System.Collections;
 using Demo.Base;
 using Demo.Utils;
 using UnityEngine;
 using Framework.Camera;
 using Inputs;
-using UnityEngine.Serialization;
 using Utils;
 
 [RequireComponent(typeof(CameraHandler))]
@@ -40,8 +40,8 @@ public class Player : MonoBehaviour
     [Header("Jump")] 
     public float gravity = 20;
     public float jumpHeight = 5;
-    public float jumpTimeout = 0.2f;
-    
+    public float recoverySmoothTime = 1;
+
     /// Local horizontal direction
     private Vector3 _forward;
     private float _curSpeed;
@@ -50,12 +50,15 @@ public class Player : MonoBehaviour
     // Local velocity
     private Vector3 _motion;
     private float _motionY;
+    private float _prevSpeedY;
+    private float _fallSpeed;
     private Vector3 _rotation;
     
     public float CurSpeed => _curSpeed;
     public bool IsJump { get; private set; }
     public float VelocityY => _controller.velocity.y;
     public bool IsGrounded => _detection.IsGrounded;
+    public float FallSpeed => -_fallSpeed;
 
     #endregion
 
@@ -77,6 +80,7 @@ public class Player : MonoBehaviour
     {
         var trans = transform;
         _forward = trans.forward;
+        _prevSpeedY = VelocityY;
     }
 
     private void Update()
@@ -91,9 +95,9 @@ public class Player : MonoBehaviour
 
         JumpAndFall();
         
-        _curSpeed = Mathf.Lerp(_curSpeed, _input.IsMoveInput ? runSpeed * _input.MoveInput.magnitude : 0, acceleration * Time.deltaTime);
+        _curSpeed = Mathf.Lerp(_curSpeed, _input.IsMoveInput ? runSpeed * _input.MoveInput.magnitude: 0, acceleration * Time.deltaTime);
         if (_curSpeed < 0.1f) _curSpeed = 0;
-        
+
         _motion = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward * (_curSpeed * Time.deltaTime);
 
         _motion.y = _motionY * Time.deltaTime;
@@ -104,12 +108,11 @@ public class Player : MonoBehaviour
         _controller.Move(_motion);
     }
     
-    
     [NonSerialized] private float _rotationRef;
     public float RotationRef => _rotationRef;
     private void Rotation()
     {
-        if (_input.IsMoveInput)
+        if (_input.IsMoveInput && _curSpeed > 0.1f)
         {
             _targetYaw = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _camera.Yaw;
             _targetYaw = Functions.ClampAngle(_targetYaw, -360, 360);
@@ -133,11 +136,16 @@ public class Player : MonoBehaviour
             _motionY = Mathf.Sqrt(2 * jumpHeight * gravity);
             IsJump = true;
         }
+        
+        if (!IsGrounded && VelocityY < 0.3f)
+        {
+            _fallSpeed = _prevSpeedY;
+            _prevSpeedY = VelocityY;
+        }
     }
 
     private Vector3 AvoidLedgeStuck()
     {
-
         var avoidDirection = Vector3.zero;
 
         foreach (var hit in _detection.Hits)
