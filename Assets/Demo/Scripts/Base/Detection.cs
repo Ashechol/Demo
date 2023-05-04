@@ -15,15 +15,26 @@ namespace Demo.Base
         public bool drawGizmos;
 
         private readonly RaycastHit[] _hits = new RaycastHit[4];
+        private bool _isHitGround;
         [NonSerialized] private Vector3[] _rayCastDirection = Array.Empty<Vector3>();
 
         public bool IsGrounded { get; private set; }
+        public bool IsHitGround 
+        {
+            get
+            {
+                var result = _isHitGround;
+                _isHitGround = false;
+                return result;
+            }
+        }
         public RaycastHit[] Hits => _hits;
         public bool IsLedgeStuck { get; private set; }
 
         private void Start()
         {
             _prevTransform = transform;
+            _isHitGround = false;
         }
 
         private void Update()
@@ -42,8 +53,10 @@ namespace Demo.Base
         
         private void GroundCheck()
         {
-            IsGrounded = Physics.CheckSphere(_currentTransform.position, checkRadius, layerMask);
-            
+            var groundCheck = Physics.CheckSphere(_currentTransform.position, checkRadius, layerMask);
+            if (groundCheck && !IsGrounded) _isHitGround = true;
+            IsGrounded = groundCheck;
+
             for (var i = 0; i < 4; ++i)
                 Physics.Raycast(_currentTransform.position, _rayCastDirection[i], out _hits[i], ledgeGroundCheckDistance, layerMask);
         }

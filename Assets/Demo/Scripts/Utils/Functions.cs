@@ -1,4 +1,5 @@
 using System;
+using Demo.Utils.Debug;
 using UnityEngine;
 
 namespace Demo.Utils
@@ -118,11 +119,14 @@ namespace Demo.Utils
             if (res > 180) res -= 180;
             if (res < -180) res += 180;
             
-            
-            
             return res;
         }
 
         public static bool NearlyEqual(float a, float b, float error) => Mathf.Abs(a - b) < error;
+
+        public static bool InRange(float value, float min, float max, float error = 0.0001f)
+        {
+            return value > min + error && value < max + error;
+        }
     }
 }

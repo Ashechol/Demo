@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Demo.Base;
 using Demo.Utils;
+using Demo.Utils.Debug;
 using UnityEngine;
 using Framework.Camera;
 using Inputs;
@@ -12,7 +13,7 @@ using Utils;
 public class Player : MonoBehaviour
 {
     #region Components
-    
+
     private CharacterController _controller;
     private InputHandler _input;
     private CameraHandler _camera;
@@ -20,7 +21,7 @@ public class Player : MonoBehaviour
     private Detection _detection;
 
     #endregion
-    
+
 #if UNITY_EDITOR
     private readonly DebugLabel _debugLabel = new DebugLabel
     {
@@ -30,32 +31,54 @@ public class Player : MonoBehaviour
 #endif
 
     #region Locomotion
-    
-    [Header("Movement")]
-    public float runSpeed = 6;
+
+    [Header("Movement")] public float runSpeed = 6;
     public float acceleration = 15;
     public float angularTime = 0.5f;
     public float ledgeStuckAvoidForce = 0.5f;
 
-    [Header("Jump")] 
-    public float gravity = 20;
-    public float jumpHeight = 5;
+    [Header("Jump")] public float gravity = 20;
+    public float jumpHeight = 1.8f;
+    public float landingRecoveryHeight = 5;
+    [Range(0, 1)] public float speedDecreaseRate = 0.5f;
+    public AnimationCurve recoveryCurve;
     public float recoverySmoothTime = 1;
+
+    private bool _isJump;
+    private bool _canJump = true;
+    private float _landingRecoverySpeed;
 
     /// Local horizontal direction
     private Vector3 _forward;
+
     private float _curSpeed;
     private float _targetYaw;
+
     private float _smoothYaw;
+
     // Local velocity
     private Vector3 _motion;
     private float _motionY;
+    private Vector3 _velocity;
     private float _prevSpeedY;
     private float _fallSpeed;
     private Vector3 _rotation;
-    
-    public float CurSpeed => _curSpeed;
-    public bool IsJump { get; private set; }
+    private float _curSpeedDecreaseRate = 1;
+
+    [NonSerialized] private float _stepOffset;
+
+    public float CurSpeed => _velocity.MagnitudeXZ();
+
+    public bool IsJump
+    {
+        get
+        {
+            var result = _isJump;
+            _isJump = false;
+            return result;
+        }
+    }
+
     public float VelocityY => _controller.velocity.y;
     public bool IsGrounded => _detection.IsGrounded;
     public float FallSpeed => -_fallSpeed;
@@ -69,11 +92,21 @@ public class Player : MonoBehaviour
         _camera = this.GetComponentSafe<CameraHandler>();
         _anim = this.GetComponentSafe<PlayerAnim>();
         _detection = GetComponentInChildren<Detection>();
-        
+
 #if UNITY_EDITOR
-        if(!_detection) 
+        if (!_detection)
             DebugLog.LabelLog(_debugLabel, "Missing Detection Component In Children!", Verbose.Error);
 #endif
+    }
+
+    private void OnEnable()
+    {
+        GUIStats.Instance.OnGUIStatsInfo.AddListener(OnPlayerGUIInfo);
+    }
+
+    private void OnDisable()
+    {
+        GUIStats.Instance.OnGUIStatsInfo.RemoveListener(OnPlayerGUIInfo);
     }
 
     private void Start()
@@ -81,6 +114,8 @@ public class Player : MonoBehaviour
         var trans = transform;
         _forward = trans.forward;
         _prevSpeedY = VelocityY;
+        _stepOffset = _controller.stepOffset;
+        _landingRecoverySpeed = Mathf.Sqrt(2 * landingRecoveryHeight * gravity);
     }
 
     private void Update()
@@ -88,17 +123,19 @@ public class Player : MonoBehaviour
         Locomotion();
         _anim.UpdateAnimParams();
     }
-    
+
     private void Locomotion()
     {
         Rotation();
 
         JumpAndFall();
-        
-        _curSpeed = Mathf.Lerp(_curSpeed, _input.IsMoveInput ? runSpeed * _input.MoveInput.magnitude: 0, acceleration * Time.deltaTime);
+
+        _curSpeed = Mathf.Lerp(_curSpeed, _input.IsMoveInput ? runSpeed * _input.MoveInput.magnitude : 0,
+            acceleration * Time.deltaTime);
         if (_curSpeed < 0.1f) _curSpeed = 0;
 
-        _motion = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward * (_curSpeed * Time.deltaTime);
+        _motion = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward *
+                  (_curSpeed * _curSpeedDecreaseRate * Time.deltaTime);
 
         _motion.y = _motionY * Time.deltaTime;
 
@@ -106,42 +143,80 @@ public class Player : MonoBehaviour
             _motion += AvoidLedgeStuck() * Time.deltaTime;
         
         _controller.Move(_motion);
+        _velocity = _controller.velocity;
     }
-    
+
     [NonSerialized] private float _rotationRef;
     public float RotationRef => _rotationRef;
+
     private void Rotation()
     {
         if (_input.IsMoveInput && _curSpeed > 0.1f)
         {
             _targetYaw = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _camera.Yaw;
             _targetYaw = Functions.ClampAngle(_targetYaw, -360, 360);
-            _smoothYaw = Mathf.SmoothDampAngle(_smoothYaw,  _targetYaw, ref _rotationRef, angularTime);
+            _smoothYaw = Mathf.SmoothDampAngle(_smoothYaw, _targetYaw, ref _rotationRef, angularTime);
             _forward = Quaternion.Euler(0, _smoothYaw, 0) * Vector3.forward;
         }
-        
+
         transform.forward = _forward;
     }
 
+    private float _speedDecreaseRateRef;
+
     private void JumpAndFall()
     {
+        // 重力模拟
         if (_detection.IsGrounded && _motionY < 0)
+        {
             _motionY = -2;
+            _controller.stepOffset = _stepOffset;
+        }
         else
             _motionY -= gravity * Time.deltaTime;
-        IsJump = false;
-        
-        if (_input.JumpInput && _detection.IsGrounded)
+
+        // 跳跃
+        if (_input.JumpInput && _detection.IsGrounded && _canJump)
         {
             _motionY = Mathf.Sqrt(2 * jumpHeight * gravity);
-            IsJump = true;
+            _isJump = true;
+            _fallSpeed = 0.0f;
+            _controller.stepOffset = 0.0f;
         }
-        
-        if (!IsGrounded && VelocityY < 0.3f)
+
+        // 下落速度记录
+        if (!_detection.IsGrounded && VelocityY < 0.3f)
         {
             _fallSpeed = _prevSpeedY;
             _prevSpeedY = VelocityY;
         }
+
+        // 下落着陆移动减速
+        LandingRecovery();
+    }
+
+    private void LandingRecovery()
+    {
+        var ratio = Mathf.Clamp(-_fallSpeed / _landingRecoverySpeed, 0, 1);
+        
+        if (_detection.IsHitGround)
+            _curSpeedDecreaseRate = recoveryCurve.Evaluate(ratio);
+        else if (Functions.InRange(_curSpeedDecreaseRate, 0.1f, 1))
+        {
+            _curSpeedDecreaseRate =
+                Mathf.SmoothDamp(_curSpeedDecreaseRate, 1, ref _speedDecreaseRateRef, recoverySmoothTime);
+        }
+        else
+            StartCoroutine(HeavyLanding(0.6f));
+    }
+
+    private IEnumerator HeavyLanding(float recoveringTime)
+    {
+        _canJump = false;
+        _curSpeedDecreaseRate = 0;
+        yield return new WaitForSeconds(recoveringTime);
+        _curSpeedDecreaseRate = 1;
+        _canJump = true;
     }
 
     private Vector3 AvoidLedgeStuck()
@@ -156,5 +231,14 @@ public class Player : MonoBehaviour
         }
 
         return avoidDirection * ledgeStuckAvoidForce;
+    }
+
+    private void OnPlayerGUIInfo()
+    {
+        var style = new GUIStyle
+        {
+            fontSize = 30
+        };
+        GUILayout.Label($"<color=yellow>Speed decrease rate: {_curSpeedDecreaseRate}</color>", style);
     }
 }

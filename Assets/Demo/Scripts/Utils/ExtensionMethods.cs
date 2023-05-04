@@ -1,4 +1,5 @@
 using Demo.Utils;
+using Demo.Utils.Debug;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -74,7 +75,7 @@ namespace Utils
         }
 
         #endregion
-        
-        
+
+        public static float MagnitudeXZ(this Vector3 vec) => Mathf.Sqrt(vec.x * vec.x + vec.z * vec.z);
     }
 }

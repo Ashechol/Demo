@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Demo.Utils
+namespace Demo.Utils.Debug
 { 
     public enum Verbose
     {
@@ -51,20 +51,20 @@ namespace Demo.Utils
             switch (verb)
             {
                 case Verbose.Log:
-                    Debug.Log($"<color=#{labelColor}>#{label}: </color>" + 
-                              $"<color={color}>{message}</color>");
+                    UnityEngine.Debug.Log($"<color=#{labelColor}>#{label}: </color>" + 
+                                          $"<color={color}>{message}</color>");
                     break;
                 case Verbose.Warning:
-                    Debug.LogWarning($"<color=#{labelColor}>#{label}: </color>" + 
-                              $"<color={color}>{message}</color>");
+                    UnityEngine.Debug.LogWarning($"<color=#{labelColor}>#{label}: </color>" + 
+                                                 $"<color={color}>{message}</color>");
                     break;
                 case Verbose.Error:
-                    Debug.LogError($"<color=#{labelColor}>#{label}: </color>" + 
-                              $"<color={color}>{message}</color>");
+                    UnityEngine.Debug.LogError($"<color=#{labelColor}>#{label}: </color>" + 
+                                               $"<color={color}>{message}</color>");
                     break;
                 case Verbose.Assert:
-                    Debug.Assert(condition, $"<color=#{labelColor}>#{label}: </color>" + 
-                              $"<color=#{color}>{message}</color>");
+                    UnityEngine.Debug.Assert(condition, $"<color=#{labelColor}>#{label}: </color>" + 
+                                                        $"<color=#{color}>{message}</color>");
                     break;
             }
         }

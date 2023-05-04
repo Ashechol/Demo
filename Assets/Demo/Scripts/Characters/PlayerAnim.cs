@@ -1,5 +1,7 @@
+using System;
 using Demo.Base;
 using Demo.Utils;
+using Demo.Utils.Debug;
 using UnityEngine;
 
 public class PlayerAnim : AnimationHandler
@@ -30,6 +32,16 @@ public class PlayerAnim : AnimationHandler
             DebugLog.LabelLog(debugLabel, $"Missing Player in {gameObject.name}!", Verbose.Error);
     }
 
+    private void OnEnable()
+    {
+        GUIStats.Instance.OnGUIStatsInfo.AddListener(OnAnimGUIInfo);
+    }
+
+    private void OnDisable()
+    {
+        GUIStats.Instance.OnGUIStatsInfo.RemoveListener(OnAnimGUIInfo);
+    }
+
     protected override void RegisterAnimID()
     {
         _animSpeedXZ = Animator.StringToHash("speedXZ");
@@ -53,8 +65,8 @@ public class PlayerAnim : AnimationHandler
         // 倾斜度计算，利用 Player SmoothDamp 的相对速度除以一定值可以很轻松的求到倾斜度
         _leanAmount = Mathf.Clamp(_player.RotationRef / _leanNormalizeAmount, -1, 1);
         anim.SetFloat(_animLean, _leanAmount);
-        
-        anim.SetBool(_animJump, _player.IsJump);
+
+        if (_player.IsJump) anim.SetTrigger(_animJump);
         anim.SetFloat(_animSpeedY, _player.VelocityY);
         anim.SetBool(_animGrounded, _player.IsGrounded);
         anim.SetFloat(_animFallHeight, _fallHeight);
@@ -62,6 +74,7 @@ public class PlayerAnim : AnimationHandler
     }
 
     private RaycastHit _prevHit;
+     
     // private void GetFallHeight()
     // {
     //     if (!_player.IsGrounded)
@@ -79,7 +92,7 @@ public class PlayerAnim : AnimationHandler
     //         _fallHeight = 0;
     // }
 
-    private void OnGUI()
+    private void OnAnimGUIInfo()
     {
         var style = new GUIStyle
         {
