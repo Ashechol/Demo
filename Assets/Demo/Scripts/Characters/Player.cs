@@ -68,6 +68,17 @@ public class Player : MonoBehaviour
 
     public float CurSpeed => _velocity.MagnitudeXZ();
 
+    private bool _isStop;
+    public bool IsStop
+    {
+        get
+        {
+            var result = _isStop;
+            _isStop = false;
+            return result;
+        }
+    }
+
     public bool IsJump
     {
         get
@@ -115,7 +126,11 @@ public class Player : MonoBehaviour
         _prevSpeedY = VelocityY;
         _stepOffset = _controller.stepOffset;
         _landingRecoverySpeed = Mathf.Sqrt(2 * landingRecoveryHeight * gravity);
+
+        _input.onMoveCanceled.AddListener(StopMove); 
     }
+
+    private void StopMove() => _isStop = true;
 
     private void Update()
     {
@@ -239,5 +254,6 @@ public class Player : MonoBehaviour
             fontSize = 30
         };
         GUILayout.Label($"<color=yellow>Speed decrease rate: {_curSpeedDecreaseRate}</color>", style);
+        GUILayout.Label($"<color=yellow>Current Speed: {CurSpeed}</color>", style);
     }
 }

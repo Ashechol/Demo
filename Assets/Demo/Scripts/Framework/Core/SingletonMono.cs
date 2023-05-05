@@ -1,18 +1,21 @@
-using Demo.Utils;
 using Demo.Utils.Debug;
 using UnityEngine;
 
-namespace Framework.Core
+namespace Demo.Framework.Core
 {
     public class SingletonMono<T> : MonoBehaviour where T: MonoBehaviour 
     {
         private static T _instance;
+        private static bool _isApplicationQuit;
         protected SingletonMono() {}
         
         public static T Instance
         {
             get
             {
+                if (_isApplicationQuit)
+                    return _instance;
+                
                 if (!_instance)
                 {
                     _instance = FindObjectOfType<T>();
@@ -28,7 +31,12 @@ namespace Framework.Core
                 return _instance;
             }
         }
-        
+
+        private void OnApplicationQuit()
+        {
+            _isApplicationQuit = true;
+        }
+
         public static bool HasInstance => _instance != null;
     }
 }

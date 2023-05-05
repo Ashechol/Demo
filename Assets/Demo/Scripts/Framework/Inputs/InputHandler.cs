@@ -1,6 +1,8 @@
 using Demo.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Inputs
 {
@@ -10,6 +12,8 @@ namespace Inputs
         private PlayerInput _playerInput = null;
 
         private InputActionAsset _actions;
+
+        public UnityEvent onMoveCanceled = new ();
 
         #region Values
 
@@ -86,6 +90,9 @@ namespace Inputs
             if (context.action.name != "Move") return;
             
             _rawMoveInput = context.ReadValue<Vector2>();
+            
+            if (context.canceled)
+                onMoveCanceled?.Invoke();
         }
 
         private void OnLookAction(InputAction.CallbackContext context)

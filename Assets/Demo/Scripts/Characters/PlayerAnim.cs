@@ -15,6 +15,7 @@ public class PlayerAnim : AnimationHandler
     private int _animGrounded;
     private int _animFallHeight;
     private int _animFallSpeed;
+    private int _animStopRun;
     private Player _player;
     
     #endregion
@@ -51,7 +52,7 @@ public class PlayerAnim : AnimationHandler
         _animGrounded = Animator.StringToHash("grounded");
         _animFallHeight = Animator.StringToHash("fallHeight");
         _animFallSpeed = Animator.StringToHash("fallSpeed");
-
+        _animStopRun = Animator.StringToHash("stopRun");
     }
 
     public override void UpdateAnimParams()
@@ -67,6 +68,8 @@ public class PlayerAnim : AnimationHandler
         anim.SetFloat(_animLean, _leanAmount);
 
         if (_player.IsJump) anim.SetTrigger(_animJump);
+        if (_player.IsStop && Mathf.Abs(_player.CurSpeed - 6) < 1f) anim.SetTrigger(_animStopRun);
+        
         anim.SetFloat(_animSpeedY, _player.VelocityY);
         anim.SetBool(_animGrounded, _player.IsGrounded);
         anim.SetFloat(_animFallHeight, _fallHeight);
@@ -74,7 +77,7 @@ public class PlayerAnim : AnimationHandler
     }
 
     private RaycastHit _prevHit;
-     
+
     // private void GetFallHeight()
     // {
     //     if (!_player.IsGrounded)
@@ -100,6 +103,5 @@ public class PlayerAnim : AnimationHandler
         };
         GUILayout.Label($"<color=yellow>Rotation speed reference：{_player.RotationRef}</color>", style);
         GUILayout.Label($"<color=yellow>Fall speed：{_player.FallSpeed}</color>", style);
-        GUILayout.Label($"<color=yellow>Fall speed：{anim.GetAnimatorTransitionInfo(0).IsUserName("Recovering")}</color>", style);
     }
 }
