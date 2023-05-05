@@ -1,9 +1,9 @@
 {
-    "name": "Utils",
-    "rootNamespace": "",
+    "name": "Base",
+    "rootNamespace": "Demo",
     "references": [
-        "GUID:21b0c8d1703a94250bfac916590cea4f",
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:2c09f8c43f193244aa40d7e046cfe1d2",
+        "GUID:6aa5155d7f7a98842bb36fbfaa0342fc"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

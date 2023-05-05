@@ -6,7 +6,6 @@ using Demo.Utils.Debug;
 using UnityEngine;
 using Framework.Camera;
 using Inputs;
-using Utils;
 
 [RequireComponent(typeof(CameraHandler))]
 [RequireComponent(typeof(CharacterController))]

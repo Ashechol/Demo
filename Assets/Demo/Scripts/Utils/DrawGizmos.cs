@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Utils
+namespace Demo.Utils
 {
     public struct DrawGizmos
     {

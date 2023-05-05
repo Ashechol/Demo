@@ -1,6 +1,6 @@
+using Demo.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Utils;
 
 namespace Inputs
 {

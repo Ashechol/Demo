@@ -1,9 +1,7 @@
-using Demo.Utils;
 using Demo.Utils.Debug;
 using UnityEngine;
-using UnityEngine.Animations;
 
-namespace Utils
+namespace Demo.Utils
 {
     public static class ExtensionMethods
     {

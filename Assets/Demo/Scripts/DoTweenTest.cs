@@ -1,7 +1,6 @@
 using Demo.Utils;
 using DG.Tweening;
 using UnityEngine;
-using Utils;
 
 public class DoTweenTest : MonoBehaviour
 {
