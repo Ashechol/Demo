@@ -6,7 +6,7 @@ namespace Demo.Base
 {
     public abstract class AnimationHandler : MonoBehaviour
     {
-        protected Animator anim;
+        public Animator anim;
         protected bool hasAnimator;
 
         protected static DebugLabel debugLabel = new("AnimationHandler", Color.cyan); 
