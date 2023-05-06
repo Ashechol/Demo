@@ -532,6 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runSpeed: 5
+  dashSpeed: 8
   acceleration: 15
   angularTime: 0.12
   ledgeStuckAvoidForce: 0.5
@@ -757,7 +758,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runSpeed: 6
-  acceleration: 10
+  dashSpeed: 10
+  acceleration: 8
   angularTime: 0.15
   ledgeStuckAvoidForce: 0.5
   gravity: 20

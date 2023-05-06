@@ -2,7 +2,7 @@ using Demo.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
+using System;
 
 namespace Inputs
 {
@@ -13,13 +13,15 @@ namespace Inputs
 
         private InputActionAsset _actions;
 
-        public UnityEvent onMoveCanceled = new ();
+        public event Action OnMoveCanceled;
+        public event Action<bool> OnDash;
 
         #region Values
 
         private Vector2 _rawMoveInput;
         private Vector2 _rawLookInput;
         private bool _jumpInput;
+        private bool _dashInput;
 
         public Vector2 MoveInput => _rawMoveInput;
         public bool IsMoveInput => _rawMoveInput != Vector2.zero;
@@ -76,6 +78,7 @@ namespace Inputs
             _playerInput.onActionTriggered += OnMoveAction;
             _playerInput.onActionTriggered += OnLookAction;
             _playerInput.onActionTriggered += OnJumpAction;
+            _playerInput.onActionTriggered += OnDashAction;
         }
 
         private void ActionUnBinding()
@@ -83,6 +86,7 @@ namespace Inputs
             _playerInput.onActionTriggered -= OnMoveAction;
             _playerInput.onActionTriggered -= OnMoveAction;
             _playerInput.onActionTriggered -= OnJumpAction;
+            _playerInput.onActionTriggered -= OnDashAction;
         }
 
         private void OnMoveAction(InputAction.CallbackContext context)
@@ -92,7 +96,7 @@ namespace Inputs
             _rawMoveInput = context.ReadValue<Vector2>();
             
             if (context.canceled)
-                onMoveCanceled?.Invoke();
+                OnMoveCanceled?.Invoke();
         }
 
         private void OnLookAction(InputAction.CallbackContext context)
@@ -108,6 +112,13 @@ namespace Inputs
             
             if (context.performed)
                 _jumpInput = true;
+        }
+
+        private void OnDashAction(InputAction.CallbackContext context)
+        {
+            if (context.action.name != "Dash") return;
+            
+            OnDash?.Invoke(context.performed);
         }
         
     }

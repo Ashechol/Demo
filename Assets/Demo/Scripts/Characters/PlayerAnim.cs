@@ -16,6 +16,7 @@ public class PlayerAnim : AnimationHandler
     private int _animFallHeight;
     private int _animFallSpeed;
     private int _animStopRun;
+    private int _animStopDash;
     private Player _player;
     
     #endregion
@@ -53,6 +54,7 @@ public class PlayerAnim : AnimationHandler
         _animFallHeight = Animator.StringToHash("fallHeight");
         _animFallSpeed = Animator.StringToHash("fallSpeed");
         _animStopRun = Animator.StringToHash("stopRun");
+        _animStopDash = Animator.StringToHash("stopDash");
     }
 
     public override void UpdateAnimParams()
@@ -68,15 +70,14 @@ public class PlayerAnim : AnimationHandler
         anim.SetFloat(_animLean, _leanAmount);
 
         if (_player.IsJump) anim.SetTrigger(_animJump);
-        if (_player.IsStop && Mathf.Abs(_player.CurSpeed - 6) < 1f) anim.SetTrigger(_animStopRun);
-        
+
         anim.SetFloat(_animSpeedY, _player.VelocityY);
         anim.SetBool(_animGrounded, _player.IsGrounded);
         anim.SetFloat(_animFallHeight, _fallHeight);
         anim.SetFloat(_animFallSpeed, _player.FallSpeed);
     }
 
-    private RaycastHit _prevHit;
+    // private RaycastHit _prevHit;
 
     // private void GetFallHeight()
     // {

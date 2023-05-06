@@ -31,12 +31,15 @@ public class Player : MonoBehaviour
 
     #region Locomotion
 
-    [Header("Movement")] public float runSpeed = 6;
+    [Header("Movement")] 
+    public float runSpeed = 6;
+    public float dashSpeed = 8;
     public float acceleration = 15;
     public float angularTime = 0.5f;
     public float ledgeStuckAvoidForce = 0.5f;
 
-    [Header("Jump")] public float gravity = 20;
+    [Header("Jump")] 
+    public float gravity = 20;
     public float jumpHeight = 1.8f;
     public float landingRecoveryHeight = 5;
     [Range(0, 1)] public float speedDecreaseRate = 0.5f;
@@ -56,6 +59,7 @@ public class Player : MonoBehaviour
     private float _smoothYaw;
 
     // Local velocity
+    private float _desiredSpeed;
     private Vector3 _motion;
     private float _motionY;
     private Vector3 _velocity;
@@ -67,6 +71,7 @@ public class Player : MonoBehaviour
     [NonSerialized] private float _stepOffset;
 
     public float CurSpeed => _velocity.MagnitudeXZ();
+    public bool IsDash { get; private set; }
 
     private bool _isStop;
     public bool IsStop
@@ -124,10 +129,12 @@ public class Player : MonoBehaviour
         var trans = transform;
         _forward = trans.forward;
         _prevSpeedY = VelocityY;
+        _desiredSpeed = runSpeed;
         _stepOffset = _controller.stepOffset;
         _landingRecoverySpeed = Mathf.Sqrt(2 * landingRecoveryHeight * gravity);
 
-        _input.onMoveCanceled.AddListener(StopMove); 
+        _input.OnMoveCanceled += StopMove;
+        _input.OnDash += (isDash) => { _desiredSpeed = isDash ? dashSpeed : runSpeed; };
     }
 
     private void StopMove() => _isStop = true;
@@ -144,12 +151,12 @@ public class Player : MonoBehaviour
 
         JumpAndFall();
 
-        _curSpeed = Mathf.Lerp(_curSpeed, _input.IsMoveInput ? runSpeed * _input.MoveInput.magnitude : 0,
-            acceleration * Time.deltaTime);
+        var moveInput = Functions.NearlyEqual(_desiredSpeed, runSpeed, 0.01f) ? _input.MoveInput.magnitude : 1;
+        var targetSpeed = _input.IsMoveInput ? _desiredSpeed * moveInput : 0;
+        _curSpeed = Mathf.Lerp(_curSpeed, targetSpeed, acceleration * Time.deltaTime);
         if (_curSpeed < 0.1f) _curSpeed = 0;
 
-        _motion = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward *
-                  (_curSpeed * _curSpeedDecreaseRate * Time.deltaTime);
+        _motion = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward * (_curSpeed * _curSpeedDecreaseRate * Time.deltaTime);
 
         _motion.y = _motionY * Time.deltaTime;
 
@@ -254,6 +261,7 @@ public class Player : MonoBehaviour
             fontSize = 30
         };
         GUILayout.Label($"<color=yellow>Speed decrease rate: {_curSpeedDecreaseRate}</color>", style);
+        GUILayout.Label($"<color=yellow>Desired Speed: {_desiredSpeed}</color>", style);
         GUILayout.Label($"<color=yellow>Current Speed: {CurSpeed}</color>", style);
     }
 }
