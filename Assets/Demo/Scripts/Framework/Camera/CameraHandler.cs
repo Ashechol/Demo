@@ -1,10 +1,11 @@
 using Cinemachine;
+using Demo.Framework.Input;
 using Demo.Utils;
-using Inputs;
+using Framework;
 using UnityEngine;
 using StateCamera = Cinemachine.CinemachineStateDrivenCamera;
 
-namespace Framework.Camera
+namespace Demo.Framework.Camera
 {
     public class CameraHandler : MonoBehaviour
     {

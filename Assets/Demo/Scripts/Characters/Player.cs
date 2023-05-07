@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using Demo.Base;
 using Demo.Characters;
+using Demo.Framework.Camera;
+using Demo.Framework.Input;
 using Demo.Utils;
 using Demo.Utils.Debug;
 using UnityEngine;
-using Framework.Camera;
-using Inputs;
 
 [RequireComponent(typeof(CameraHandler))]
 [RequireComponent(typeof(CharacterController))]

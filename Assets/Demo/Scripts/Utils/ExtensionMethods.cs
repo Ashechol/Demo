@@ -67,6 +67,7 @@ namespace Demo.Utils
                 DebugLog.Tips($"Attaching {name} to {parent.name}.", Color.white);
                 res = new GameObject(name).transform;
                 res.SetParent(parent);
+                res.localPosition = Vector3.zero;
             }
         
             return res;

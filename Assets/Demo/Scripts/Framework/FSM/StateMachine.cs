@@ -12,7 +12,7 @@ namespace Demo.Framework.FSM
         private static readonly DebugLabel DebugLabel = new("StateMachine", Color.magenta);
 #endif
 
-        public void Init(State defaultState)
+        public virtual void Init(State defaultState)
         {
             _currentState = defaultState;
         }
@@ -26,12 +26,6 @@ namespace Demo.Framework.FSM
 
         public void LogicUpdate()
         {
-#if UNITY_EDITOR
-            DebugLog.LabelLog(DebugLabel, 
-                      "StateMachine Must Be Initialize First !\nUse Init()", 
-                              Verbose.Assert, _currentState == null);
-#endif
-            
             _currentState?.LogicUpdate();
         }
 

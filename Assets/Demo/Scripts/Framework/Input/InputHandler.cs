@@ -1,10 +1,9 @@
+using System;
 using Demo.Utils;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using System;
 
-namespace Inputs
+namespace Demo.Framework.Input
 {
     /// Binding and process input action
     public class InputHandler : MonoBehaviour

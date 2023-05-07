@@ -6,8 +6,8 @@ namespace Demo.Base.Character
 {
     public class CharacterState : State
     {
-        private readonly int _animParam;
-        private readonly Animator _anim;
+        private readonly string _animParam;
+        private readonly AnimHandler _anim;
         
         #if UNITY_EDITOR
         private readonly DebugLabel _debugLabel;
@@ -15,8 +15,8 @@ namespace Demo.Base.Character
         
         public CharacterState(CharacterStateMachine stateMachine, string animTriggerName) : base(stateMachine)
         {
-            _anim = stateMachine.character.anim;
-            _animParam = Animator.StringToHash(animTriggerName);
+            _anim = stateMachine.character.animHandler;
+            _animParam = animTriggerName;
         }
 
         public override void Enter()
