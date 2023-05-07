@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Demo.Framework.FSM
 {
-    public class StateBase
+    public class State
     {
-        private StateMachineBase _stateMachine;
+        private StateMachine _stateMachine;
 
-        public StateBase(StateMachineBase stateMachine)
+        public State(StateMachine stateMachine)
         {
             _stateMachine = stateMachine;
         }

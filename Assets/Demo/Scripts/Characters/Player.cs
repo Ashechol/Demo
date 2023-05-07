@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Demo.Base;
+using Demo.Characters;
 using Demo.Utils;
 using Demo.Utils.Debug;
 using UnityEngine;

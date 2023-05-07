@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Demo.Base.Character
 {
-    public class CharacterState : StateBase
+    public class CharacterState : State
     {
         private readonly int _animParam;
         private readonly Animator _anim;

@@ -8,11 +8,12 @@ namespace Demo.Base.Character
     public class CharacterBase : MonoBehaviour
     {
         internal Animator anim;
-        internal AnimationHandler animHandler;
+        internal AnimHandler animHandler;
+        protected CharacterStateMachine stateMachine;
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            this.GetComponentSafe<AnimationHandler>();
+            this.GetComponentSafe<AnimHandler>();
             anim = animHandler.anim;
         }
     }

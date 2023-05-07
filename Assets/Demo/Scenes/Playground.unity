@@ -577,6 +577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec829c4823dfb24c98eb0b46a7255e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  animController: {fileID: 0}
   _leanNormalizeAmount: 150
 --- !u!1 &519494030
 GameObject:
@@ -867,6 +869,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec829c4823dfb24c98eb0b46a7255e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  animController: {fileID: 0}
   _leanNormalizeAmount: 300
 --- !u!114 &689801164 stripped
 MonoBehaviour:
@@ -1699,6 +1703,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Set Costume_01 SD Unity-Chan WGS
       objectReference: {fileID: 0}
+    - target: {fileID: 5887915034496597730, guid: 439b9c346e1be3147b951c0eadcc990d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 83efe22efabcea447a7be6a7bbd43d47, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 439b9c346e1be3147b951c0eadcc990d, type: 3}
 --- !u!1 &1676180950

@@ -4,20 +4,20 @@ using UnityEngine;
 
 namespace Demo.Framework.FSM
 {
-    public class StateMachineBase
+    public class StateMachine
     {
-        private StateBase _currentState;
+        private State _currentState;
         
 #if UNITY_EDITOR
         private static readonly DebugLabel DebugLabel = new("StateMachine", Color.magenta);
 #endif
 
-        public void Init(StateBase defaultState)
+        public void Init(State defaultState)
         {
             _currentState = defaultState;
         }
 
-        public void ChangeState(StateBase nextState)
+        public void ChangeState(State nextState)
         {
             _currentState?.Exit();
             _currentState = nextState;

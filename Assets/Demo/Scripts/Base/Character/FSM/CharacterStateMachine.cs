@@ -2,7 +2,7 @@ using Demo.Framework.FSM;
 
 namespace Demo.Base.Character
 {
-    public class CharacterStateMachine : StateMachineBase
+    public class CharacterStateMachine : StateMachine
     {
         internal readonly CharacterBase character;
         
