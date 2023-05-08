@@ -8,14 +8,17 @@ namespace Demo.Base.Character
     {
         private readonly string _animParam;
         private readonly AnimHandler _anim;
-        
-        #if UNITY_EDITOR
+
+        protected readonly CharacterBase _character;
+
+#if UNITY_EDITOR
         private readonly DebugLabel _debugLabel;
-        #endif
+#endif
         
         public CharacterState(CharacterStateMachine stateMachine, string animTriggerName) : base(stateMachine)
         {
-            _anim = stateMachine.character.animHandler;
+            _character = stateMachine.character;
+            _anim = _character._animHandler;
             _animParam = animTriggerName;
         }
 

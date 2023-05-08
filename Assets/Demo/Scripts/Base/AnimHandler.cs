@@ -20,6 +20,12 @@ namespace Demo.Base
         {
             anim = transform.GetComponentInChildren<Animator>();
             hasAnimator = anim;
+            
+            foreach (var param in animController.parameters)
+            {
+                if (param.type == AnimatorControllerParameterType.Trigger)
+                    animTriggerID[param.name] = param.nameHash;
+            }
         
             if (!hasAnimator) 
                 DebugLog.LabelLog(debugLabel, $"Missing animator in {gameObject.name}!", Verbose.Warning);
@@ -28,12 +34,6 @@ namespace Demo.Base
         protected virtual void Start()
         {
             anim.runtimeAnimatorController = animController;
-
-            foreach (var param in animController.parameters)
-            {
-                if (param.type == AnimatorControllerParameterType.Trigger)
-                    animTriggerID[param.name] = param.nameHash;
-            }
         }
 
         public void SetTrigger(string trigger)

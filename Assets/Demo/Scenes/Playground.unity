@@ -203,7 +203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 213814012}
   - component: {fileID: 213814014}
-  - component: {fileID: 213814013}
+  - component: {fileID: 213814015}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -228,26 +228,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &213814013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 213814011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 013b66d10dc739343b6264ab89e76b36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 2
-  runSpeed: 6
-  dashSpeed: 8
-  acceleration: 15
-  angularTime: 0.5
-  ledgeStuckAvoidForce: 0.5
-  gravity: 20
-  jumpHeight: 1.8
 --- !u!143 &213814014
 CharacterController:
   m_ObjectHideFlags: 0
@@ -266,6 +246,26 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.52, z: 0}
+--- !u!114 &213814015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213814011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab200a8a00181604eb3ee653f7678022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 2
+  runSpeed: 6
+  dashSpeed: 8
+  acceleration: 15
+  angularTime: 0.5
+  ledgeStuckAvoidForce: 0.5
+  gravity: 20
+  jumpHeight: 1.8
 --- !u!114 &218196138 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 62072030729837756, guid: 439b9c346e1be3147b951c0eadcc990d, type: 3}

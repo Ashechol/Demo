@@ -5,7 +5,7 @@ namespace Demo.Framework.FSM
 {
     public class State
     {
-        private StateMachine _stateMachine;
+        protected StateMachine _stateMachine;
 
         public State(StateMachine stateMachine)
         {

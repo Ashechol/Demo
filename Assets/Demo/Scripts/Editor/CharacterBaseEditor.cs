@@ -35,4 +35,9 @@ public class CharacterBaseEditor : Editor
             DestroyImmediate(_character.transform.GetComponentInChildren<Detection>().gameObject);
         }
     }
+
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+    }
 }

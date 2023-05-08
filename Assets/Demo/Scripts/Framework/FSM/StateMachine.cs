@@ -9,11 +9,16 @@ namespace Demo.Framework.FSM
         private State _currentState;
         
 #if UNITY_EDITOR
-        private static readonly DebugLabel DebugLabel = new("StateMachine", Color.magenta);
+        protected static readonly DebugLabel debugLabel = new("StateMachine", Color.magenta);
 #endif
 
         public virtual void Init(State defaultState)
         {
+#if UNITY_EDITOR
+            if (defaultState == null)
+                DebugLog.LabelLog(debugLabel, "Default State Is Null, Please Assign a State!", Verbose.Error);
+#endif
+                
             _currentState = defaultState;
         }
 
