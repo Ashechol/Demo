@@ -1,5 +1,5 @@
 using System;
-using Demo.Utils;
+using Demo.Framework.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

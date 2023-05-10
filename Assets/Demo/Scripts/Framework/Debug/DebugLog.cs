@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Demo.Utils.Debug
+namespace Demo.Framework.Debug
 { 
     public enum Verbose
     {

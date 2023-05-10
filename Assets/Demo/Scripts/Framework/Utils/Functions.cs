@@ -1,8 +1,8 @@
 using System;
-using Demo.Utils.Debug;
+using Demo.Framework.Debug;
 using UnityEngine;
 
-namespace Demo.Utils
+namespace Demo.Framework.Utils
 {
     public struct Functions
     {

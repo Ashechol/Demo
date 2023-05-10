@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Demo.Utils.Debug;
+using Demo.Framework.Debug;
 using UnityEngine;
 
 namespace Demo.Framework.FSM

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace Demo.Utils.Debug
+namespace Demo.Framework.Debug
 {
     /// GUIStats handles all the OnGUI Info stats
     public class GUIStats : MonoBehaviour

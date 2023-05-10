@@ -1,4 +1,4 @@
-using Demo.Utils;
+using Demo.Framework.Utils;
 using DG.Tweening;
 using UnityEngine;
 

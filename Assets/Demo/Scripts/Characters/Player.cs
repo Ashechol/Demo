@@ -4,8 +4,8 @@ using Demo.Base;
 using Demo.Characters;
 using Demo.Framework.Camera;
 using Demo.Framework.Input;
-using Demo.Utils;
-using Demo.Utils.Debug;
+using Demo.Framework.Utils;
+using Demo.Framework.Debug;
 using UnityEngine;
 
 [RequireComponent(typeof(CameraHandler))]

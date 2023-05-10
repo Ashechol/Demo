@@ -1,5 +1,5 @@
-using Demo.Utils;
-using Demo.Utils.Debug;
+using Demo.Framework.Utils;
+using Demo.Framework.Debug;
 using UnityEngine;
 using Object = UnityEngine.Object;
 

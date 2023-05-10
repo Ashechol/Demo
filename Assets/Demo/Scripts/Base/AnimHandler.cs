@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Demo.Utils.Debug;
+using Demo.Framework.Debug;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Serialization;

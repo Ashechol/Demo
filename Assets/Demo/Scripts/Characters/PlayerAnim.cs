@@ -1,5 +1,5 @@
 using Demo.Base;
-using Demo.Utils.Debug;
+using Demo.Framework.Debug;
 using UnityEngine;
 
 namespace Demo.Characters

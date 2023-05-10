@@ -1,6 +1,6 @@
 using Cinemachine;
 using Demo.Framework.Input;
-using Demo.Utils;
+using Demo.Framework.Utils;
 using Framework;
 using UnityEngine;
 using StateCamera = Cinemachine.CinemachineStateDrivenCamera;
