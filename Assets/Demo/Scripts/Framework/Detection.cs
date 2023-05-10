@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Demo.Base
+namespace Demo.Framework.Gameplay
 {
     public class Detection : MonoBehaviour
     {

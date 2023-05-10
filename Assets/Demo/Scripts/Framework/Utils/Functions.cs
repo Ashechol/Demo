@@ -46,7 +46,7 @@ namespace Demo.Framework.Utils
             return res;
         }
 
-        public static float ClampAngle(float angle, float min, float max)
+        public static float ClampAngle(float angle, float min = float.MinValue, float max = float.MaxValue)
         {
             if (angle > 180) angle -= 360;
             if (angle < -180) angle += 360;

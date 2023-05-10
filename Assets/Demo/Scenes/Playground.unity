@@ -559,12 +559,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94078e3e133fa194ab25dc02696f0219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yaw: 0
+  pitch: 0
+  roll: 0
   stateCamera: {fileID: 60339769}
   cameraRoot: {fileID: 439783592}
-  mouseYSpeed: 5
-  mouseXSpeed: 5
-  pitchMax: 60
-  pitchMin: -30
 --- !u!114 &507602822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,12 +831,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94078e3e133fa194ab25dc02696f0219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yaw: 0
+  pitch: 0
+  roll: 0
   stateCamera: {fileID: 1265368910}
   cameraRoot: {fileID: 1171449257}
-  mouseYSpeed: 5
-  mouseXSpeed: 5
-  pitchMax: 60
-  pitchMin: -30
 --- !u!4 &638805730
 Transform:
   m_ObjectHideFlags: 0

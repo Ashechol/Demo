@@ -8,12 +8,16 @@ namespace Demo.Framework.Input
     /// Binding and process input action
     public class InputHandler : MonoBehaviour
     {
-        private PlayerInput _playerInput = null;
+        private PlayerInput _playerInput;
 
         private InputActionAsset _actions;
 
         public event Action OnMoveCanceled;
         public event Action<bool> OnDash;
+
+        public event Action OnMovePerformed;
+        public event Action OnLook;
+        public event Action OnJump;
 
         #region Values
 
@@ -26,13 +30,13 @@ namespace Demo.Framework.Input
         public bool IsMoveInput => _rawMoveInput != Vector2.zero;
         public float MoveInputX => _rawMoveInput.x;
         public float MoveInputY => _rawMoveInput.y;
-        public float YawInput => _rawLookInput.x;
+        public bool DashInput => _dashInput;
+
         // 处理鼠标输入不能乘以 Time.deltaTime
         /// Fixed YawInput: do not multiply delta time.
-        public float YawInputFixed => IsCurrentDeviceMouse ? YawInput : YawInput * Time.deltaTime;
-        public float PitchInput => _rawLookInput.y;
-        /// Fixed PitchInput: do not multiply delta time.
-        public float PitchInputFixed => IsCurrentDeviceMouse ? PitchInput : PitchInput * Time.deltaTime;
+        public float YawInput => IsCurrentDeviceMouse ? _rawLookInput.x : _rawLookInput.x * Time.deltaTime;
+        public float PitchInput => IsCurrentDeviceMouse ? _rawLookInput.y : _rawLookInput.y * Time.deltaTime;
+        
         public bool JumpInput
         {
             get
@@ -94,6 +98,8 @@ namespace Demo.Framework.Input
             
             _rawMoveInput = context.ReadValue<Vector2>();
             
+            if (context.performed)
+                OnMovePerformed?.Invoke();
             if (context.canceled)
                 OnMoveCanceled?.Invoke();
         }
@@ -103,19 +109,25 @@ namespace Demo.Framework.Input
             if (context.action.name != "Look") return;
 
             _rawLookInput = context.ReadValue<Vector2>();
+            
+            OnLook?.Invoke();
         }
 
         private void OnJumpAction(InputAction.CallbackContext context)
         {
             if (context.action.name != "Jump") return;
             
-            if (context.performed)
+            if (context.started)
                 _jumpInput = true;
+            
+            OnJump?.Invoke();
         }
 
         private void OnDashAction(InputAction.CallbackContext context)
         {
             if (context.action.name != "Dash") return;
+            
+            _dashInput = context.performed;
             
             OnDash?.Invoke(context.performed);
         }

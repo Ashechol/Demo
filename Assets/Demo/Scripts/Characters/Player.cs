@@ -1,20 +1,22 @@
 using System;
 using System.Collections;
-using Demo.Base;
 using Demo.Characters;
 using Demo.Framework.Camera;
 using Demo.Framework.Input;
 using Demo.Framework.Utils;
 using Demo.Framework.Debug;
+using Demo.Framework.Gameplay;
 using UnityEngine;
 
+using CharacterMovement = UnityEngine.CharacterController;
+
 [RequireComponent(typeof(CameraHandler))]
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterMovement))]
 public class Player : MonoBehaviour
 {
     #region Components
 
-    private CharacterController _controller;
+    private CharacterMovement _controller;
     private InputHandler _input;
     private CameraHandler _camera;
     private PlayerAnim _anim;
@@ -103,7 +105,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _controller = this.GetComponentSafe<CharacterController>();
+        _controller = this.GetComponentSafe<CharacterMovement>();
         _input = this.GetComponentSafe<InputHandler>();
         _camera = this.GetComponentSafe<CameraHandler>();
         _anim = this.GetComponentSafe<PlayerAnim>();

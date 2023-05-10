@@ -26,6 +26,8 @@
 
 ### Demo.Framework.Gameplay
 
+Gameplay 相关类
+
 #### Character
 
 
@@ -39,4 +41,10 @@
 
 
 #### AIController
+
+
+
+#### InputHandler
+
+直接与 InputSystem 交互，获取输入值（raw input value）然后处理为更方便使用的值，绑定玩家输入相关事件。
 
