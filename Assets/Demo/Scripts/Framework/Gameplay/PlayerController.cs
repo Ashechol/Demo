@@ -1,3 +1,4 @@
+using System;
 using Demo.Framework.Camera;
 using Demo.Framework.Input;
 using Demo.Framework.Utils;
@@ -21,6 +22,13 @@ namespace Demo.Framework.Gameplay
         private void Awake()
         {
             _character = GetComponentInChildren<Character>();
+            _input = GetComponent<InputHandler>();
+            _camera = GetComponent<CameraHandler>();
+        }
+
+        private void Start()
+        {
+            Binding();
         }
 
         private void Binding()
@@ -34,7 +42,7 @@ namespace Demo.Framework.Gameplay
         {
             var speed = _character.runSpeed;
             if (_input.DashInput) speed = _character.dashSpeed;
-
+            
             var targetAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _camera.yaw;
             
             _character.MoveXZ(targetAngle , speed);

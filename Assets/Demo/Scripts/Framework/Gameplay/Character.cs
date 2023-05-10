@@ -47,7 +47,7 @@ namespace Demo.Framework.Gameplay
         protected void Awake()
         {
             _movement = GetComponent<CharacterMovement>();
-            // _controller = 
+            _detection = GetComponentInChildren<Detection>();
         }
 
         protected void Start()

@@ -68,7 +68,7 @@ namespace Demo.Framework.Gameplay
             var trans = transform;
             var position = trans.position;
             
-            Gizmos.color = IsGrounded ? new Color(0, 1, 0, 0.3f) : new Color(1, 0, 0, 0.3f);
+            Gizmos.color = IsGrounded ? new Color(0, 1, 0, 0.3f) : new Color(1, 0, 0, 0.7f);
             Gizmos.DrawSphere(position, checkRadius);
 
             var directions = Array.Empty<Vector3>();
