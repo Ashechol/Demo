@@ -31,21 +31,31 @@ namespace Demo.Framework.Gameplay
             Binding();
         }
 
+        private void Update()
+        {
+            Move();
+        }
+
         private void Binding()
         {
-            _input.OnMovePerformed += Move;
             _input.OnLook += Look;
             _input.OnJump += Jump;
         }
 
         private void Move()
         {
-            var speed = _character.runSpeed;
-            if (_input.DashInput) speed = _character.dashSpeed;
+            float targetSpeed = 0;
             
-            var targetAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _camera.yaw;
+            if (_input.IsMoveInput)
+            {
+                var targetAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _camera.yaw;
+                _character.Turn(targetAngle);
+
+                targetSpeed = _character.runSpeed;
+                if (_input.DashInput) targetSpeed = _character.dashSpeed;
+            }
             
-            _character.MoveXZ(targetAngle , speed);
+            _character.Move(targetSpeed);
         }
 
         private void Look()
