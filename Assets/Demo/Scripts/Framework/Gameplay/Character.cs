@@ -1,5 +1,6 @@
 using Demo.Framework.Animation;
 using UnityEngine;
+using UnityEngine.Serialization;
 using CharacterMovement = UnityEngine.CharacterController;
 
 namespace Demo.Framework.Gameplay
@@ -10,7 +11,7 @@ namespace Demo.Framework.Gameplay
         private CharacterMovement _movement;
         private PlayerController _controller;
         private Detection _detection;
-        private AnimController _anim;
+        [HideInInspector] public AnimController anim;
 
         [Header("Movement")] 
         public float walkSpeed = 2;
@@ -42,6 +43,8 @@ namespace Demo.Framework.Gameplay
 
         private float _targetSpeed;
         private float _smoothAngle;
+
+        public float CurSpeed => _curSpeed;
         
         #region Mono Events
 
@@ -49,7 +52,7 @@ namespace Demo.Framework.Gameplay
         {
             _movement = GetComponent<CharacterMovement>();
             _detection = GetComponentInChildren<Detection>();
-            _anim = GetComponent<AnimController>();
+            anim = GetComponent<AnimController>();
         }
 
         protected void Start()
@@ -65,6 +68,8 @@ namespace Demo.Framework.Gameplay
             _movement.Move(_motion * Time.deltaTime);
             _velocity = _movement.velocity;
             transform.forward = _forward;
+            
+            anim.UpdateParam();
         }
 
         #endregion
@@ -83,13 +88,10 @@ namespace Demo.Framework.Gameplay
             var direction = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward;
             _motion.x = direction.x * _curSpeed;
             _motion.z = direction.z * _curSpeed;
-
-            _anim.speed = speed;
-            if (!_anim.IsAnimMove && speed > 0)
-                _anim.AnimMove();
         }
     
         private float _rotationSpeedRef;
+        public float RotationSpeedRef => _rotationSpeedRef;
         public virtual void Turn(float targetAngle)
         {
             _targetYaw = targetAngle;

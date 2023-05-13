@@ -1,31 +1,20 @@
-using System.Collections.Generic;
+using Demo.Framework.Utils;
 using Demo.Framework.Debug;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Demo.Base
+namespace Demo.Framework.Animation
 {
     public abstract class AnimHandler : MonoBehaviour
     {
-        [HideInInspector] public Animator anim;
-        public AnimatorController animController;
+        protected Animator anim;
         protected bool hasAnimator;
 
-        protected readonly Dictionary<string, int> animTriggerID = new();
-
-        protected static DebugLabel debugLabel = new("AnimHandler", Color.cyan); 
+        protected static DebugLabel debugLabel = new("AnimationHandler", Color.cyan); 
 
         protected virtual void Awake()
         {
             anim = transform.GetComponentInChildren<Animator>();
             hasAnimator = anim;
-            
-            foreach (var param in animController.parameters)
-            {
-                if (param.type == AnimatorControllerParameterType.Trigger)
-                    animTriggerID[param.name] = param.nameHash;
-            }
         
             if (!hasAnimator) 
                 DebugLog.LabelLog(debugLabel, $"Missing animator in {gameObject.name}!", Verbose.Warning);
@@ -33,21 +22,11 @@ namespace Demo.Base
 
         protected virtual void Start()
         {
-            anim.runtimeAnimatorController = animController;
+            RegisterAnimID();
+
         }
 
-        public void SetTrigger(string trigger)
-        {
-            if (animTriggerID.ContainsKey(trigger))
-                anim.SetTrigger(animTriggerID[trigger]);
-#if UNITY_EDITOR
-            else
-            {
-                DebugLog.LabelLog(debugLabel, $"{animController.name} missing parameter {trigger}, adding it", Verbose.Warning);
-                animController.AddParameter(trigger, AnimatorControllerParameterType.Trigger);
-            }
-#endif
-        }
+        protected abstract void RegisterAnimID();
 
         public abstract void UpdateAnimParams();
     }

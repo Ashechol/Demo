@@ -6559,7 +6559,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7746984342729668437}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 76adfb3732322344fa08526f3705d905, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 61172668e615ebf44b08390a6c77f6cb, type: 3}
   m_Controller: {fileID: 9100000, guid: 5afc981833fd6634a907077cbb08ed7c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -6596,18 +6596,37 @@ MonoBehaviour:
   collideWithGround: 0
   groundHeight: 0
   springBones:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5660149962782245305}
+  - {fileID: 7440994312704064392}
+  - {fileID: 7440994313148007840}
+  - {fileID: 7440994312990937812}
+  - {fileID: 7440994313365738955}
+  - {fileID: 5660149962757809116}
+  - {fileID: 5660149964456678599}
+  - {fileID: 5660149964864608225}
+  - {fileID: 7440994313376817970}
+  - {fileID: 7440994312192655342}
+  - {fileID: 4839791003015024498}
+  - {fileID: 4839791002855839540}
+  - {fileID: 2179088410635286160}
+  - {fileID: 7372839869113130228}
+  - {fileID: 7372839869244525434}
+  - {fileID: 7372839868484957811}
+  - {fileID: 5784725818031656404}
+  - {fileID: 5784725819769666229}
+  - {fileID: 8060668892865619622}
+  - {fileID: 7372839869661727042}
+  - {fileID: 7372839869784103047}
+  - {fileID: 7372839868650628607}
+  - {fileID: 5784725818070064790}
+  - {fileID: 8060668894128509090}
+  - {fileID: 5784725819000962636}
+  - {fileID: 5784725819173036037}
+  - {fileID: 8060668893736686224}
+  - {fileID: 8060668894372474715}
+  - {fileID: 5784725818349129813}
+  - {fileID: 8060668894292658610}
+  - {fileID: 8060668894328442392}
   boneColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   colliderColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   collisionColor: {r: 1, g: 0, b: 0, a: 1}

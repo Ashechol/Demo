@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Demo.Characters;
 using Demo.Framework.Camera;
 using Demo.Framework.Input;
 using Demo.Framework.Utils;

@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Animancer;
-using DG.Tweening;
-
+using Demo.Framework.Gameplay;
 
 namespace Demo.Framework.Animation
 {
@@ -12,16 +9,15 @@ namespace Demo.Framework.Animation
     public class AnimController : MonoBehaviour
     {
         private AnimancerComponent _anim;
+        private Character _character;
 
         [SerializeField] private ClipTransition[] _idle;
+        [SerializeField] private Float2ControllerTransition _movement;
         
-        [SerializeField] private LinearMixerTransition _walk;
-        [SerializeField] private LinearMixerTransition _run;
-        [SerializeField] private LinearMixerTransition _dash;
+        [SerializeField] private float _leanNormalizeAmount = 300;
+        private float _leanAmount;
 
-        public float speed;
-        public float leanAmount;
-        
+
         private void Awake()
         {
             _anim = GetComponent<AnimancerComponent>();
@@ -29,29 +25,24 @@ namespace Demo.Framework.Animation
 
         private void OnEnable()
         {
-            _anim.Play(_idle[0]);
-        }
-
-        public void AnimMove()
-        {
-            var state = _run.State;
             
-            switch (speed)
-            {
-                case <= 2f:
-                    state = _anim.Play(_walk) as LinearMixerState;
-                    break;
-                case <= 5.3f:
-                    state = _anim.Play(_run) as LinearMixerState;
-                    break;
-                case <= 12.1f:
-                    state = _anim.Play(_dash) as LinearMixerState;
-                    break;
-            }
-
-            if (state != null) state.Parameter = leanAmount;
         }
 
-        public bool IsAnimMove => _anim.IsPlaying(_walk) || _anim.IsPlaying(_run) || _anim.IsPlaying(_dash);
+        public void UpdateParam()
+        {
+            if (_anim.IsPlaying(_movement.Key))
+            {
+                _movement.State.ParameterX = _character.CurSpeed;
+                _movement.State.ParameterY = _character.RotationSpeedRef / _leanNormalizeAmount;
+            }
+        }
+
+        public void PlayMove()
+        {
+            if (_anim.States.Current != _movement.State)
+                _anim.Play(_movement);
+        }
+
+        public void PlayIdle() => _anim.Play(_idle[0]);
     }
 }
