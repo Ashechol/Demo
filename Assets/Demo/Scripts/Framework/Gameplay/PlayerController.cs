@@ -22,7 +22,7 @@ namespace Demo.Framework.Gameplay
         private void Awake()
         {
             _character = GetComponentInChildren<Character>();
-            _input = GetComponent<InputHandler>();
+            _input = this.GetComponentSafe<InputHandler>();
             _camera = GetComponent<CameraHandler>();
         }
 

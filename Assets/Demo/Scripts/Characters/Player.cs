@@ -177,7 +177,7 @@ public class Player : MonoBehaviour
     {
         if (_input.IsMoveInput && _curSpeed > 0.1f)
         {
-            _targetYaw = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _camera.Yaw;
+            _targetYaw = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _camera.yaw;
             _targetYaw = Functions.ClampAngle(_targetYaw, -360, 360);
             _smoothYaw = Mathf.SmoothDampAngle(_smoothYaw, _targetYaw, ref _rotationRef, angularTime);
             _forward = Quaternion.Euler(0, _smoothYaw, 0) * Vector3.forward;

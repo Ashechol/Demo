@@ -1,3 +1,4 @@
+using Demo.Framework.Animation;
 using UnityEngine;
 using CharacterMovement = UnityEngine.CharacterController;
 
@@ -9,6 +10,7 @@ namespace Demo.Framework.Gameplay
         private CharacterMovement _movement;
         private PlayerController _controller;
         private Detection _detection;
+        private AnimController _anim;
 
         [Header("Movement")] 
         public float walkSpeed = 2;
@@ -47,6 +49,7 @@ namespace Demo.Framework.Gameplay
         {
             _movement = GetComponent<CharacterMovement>();
             _detection = GetComponentInChildren<Detection>();
+            _anim = GetComponent<AnimController>();
         }
 
         protected void Start()
@@ -67,7 +70,6 @@ namespace Demo.Framework.Gameplay
         #endregion
 
         /// Move character in with angle and speed.
-        /// <param name="targetAngle"> Directional angle in world space </param>
         /// <param name="speed"> Target move speed </param>
         public virtual void Move(float speed)
         {
@@ -81,6 +83,10 @@ namespace Demo.Framework.Gameplay
             var direction = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward;
             _motion.x = direction.x * _curSpeed;
             _motion.z = direction.z * _curSpeed;
+
+            _anim.speed = speed;
+            if (!_anim.IsAnimMove && speed > 0)
+                _anim.AnimMove();
         }
     
         private float _rotationSpeedRef;

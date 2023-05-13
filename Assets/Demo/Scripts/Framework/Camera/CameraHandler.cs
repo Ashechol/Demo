@@ -14,8 +14,6 @@ namespace Demo.Framework.Camera
         [HideInInspector] public float pitch;
         [HideInInspector] public float roll;
 
-        public float Yaw => cameraRoot.eulerAngles.y;
-
         [Header("Basic Settings")]
         public CinemachineStateDrivenCamera stateCamera;
         public Transform cameraRoot;
