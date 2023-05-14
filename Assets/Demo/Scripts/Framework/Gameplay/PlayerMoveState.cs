@@ -16,7 +16,7 @@ namespace Demo
         {
             base.Enter();
             
-            _player.character.anim.PlayMove();
+            // _player.character.anim.PlayMove();
         }
     }
 }

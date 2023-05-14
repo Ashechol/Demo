@@ -1,22 +1,19 @@
 using Demo.Framework.Animation;
 using UnityEngine;
-using UnityEngine.Serialization;
-using CharacterMovement = UnityEngine.CharacterController;
 
 namespace Demo.Framework.Gameplay
 {
-    [RequireComponent(typeof(CharacterMovement))]
+    [RequireComponent(typeof(CharacterController))]
     public class Character : MonoBehaviour
     {
-        private CharacterMovement _movement;
-        private PlayerController _controller;
+        private CharacterController _controller;
         private Detection _detection;
         [HideInInspector] public AnimController anim;
 
         [Header("Movement")] 
-        public float walkSpeed = 2;
-        public float runSpeed = 6;
-        public float dashSpeed = 10;
+        public float walkSpeed = 1.8f;
+        public float runSpeed = 5;
+        public float dashSpeed = 12;
         public float acceleration = 15;
         public float angularTime = 0.1f;
         public float ledgeStuckAvoidForce = 0.5f;
@@ -27,16 +24,12 @@ namespace Demo.Framework.Gameplay
         
         private bool _isJump;
 
-        /// Local horizontal direction
-        private Vector3 _forward;
-
         private float _curSpeed;
         private float _targetYaw;
 
         private float _smoothYaw;
         
         private Vector3 _motion;
-        private Vector3 _velocity;
         private float _prevSpeedY;
         private float _fallSpeed;
         private Vector3 _rotation;
@@ -45,33 +38,22 @@ namespace Demo.Framework.Gameplay
         private float _smoothAngle;
 
         public float CurSpeed => _curSpeed;
+        public Vector3 Velocity => _controller.velocity;
         
         #region Mono Events
 
         protected void Awake()
         {
-            _movement = GetComponent<CharacterMovement>();
+            _controller = GetComponent<CharacterController>();
             _detection = GetComponentInChildren<Detection>();
             anim = GetComponent<AnimController>();
         }
 
         protected void Start()
         {
-            _prevSpeedY = _movement.velocity.y;
-            _forward = transform.forward;
+            _prevSpeedY = _controller.velocity.y;
         }
-
-        protected void Update()
-        {
-            Fall();
-            
-            _movement.Move(_motion * Time.deltaTime);
-            _velocity = _movement.velocity;
-            transform.forward = _forward;
-            
-            anim.UpdateParam();
-        }
-
+        
         #endregion
 
         /// Move character in with angle and speed.
@@ -88,6 +70,7 @@ namespace Demo.Framework.Gameplay
             var direction = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward;
             _motion.x = direction.x * _curSpeed;
             _motion.z = direction.z * _curSpeed;
+            _controller.Move(_motion * Time.deltaTime);
         }
     
         private float _rotationSpeedRef;
@@ -96,7 +79,7 @@ namespace Demo.Framework.Gameplay
         {
             _targetYaw = targetAngle;
             _smoothAngle = Mathf.SmoothDampAngle(_smoothAngle, _targetYaw, ref _rotationSpeedRef, angularTime);
-            _forward = Quaternion.Euler(0, _smoothAngle, 0) * Vector3.forward;
+            transform.forward = Quaternion.AngleAxis(_smoothAngle, Vector3.up) * Vector3.forward;
         }
 
         public virtual void Jump()
@@ -122,11 +105,16 @@ namespace Demo.Framework.Gameplay
                 _motion.y -= gravity * Time.deltaTime;
             
             // 下落速度记录
-            if (!_detection.IsGrounded && _velocity.y < 0.2f)
+            if (!_detection.IsGrounded && Velocity.y < 0.2f)
             {
                 _fallSpeed = _prevSpeedY;
-                _prevSpeedY = _velocity.y;
+                _prevSpeedY = Velocity.y;
             }
+        }
+
+        private void AnimUpdate()
+        {
+            
         }
     }
 }

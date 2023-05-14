@@ -46,6 +46,11 @@ namespace Demo.Framework.Gameplay
             stateMachine.LogicUpdate();
         }
 
+        private void LateUpdate()
+        {
+            
+        }
+
         private void Binding()
         {
             input.OnLook += Look;

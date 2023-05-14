@@ -1183,7 +1183,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.64, z: 0.011994362}
+  m_LocalPosition: {x: 0, y: 0.64, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1282,7 +1282,7 @@ GameObject:
   - component: {fileID: 969575767}
   m_Layer: 0
   m_Name: AnimancerTester
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1507,7 +1507,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1158832786}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.64, z: 0.011994362}
+  m_LocalPosition: {x: 0, y: 0.64, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6038,7 +6038,7 @@ Animator:
   m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -6842,25 +6842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8635e0e75705bc94fa4ec85dea02ec1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _idle:
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 1827226128182048838, guid: a442a3b64511af44db4cede4743c81b7, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-  _movement:
-    _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Controller: {fileID: 9100000, guid: 5ebfc48f768556a44a2893522ff81c75, type: 2}
-    _ActionsOnStop: 
-    _ParameterNameX: speed
-    _ParameterNameY: leanAmount
+  _holder: {fileID: 11400000, guid: 8478572b16f1899498d0328d80c4db5f, type: 2}
   _leanNormalizeAmount: 300
 --- !u!114 &1809153354788215811
 MonoBehaviour:
