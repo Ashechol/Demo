@@ -7,7 +7,8 @@ namespace Demo.Framework.FSM
     public class StateMachine
     {
         private State _currentState;
-        
+        public State CurrentState => _currentState;
+
 #if UNITY_EDITOR
         protected static readonly DebugLabel debugLabel = new("StateMachine", Color.magenta);
 #endif
@@ -20,6 +21,7 @@ namespace Demo.Framework.FSM
 #endif
                 
             _currentState = defaultState;
+            _currentState?.Enter();
         }
 
         public void ChangeState(State nextState)

@@ -24,7 +24,7 @@ namespace Demo.Framework.Camera
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        private void LateUpdate()
+        public void OnLateUpdate()
         {
             // 必须是 global rotation 才能解绑子物体的旋转和父物体
             cameraRoot.rotation = Quaternion.Euler(pitch, yaw, roll);  

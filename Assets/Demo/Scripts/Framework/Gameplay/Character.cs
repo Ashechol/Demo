@@ -17,6 +17,7 @@ namespace Demo.Framework.Gameplay
         public float acceleration = 15;
         public float angularTime = 0.1f;
         public float ledgeStuckAvoidForce = 0.5f;
+        private Vector3 _direction;
         
         [Header("Jump And Fall")]
         public float gravity = 20;
@@ -46,7 +47,7 @@ namespace Demo.Framework.Gameplay
         {
             _controller = GetComponent<CharacterController>();
             _detection = GetComponentInChildren<Detection>();
-            anim = GetComponent<AnimController>();
+            anim = GetComponentInChildren<AnimController>();
         }
 
         protected void Start()
@@ -56,21 +57,27 @@ namespace Demo.Framework.Gameplay
         
         #endregion
 
+        public void OnUpdate()
+        {
+            Fall();
+            
+            _curSpeed = Mathf.Lerp(_curSpeed, _targetSpeed, acceleration * Time.deltaTime);
+            _motion.x = _direction.x * _curSpeed;
+            _motion.z = _direction.z * _curSpeed;
+            _controller.Move(_motion * Time.deltaTime);
+        }
+
         /// Move character in with angle and speed.
         /// <param name="speed"> Target move speed </param>
         public virtual void Move(float speed)
         {
             _targetSpeed = speed;
-            _curSpeed = Mathf.Lerp(_curSpeed, _targetSpeed, acceleration * Time.deltaTime);
-            
+
             // 因为 forward 旋转有时间，所以不能用 forward 作为移动方向
             // _motion.x = _forward.x * _curSpeed;
             // _motion.z = _forward.z * _curSpeed;
 
-            var direction = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward;
-            _motion.x = direction.x * _curSpeed;
-            _motion.z = direction.z * _curSpeed;
-            _controller.Move(_motion * Time.deltaTime);
+            _direction = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward;
         }
     
         private float _rotationSpeedRef;
@@ -110,11 +117,6 @@ namespace Demo.Framework.Gameplay
                 _fallSpeed = _prevSpeedY;
                 _prevSpeedY = Velocity.y;
             }
-        }
-
-        private void AnimUpdate()
-        {
-            
         }
     }
 }

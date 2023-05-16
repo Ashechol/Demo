@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Demo.Framework.FSM;
+using Demo.Framework.Input;
 using UnityEngine;
 
 namespace Demo.Framework.Gameplay
@@ -8,10 +9,21 @@ namespace Demo.Framework.Gameplay
     public class PlayerState : State
     {
         protected readonly PlayerController _player;
-        
-        public PlayerState(PlayerStateMachine stateMachine, PlayerController player) : base(stateMachine)
+        protected readonly InputHandler _input;
+        protected readonly Character _character;
+
+        protected PlayerState(PlayerStateMachine stateMachine, PlayerController player) : base(stateMachine)
         {
             _player = player;
+            _input = player.input;
+            _character = player.character;
+        }
+
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+            
+            _character.OnUpdate();
         }
     }
 }

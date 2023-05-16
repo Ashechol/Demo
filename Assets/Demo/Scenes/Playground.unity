@@ -1280,6 +1280,7 @@ GameObject:
   - component: {fileID: 969575770}
   - component: {fileID: 969575768}
   - component: {fileID: 969575767}
+  - component: {fileID: 969575771}
   m_Layer: 0
   m_Name: AnimancerTester
   m_TagString: Player
@@ -1357,6 +1358,27 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.52, z: 0}
+--- !u!114 &969575771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969575766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d743b05a402bf447951249b4ef28c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  walkSpeed: 1.8
+  runSpeed: 5
+  dashSpeed: 12
+  acceleration: 15
+  angularTime: 0.1
+  ledgeStuckAvoidForce: 0.5
+  gravity: 20
+  jumpHeight: 1.8
 --- !u!114 &988146246 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2645119930003473925, guid: 439b9c346e1be3147b951c0eadcc990d, type: 3}
@@ -6038,7 +6060,7 @@ Animator:
   m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -6821,29 +6843,15 @@ GameObject:
   - component: {fileID: 1319756762771605179}
   - component: {fileID: 1574587192656977636}
   - component: {fileID: 1809153354788215811}
-  - component: {fileID: 1809153354788215810}
   - component: {fileID: 1574587192656977637}
+  - component: {fileID: 1809153354788215812}
   m_Layer: 0
   m_Name: Unity-Chan
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1809153354788215810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1809153354788215809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8635e0e75705bc94fa4ec85dea02ec1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _holder: {fileID: 11400000, guid: 8478572b16f1899498d0328d80c4db5f, type: 2}
-  _leanNormalizeAmount: 300
 --- !u!114 &1809153354788215811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6858,6 +6866,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Animator: {fileID: 1574587192656977636}
   _ActionOnDisable: 0
+--- !u!114 &1809153354788215812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809153354788215809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8635e0e75705bc94fa4ec85dea02ec1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _holder: {fileID: 11400000, guid: 8478572b16f1899498d0328d80c4db5f, type: 2}
+  _leanNormalizeAmount: 300
 --- !u!4 &1839152300253694367
 Transform:
   m_ObjectHideFlags: 0

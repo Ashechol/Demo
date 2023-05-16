@@ -109,8 +109,6 @@ namespace Demo.Framework.Input
             if (context.action.name != "Look") return;
 
             _rawLookInput = context.ReadValue<Vector2>();
-            
-            OnLook?.Invoke();
         }
 
         private void OnJumpAction(InputAction.CallbackContext context)

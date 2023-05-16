@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Animancer;
+using Demo.Framework.Debug;
 using Demo.Framework.Gameplay;
 using DG.Tweening;
 using UnityEngine.Serialization;
@@ -12,6 +13,7 @@ namespace Demo.Framework.Animation
     {
         private AnimancerComponent _anim;
         [SerializeField] private AnimHolder _holder;
+        private readonly DebugLabel _dbLabel = new DebugLabel("AnimController");
 
         private ClipTransition[] _idles;
         private MixerTransition2D _move;
@@ -33,10 +35,36 @@ namespace Demo.Framework.Animation
             _landing = _holder.landing;
         }
 
+        private void OnEnable()
+        {
+            GUIStats.Instance.OnGUIStatsInfo.AddListener(OnGUIStats);
+        }
+
         public void PlayIdle(int index = 0) => _anim.Play(_idles[index]);
         public void PlayMove() => _anim.Play(_move);
         public void PlayJump() => _anim.Play(_jumpStart).Events.OnEnd += PlayAirBorne;
         public void PlayAirBorne() => _anim.Play(_airBorne);
         public void PlayLanding() => _anim.Play(_landing);
+
+        public void UpdateMoveParam(float speed, float rotationSpeedRef)
+        {
+            var moveState = _anim.States[_move.Key] as MixerState<Vector2>;
+            _leanAmount = rotationSpeedRef / _leanNormalizeAmount;
+
+            if (moveState != null) 
+                moveState.Parameter = new Vector2(speed, _leanAmount);
+            else
+                DebugLog.LabelLog(_dbLabel, "Missing move state!", Verbose.Warning);
+        }
+
+        private void OnGUIStats()
+        {
+            var style = new GUIStyle
+            {
+                fontSize = 30
+            };
+            
+            GUILayout.Label($"<color=yellow>Current Lean Amount: {_leanAmount}</color>", style);
+        }
     }
 }

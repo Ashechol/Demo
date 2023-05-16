@@ -15,7 +15,7 @@ namespace Demo.Framework.Gameplay
         {
             base.Enter();
             
-            // _player.character.anim.PlayIdle();
+            _player.character.anim.PlayIdle();
         }
 
         public override void LogicUpdate()
