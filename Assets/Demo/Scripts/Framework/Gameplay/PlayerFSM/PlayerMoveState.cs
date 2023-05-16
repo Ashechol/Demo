@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Demo.Framework.Gameplay
 {
-    public class PlayerMoveState : PlayerState
+    public class PlayerMoveState : PlayerGroundState
     {
         public PlayerMoveState(PlayerStateMachine stateMachine, PlayerController player) : base(stateMachine, player)
         {

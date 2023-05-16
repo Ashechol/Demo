@@ -21,11 +21,12 @@ namespace Demo.Framework.Gameplay
         [SerializeField] private float _pitchMin = -30;
 
         internal float cameraYaw;
-        
 
         internal PlayerStateMachine stateMachine;
         internal PlayerIdleState idleState;
         internal PlayerMoveState moveState;
+        internal PlayerJumpState jumpState;
+        internal PlayerAirBorneState airBorneState;
 
         private void Awake()
         {
@@ -33,9 +34,11 @@ namespace Demo.Framework.Gameplay
             input = this.GetComponentSafe<InputHandler>();
             _camera = GetComponent<CameraHandler>();
 
-            stateMachine = new();
+            stateMachine = new PlayerStateMachine();
             idleState = new PlayerIdleState(stateMachine, this);
             moveState = new PlayerMoveState(stateMachine, this);
+            jumpState = new PlayerJumpState(stateMachine, this);
+            airBorneState = new PlayerAirBorneState(stateMachine, this);
             
             stateMachine.Init(idleState);
         }
@@ -43,11 +46,6 @@ namespace Demo.Framework.Gameplay
         private void OnEnable()
         {
             GUIStats.Instance.OnGUIStatsInfo.AddListener(OnGUIStats);
-        }
-
-        private void Start()
-        {
-            Binding();
         }
 
         private void Update()
@@ -61,27 +59,21 @@ namespace Demo.Framework.Gameplay
             _camera.OnLateUpdate();
         }
 
-        private void Binding()
-        {
-            // input.OnLook += Look;
-            input.OnJump += Jump;
-        }
-
-        private void Move()
-        {
-            float targetSpeed = 0;
-            
-            if (input.IsMoveInput)
-            {
-                var targetAngle = Mathf.Atan2(input.MoveInputX, input.MoveInputY) * Mathf.Rad2Deg + _camera.yaw;
-                character.Turn(targetAngle);
-
-                targetSpeed = character.runSpeed;
-                if (input.DashInput) targetSpeed = character.dashSpeed;
-            }
-            
-            character.Move(targetSpeed);
-        }
+        // private void Move()
+        // {
+        //     float targetSpeed = 0;
+        //     
+        //     if (input.IsMoveInput)
+        //     {
+        //         var targetAngle = Mathf.Atan2(input.MoveInputX, input.MoveInputY) * Mathf.Rad2Deg + _camera.yaw;
+        //         character.Turn(targetAngle);
+        //
+        //         targetSpeed = character.runSpeed;
+        //         if (input.DashInput) targetSpeed = character.dashSpeed;
+        //     }
+        //     
+        //     character.Move(targetSpeed);
+        // }
 
         private void Look()
         {

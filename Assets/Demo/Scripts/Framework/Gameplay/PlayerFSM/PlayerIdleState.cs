@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Demo.Framework.Gameplay
 {
-    public class PlayerIdleState : PlayerState
+    public class PlayerIdleState : PlayerGroundState
     {
         public PlayerIdleState(PlayerStateMachine stateMachine, PlayerController player) : base(stateMachine, player)
         {

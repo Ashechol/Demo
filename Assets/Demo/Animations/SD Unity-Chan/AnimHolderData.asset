@@ -91,9 +91,9 @@ MonoBehaviour:
     _Speeds: []
     _SynchronizeChildren: 
     _Thresholds:
-    - -1
+    - -5
     - 0
-    - 1
+    - 5
     _DefaultParameter: 0
     _ExtrapolateSpeed: 1
   landing:

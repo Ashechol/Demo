@@ -1281,7 +1281,7 @@ GameObject:
   - component: {fileID: 969575768}
   - component: {fileID: 969575767}
   - component: {fileID: 969575771}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AnimancerTester
   m_TagString: Player
   m_Icon: {fileID: 0}

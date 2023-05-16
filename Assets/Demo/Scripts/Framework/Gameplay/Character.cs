@@ -40,6 +40,7 @@ namespace Demo.Framework.Gameplay
 
         public float CurSpeed => _curSpeed;
         public Vector3 Velocity => _controller.velocity;
+        public bool IsGrounded => _detection.IsGrounded;
         
         #region Mono Events
 
@@ -92,12 +93,21 @@ namespace Demo.Framework.Gameplay
         public virtual void Jump()
         {
             // 跳跃
+            _motion.y = Mathf.Sqrt(2 * jumpHeight * gravity);
+            _isJump = true;
+            _fallSpeed = 0.0f;
+        }
+        
+        public virtual bool TryJump()
+        {
             if (_detection.IsGrounded)
             {
                 _motion.y = Mathf.Sqrt(2 * jumpHeight * gravity);
                 _isJump = true;
                 _fallSpeed = 0.0f;
+                return true;
             }
+            return false;
         }
 
         private void Fall()

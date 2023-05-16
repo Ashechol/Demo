@@ -37,7 +37,7 @@ namespace Demo.Framework.Gameplay
             _isHitGround = false;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             _currentTransform = transform;
             IsLedgeStuck = _currentTransform.position == _prevTransform.position && !IsGrounded;

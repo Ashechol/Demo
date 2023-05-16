@@ -57,6 +57,14 @@ namespace Demo.Framework.Animation
                 DebugLog.LabelLog(_dbLabel, "Missing move state!", Verbose.Warning);
         }
 
+        public void UpdateAirBorneParam(float speedY)
+        {
+            var airState = _anim.States[_airBorne.Key] as LinearMixerState;
+
+            if (airState != null)
+                airState.Parameter = speedY;
+        }
+
         private void OnGUIStats()
         {
             var style = new GUIStyle

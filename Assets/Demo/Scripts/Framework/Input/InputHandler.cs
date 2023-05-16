@@ -117,8 +117,6 @@ namespace Demo.Framework.Input
             
             if (context.started)
                 _jumpInput = true;
-            
-            OnJump?.Invoke();
         }
 
         private void OnDashAction(InputAction.CallbackContext context)
