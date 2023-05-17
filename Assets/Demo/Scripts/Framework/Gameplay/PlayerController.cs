@@ -40,6 +40,11 @@ namespace Demo.Framework.Gameplay
             jumpState = new PlayerJumpState(stateMachine, this);
             airBorneState = new PlayerAirBorneState(stateMachine, this);
             
+            // stateMachine.Init(idleState);
+        }
+
+        private void Start()
+        {
             stateMachine.Init(idleState);
         }
 
