@@ -32,7 +32,7 @@ namespace Demo
             _character.anim.UpdateAirBorneParam(_character.Velocity.y);
             
             if (_character.IsGrounded)
-                _stateMachine.ChangeState(_player.idleState);
+                _stateMachine.ChangeState(_player.landingState);
         }
     }
 }

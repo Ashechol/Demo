@@ -10,6 +10,7 @@ namespace Demo.Framework.Animation
         public MixerTransition2D move;
         public ClipTransition jumpStart;
         public LinearMixerTransition airBorne;
-        public ClipTransitionSequence landing;
+        // public ClipTransitionSequence landing;
+        public MixerTransition2D landing;
     }
 }

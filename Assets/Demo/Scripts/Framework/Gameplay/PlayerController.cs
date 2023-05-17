@@ -22,11 +22,12 @@ namespace Demo.Framework.Gameplay
 
         internal float cameraYaw;
 
-        internal PlayerStateMachine stateMachine;
+        private PlayerStateMachine _stateMachine;
         internal PlayerIdleState idleState;
         internal PlayerMoveState moveState;
         internal PlayerJumpState jumpState;
         internal PlayerAirBorneState airBorneState;
+        internal PlayerLandingState landingState;
 
         private void Awake()
         {
@@ -34,18 +35,19 @@ namespace Demo.Framework.Gameplay
             input = this.GetComponentSafe<InputHandler>();
             _camera = GetComponent<CameraHandler>();
 
-            stateMachine = new PlayerStateMachine();
-            idleState = new PlayerIdleState(stateMachine, this);
-            moveState = new PlayerMoveState(stateMachine, this);
-            jumpState = new PlayerJumpState(stateMachine, this);
-            airBorneState = new PlayerAirBorneState(stateMachine, this);
-            
+            _stateMachine = new PlayerStateMachine();
+            idleState = new PlayerIdleState(_stateMachine, this);
+            moveState = new PlayerMoveState(_stateMachine, this);
+            jumpState = new PlayerJumpState(_stateMachine, this);
+            airBorneState = new PlayerAirBorneState(_stateMachine, this);
+            landingState = new PlayerLandingState(_stateMachine, this);
+
             // stateMachine.Init(idleState);
         }
 
         private void Start()
         {
-            stateMachine.Init(idleState);
+            _stateMachine.Init(idleState);
         }
 
         private void OnEnable()
@@ -55,7 +57,7 @@ namespace Demo.Framework.Gameplay
 
         private void Update()
         {
-            stateMachine.LogicUpdate();
+            _stateMachine.LogicUpdate();
         }
 
         private void LateUpdate()
@@ -91,19 +93,14 @@ namespace Demo.Framework.Gameplay
             cameraYaw = _camera.yaw;
         }
 
-        private void Jump()
-        {
-            if (input.JumpInput)
-                character.Jump();
-        }
-
         private void OnGUIStats()
         {
             var style = new GUIStyle
             {
                 fontSize = 30
             };
-            GUILayout.Label($"<color=yellow>Current State: {stateMachine.CurrentState.GetType().Name}</color>", style);
+            GUILayout.Label($"<color=yellow>Current State: {_stateMachine.CurrentState.GetType().Name}</color>", style);
+            GUILayout.Label($"<color=yellow>Fall Speed: {character.FallSpeed}</color>", style);
         }
     }
 }

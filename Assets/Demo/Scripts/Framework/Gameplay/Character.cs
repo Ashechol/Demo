@@ -39,6 +39,7 @@ namespace Demo.Framework.Gameplay
         private float _smoothAngle;
 
         public float CurSpeed => _curSpeed;
+        public float FallSpeed => -_fallSpeed;
         public Vector3 Velocity => _controller.velocity;
         public bool IsGrounded => _detection.IsGrounded;
         

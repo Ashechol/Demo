@@ -102,15 +102,26 @@ MonoBehaviour:
       _NormalizedTimes: []
       _Callbacks: []
       _Names: []
-    _Clip: {fileID: 7400000, guid: ae387e236602e4148b46668d87cabaf7, type: 2}
     _Speed: 1
-    _NormalizedStartTime: NaN
-    _Others:
-    - _FadeDuration: 0.25
-      _Events:
-        _NormalizedTimes: []
-        _Callbacks: []
-        _Names: []
-      _Clip: {fileID: 7400000, guid: 8901bec7d75328249a1629d55078144c, type: 2}
-      _Speed: 1
-      _NormalizedStartTime: NaN
+    _Animations:
+    - {fileID: 7400000, guid: 53262de56a88e8e4ba35f4ef17068c2b, type: 2}
+    - {fileID: 7400000, guid: ae387e236602e4148b46668d87cabaf7, type: 2}
+    - {fileID: 7400000, guid: 6e90a11c8c9dbe44a8f0fd529b760c92, type: 2}
+    - {fileID: 7400000, guid: ae387e236602e4148b46668d87cabaf7, type: 2}
+    - {fileID: 7400000, guid: 46815e38aec4dae48a0c9b6c9e085599, type: 2}
+    - {fileID: 7400000, guid: ae387e236602e4148b46668d87cabaf7, type: 2}
+    - {fileID: 7400000, guid: c140cc2d309507f489ab67bc9b8fee46, type: 2}
+    - {fileID: 7400000, guid: ae387e236602e4148b46668d87cabaf7, type: 2}
+    _Speeds: []
+    _SynchronizeChildren: 0000000000000000
+    _Thresholds:
+    - {x: 0, y: 0}
+    - {x: 0, y: 16}
+    - {x: 1.8, y: 0}
+    - {x: 1.8, y: 16}
+    - {x: 5.5, y: 0}
+    - {x: 5.5, y: 16}
+    - {x: 12, y: 0}
+    - {x: 12, y: 16}
+    _DefaultParameter: {x: 0, y: 0}
+    _Type: 0

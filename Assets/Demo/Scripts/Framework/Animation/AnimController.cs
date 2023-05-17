@@ -19,10 +19,12 @@ namespace Demo.Framework.Animation
         private MixerTransition2D _move;
         private ClipTransition _jumpStart;
         private LinearMixerTransition _airBorne;
-        private ClipTransitionSequence _landing;
+        private MixerTransition2D _landing;
 
         [SerializeField] private float _leanNormalizeAmount = 300;
         private float _leanAmount;
+
+        public bool IsAnimStopped => _anim.States.Current.IsStopped;
 
 
         private void Awake()
@@ -33,6 +35,8 @@ namespace Demo.Framework.Animation
             _jumpStart = _holder.jumpStart;
             _airBorne = _holder.airBorne;
             _landing = _holder.landing;
+
+            _jumpStart.Events.OnEnd += PlayAirBorne;
         }
 
         private void OnEnable()
@@ -42,7 +46,7 @@ namespace Demo.Framework.Animation
 
         public void PlayIdle(int index = 0) => _anim.Play(_idles[index]);
         public void PlayMove() => _anim.Play(_move);
-        public void PlayJump() => _anim.Play(_jumpStart).Events.OnEnd += PlayAirBorne;
+        public void PlayJump() => _anim.Play(_jumpStart);
         public void PlayAirBorne() => _anim.Play(_airBorne);
         public void PlayLanding() => _anim.Play(_landing);
 
@@ -63,6 +67,11 @@ namespace Demo.Framework.Animation
 
             if (airState != null)
                 airState.Parameter = speedY;
+        }
+
+        public void UpdateLandingParam(float speedXZ, float speedY)
+        {
+            _landing.State.Parameter = new Vector2(speedXZ, speedY);
         }
 
         private void OnGUIStats()
