@@ -25,15 +25,5 @@ namespace Demo
                 _stateMachine.ChangeState(_player.idleState);
             });
         }
-
-        public override void LogicUpdate()
-        {
-            base.LogicUpdate();
-            
-            _character.anim.UpdateLandingParam(_character.CurSpeed, _character.FallSpeed);
-            
-            if (_input.IsMoveInput)
-                _stateMachine.ChangeState(_player.moveState);
-        }
     }
 }

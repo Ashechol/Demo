@@ -19,7 +19,7 @@ namespace Demo.Framework.Animation
         private MixerTransition2D _move;
         private ClipTransition _jumpStart;
         private LinearMixerTransition _airBorne;
-        private MixerTransition2D _landing;
+        private LinearMixerTransition _landing;
 
         [SerializeField] private float _leanNormalizeAmount = 300;
         private float _leanAmount;
@@ -69,9 +69,12 @@ namespace Demo.Framework.Animation
                 airState.Parameter = speedY;
         }
 
-        public void UpdateLandingParam(float speedXZ, float speedY)
+        public void UpdateLandingParam(float speedY)
         {
-            _landing.State.Parameter = new Vector2(speedXZ, speedY);
+            _landing.State.Parameter = speedY;
+            
+            // _landing.State.Norm
+            
         }
 
         private void OnGUIStats()
