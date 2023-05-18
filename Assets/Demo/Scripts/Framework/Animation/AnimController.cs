@@ -2,9 +2,7 @@ using System;
 using UnityEngine;
 using Animancer;
 using Demo.Framework.Debug;
-using Demo.Framework.Gameplay;
 using DG.Tweening;
-using UnityEngine.Serialization;
 
 namespace Demo.Framework.Animation
 {
@@ -20,13 +18,13 @@ namespace Demo.Framework.Animation
         private ClipTransition _jumpStart;
         private LinearMixerTransition _airBorne;
         private LinearMixerTransition _landing;
+        private MixerTransition2D _landing2D;
 
         [SerializeField] private float _leanNormalizeAmount = 300;
         private float _leanAmount;
-
+        
         public bool IsAnimStopped => _anim.States.Current.IsStopped;
-
-
+        
         private void Awake()
         {
             _anim = GetComponent<AnimancerComponent>();
@@ -35,6 +33,7 @@ namespace Demo.Framework.Animation
             _jumpStart = _holder.jumpStart;
             _airBorne = _holder.airBorne;
             _landing = _holder.landing;
+            _landing2D = _holder.landing2D;
 
             _jumpStart.Events.OnEnd += PlayAirBorne;
         }
@@ -44,11 +43,22 @@ namespace Demo.Framework.Animation
             GUIStats.Instance.OnGUIStatsInfo.AddListener(OnGUIStats);
         }
 
+        private float _animDesiredSpeed;
+        private void OnAnimatorMove()
+        {
+            _animDesiredSpeed = _anim.Animator.velocity.magnitude / _anim.Animator.humanScale;
+        }
+
         public void PlayIdle(int index = 0) => _anim.Play(_idles[index]);
         public void PlayMove() => _anim.Play(_move);
         public void PlayJump() => _anim.Play(_jumpStart);
         public void PlayAirBorne() => _anim.Play(_airBorne);
-        public void PlayLanding() => _anim.Play(_landing);
+        public void PlayLanding() => _anim.Play(_landing2D);
+
+        public void SetLandingEndEvent(Action callback) => _landing2D.Events.OnEnd += callback;
+        
+        /// 根运动速度
+        public float AnimDesiredSpeed => _animDesiredSpeed;
 
         public void UpdateMoveParam(float speed, float rotationSpeedRef)
         {
@@ -61,21 +71,9 @@ namespace Demo.Framework.Animation
                 DebugLog.LabelLog(_dbLabel, "Missing move state!", Verbose.Warning);
         }
 
-        public void UpdateAirBorneParam(float speedY)
-        {
-            var airState = _anim.States[_airBorne.Key] as LinearMixerState;
+        public void UpdateAirBorneParam(float speedY) => _airBorne.State.Parameter = speedY;
 
-            if (airState != null)
-                airState.Parameter = speedY;
-        }
-
-        public void UpdateLandingParam(float speedY)
-        {
-            _landing.State.Parameter = speedY;
-            
-            // _landing.State.Norm
-            
-        }
+        public void UpdateLandingParam(float speedXZ, float speedY) => _landing2D.State.Parameter = new Vector2(speedXZ, speedY);
 
         private void OnGUIStats()
         {
@@ -85,6 +83,7 @@ namespace Demo.Framework.Animation
             };
             
             GUILayout.Label($"<color=yellow>Current Lean Amount: {_leanAmount}</color>", style);
+            GUILayout.Label($"<color=yellow>Anim Desired Speed: {AnimDesiredSpeed}</color>", style);
         }
     }
 }

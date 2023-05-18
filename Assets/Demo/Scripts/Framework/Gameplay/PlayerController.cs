@@ -48,6 +48,11 @@ namespace Demo.Framework.Gameplay
         private void Start()
         {
             _stateMachine.Init(idleState);
+            character.anim.SetLandingEndEvent(() =>
+            {
+                PlayerState nextState = input.IsMoveInput ? moveState : idleState;
+                _stateMachine.ChangeState(nextState);
+            });
         }
 
         private void OnEnable()

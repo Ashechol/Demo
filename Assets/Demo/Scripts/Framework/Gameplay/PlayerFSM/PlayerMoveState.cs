@@ -32,10 +32,13 @@ namespace Demo.Framework.Gameplay
             
             Locomotion();
             
+            if (!_input.IsMoveInput)
+                _stateMachine.ChangeState(_player.idleState);
+
             _character.anim.UpdateMoveParam(_character.CurSpeed, _character.RotationSpeedRef);
         }
 
-        private void Locomotion()
+        internal void Locomotion()
         {
             if (_input.IsMoveInput)
             {
@@ -45,10 +48,6 @@ namespace Demo.Framework.Gameplay
                 var targetSpeed = _character.runSpeed;
                 if (_input.DashInput) targetSpeed = _character.dashSpeed;
                 _character.Move(targetSpeed);
-            }
-            else
-            {
-                _stateMachine.ChangeState(_player.idleState);
             }
         }
     }
