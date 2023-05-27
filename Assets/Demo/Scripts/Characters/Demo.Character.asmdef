@@ -2,8 +2,6 @@
     "name": "Demo.Character",
     "rootNamespace": "Demo",
     "references": [
-        "GUID:e2bafd2564af9fb4eb353b9db6060e25",
-        "GUID:6aa5155d7f7a98842bb36fbfaa0342fc",
         "GUID:2c09f8c43f193244aa40d7e046cfe1d2"
     ],
     "includePlatforms": [],

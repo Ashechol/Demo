@@ -1,4 +1,3 @@
-using System;
 using Demo.Framework.Camera;
 using Demo.Framework.Debug;
 using Demo.Framework.Input;
@@ -101,6 +100,7 @@ namespace Demo.Framework.Gameplay
             };
             GUILayout.Label($"<color=yellow>Current State: {_stateMachine.CurrentState.GetType().Name}</color>", style);
             GUILayout.Label($"<color=yellow>Fall Speed: {character.FallSpeed}</color>", style);
+            GUILayout.Label($"<color=yellow>Current Speed: {character.CurSpeed}</color>", style);
         }
     }
 }

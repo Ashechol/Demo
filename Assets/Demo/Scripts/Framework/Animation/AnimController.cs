@@ -23,7 +23,6 @@ namespace Demo.Framework.Animation
         [SerializeField] private float _leanNormalizeAmount = 300;
         private float _leanAmount;
         
-        /// 
         /// <param name="exitTime"></param>
         /// <returns></returns>
         public bool IsAnimExiting(float exitTime) => _anim.States.Current.Time >= exitTime;

@@ -25,7 +25,7 @@ namespace Demo
             
             var exitTime = _input.IsMoveInput ? 0.15f : 0.45f;
             if (_character.anim.IsAnimExiting(exitTime))
-                _stateMachine.ChangeState(_player.moveState);
+                _stateMachine.ChangeState(_player.idleState);
         }
     }
 }
