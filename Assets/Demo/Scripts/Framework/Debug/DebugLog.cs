@@ -46,6 +46,7 @@ namespace Demo.Framework.Debug
             CreateLog(label, labelColor.ToHexString(), message, color.ToHexString(), verb, condition);
         }
         
+        // ReSharper disable Unity.PerformanceAnalysis
         public static void CreateLog(string label, string labelColor, string message, string color, Verbose verb, bool condition = false)
         {
             switch (verb)

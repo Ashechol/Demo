@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53a29f720c2611a4cb24c5bb6d5f69f7, type: 3}
-  m_Name: AnimHolderData
+  m_Name: AnimUnityChan
   m_EditorClassIdentifier: 
   idles:
-  - _FadeDuration: 0.25
+  - _FadeDuration: 1
     _Events:
       _NormalizedTimes: []
       _Callbacks: []
@@ -26,15 +26,7 @@ MonoBehaviour:
       _NormalizedTimes: []
       _Callbacks: []
       _Names: []
-    _Clip: {fileID: 7400000, guid: f98ba08d37315da4c93befc6e13bca08, type: 2}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 7400000, guid: de81e3d67d8aa0a44b4195cf188e5e1a, type: 2}
+    _Clip: {fileID: 0}
     _Speed: 1
     _NormalizedStartTime: NaN
   move:
@@ -45,24 +37,26 @@ MonoBehaviour:
       _Names: []
     _Speed: 1
     _Animations:
-    - {fileID: 7400000, guid: c8a72ff1c01af7643816d6c9f1872790, type: 2}
+    - {fileID: 7400000, guid: 53262de56a88e8e4ba35f4ef17068c2b, type: 2}
+    - {fileID: 7400000, guid: 6ba5934d24ce9934cb235fae8e6cb8ac, type: 2}
     - {fileID: 7400000, guid: 6e90a11c8c9dbe44a8f0fd529b760c92, type: 2}
-    - {fileID: 7400000, guid: f57505b420e29a04688bbda7d20574c5, type: 2}
-    - {fileID: 7400000, guid: 5fbd652194309b84eb534ea90068b227, type: 2}
+    - {fileID: 7400000, guid: 5434900e56da32d4bb9d55f0644b7f44, type: 2}
+    - {fileID: 7400000, guid: ce9e47c8606ac1c418e63b9870aa6ae4, type: 2}
     - {fileID: 7400000, guid: 46815e38aec4dae48a0c9b6c9e085599, type: 2}
-    - {fileID: 7400000, guid: b9c62cf349e6e804385f7f779573b23d, type: 2}
+    - {fileID: 7400000, guid: 9ae9502235b9d634f9c957c8fb7652a6, type: 2}
     - {fileID: 7400000, guid: e3319ba84968183488030a662cb8bccd, type: 2}
     - {fileID: 7400000, guid: c140cc2d309507f489ab67bc9b8fee46, type: 2}
     - {fileID: 7400000, guid: af42915aa04429148823f5b251a21bda, type: 2}
     _Speeds: []
     _SynchronizeChildren: 
     _Thresholds:
-    - {x: 1.8, y: -1}
-    - {x: 1.8, y: 0}
-    - {x: 1.8, y: 1}
-    - {x: 5.5, y: -1}
-    - {x: 5.5, y: 0}
-    - {x: 5.5, y: 1}
+    - {x: 0, y: 0}
+    - {x: 2, y: -1}
+    - {x: 2, y: 0}
+    - {x: 2, y: 1}
+    - {x: 5, y: -1}
+    - {x: 5, y: 0}
+    - {x: 5, y: 1}
     - {x: 12, y: -1}
     - {x: 12, y: 0}
     - {x: 12, y: 1}
@@ -99,7 +93,8 @@ MonoBehaviour:
   landing:
     _FadeDuration: 0.25
     _Events:
-      _NormalizedTimes: []
+      _NormalizedTimes:
+      - 0.5869563
       _Callbacks: []
       _Names: []
     _Speed: 1
@@ -111,34 +106,5 @@ MonoBehaviour:
     _Thresholds:
     - 0
     - 12
-    _DefaultParameter: 0
+    _DefaultParameter: 12
     _ExtrapolateSpeed: 1
-  landing2D:
-    _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Speed: 1
-    _Animations:
-    - {fileID: 7400000, guid: 0b695f0a6a8efbd429742fa10563d700, type: 2}
-    - {fileID: 7400000, guid: ae387e236602e4148b46668d87cabaf7, type: 2}
-    - {fileID: 7400000, guid: 6e90a11c8c9dbe44a8f0fd529b760c92, type: 2}
-    - {fileID: 7400000, guid: ae387e236602e4148b46668d87cabaf7, type: 2}
-    - {fileID: 7400000, guid: 46815e38aec4dae48a0c9b6c9e085599, type: 2}
-    - {fileID: 7400000, guid: ae387e236602e4148b46668d87cabaf7, type: 2}
-    - {fileID: 7400000, guid: c140cc2d309507f489ab67bc9b8fee46, type: 2}
-    - {fileID: 7400000, guid: ae387e236602e4148b46668d87cabaf7, type: 2}
-    _Speeds: []
-    _SynchronizeChildren: 
-    _Thresholds:
-    - {x: 0, y: 8}
-    - {x: 0, y: 12}
-    - {x: 1.8, y: 8}
-    - {x: 1.8, y: 12}
-    - {x: 5.5, y: 8}
-    - {x: 5.5, y: 12}
-    - {x: 12, y: 8}
-    - {x: 12, y: 12}
-    _DefaultParameter: {x: 0, y: 0}
-    _Type: 0

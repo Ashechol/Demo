@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Animancer;
 using Demo.Framework.Debug;
+using Demo.Framework.Utils;
 using DG.Tweening;
 
 namespace Demo.Framework.Animation
@@ -18,12 +19,14 @@ namespace Demo.Framework.Animation
         private ClipTransition _jumpStart;
         private LinearMixerTransition _airBorne;
         private LinearMixerTransition _landing;
-        private MixerTransition2D _landing2D;
 
         [SerializeField] private float _leanNormalizeAmount = 300;
         private float _leanAmount;
         
-        public bool IsAnimStopped => _anim.States.Current.IsStopped;
+        /// 
+        /// <param name="exitTime"></param>
+        /// <returns></returns>
+        public bool IsAnimExiting(float exitTime) => _anim.States.Current.Time >= exitTime;
         
         private void Awake()
         {
@@ -33,9 +36,6 @@ namespace Demo.Framework.Animation
             _jumpStart = _holder.jumpStart;
             _airBorne = _holder.airBorne;
             _landing = _holder.landing;
-            _landing2D = _holder.landing2D;
-
-            _jumpStart.Events.OnEnd += PlayAirBorne;
         }
 
         private void OnEnable()
@@ -53,13 +53,13 @@ namespace Demo.Framework.Animation
         public void PlayMove() => _anim.Play(_move);
         public void PlayJump() => _anim.Play(_jumpStart);
         public void PlayAirBorne() => _anim.Play(_airBorne);
-        public void PlayLanding() => _anim.Play(_landing2D);
-
-        public void SetLandingEndEvent(Action callback) => _landing2D.Events.OnEnd += callback;
+        public void PlayLanding() => _anim.Play(_landing);
+        
         
         /// 根运动速度
         public float AnimDesiredSpeed => _animDesiredSpeed;
 
+        // ReSharper disable Unity.PerformanceAnalysis
         public void UpdateMoveParam(float speed, float rotationSpeedRef)
         {
             var moveState = _anim.States[_move.Key] as MixerState<Vector2>;
@@ -71,9 +71,10 @@ namespace Demo.Framework.Animation
                 DebugLog.LabelLog(_dbLabel, "Missing move state!", Verbose.Warning);
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         public void UpdateAirBorneParam(float speedY) => _airBorne.State.Parameter = speedY;
 
-        public void UpdateLandingParam(float speedXZ, float speedY) => _landing2D.State.Parameter = new Vector2(speedXZ, speedY);
+        public void UpdateLandingParam(float speedY) => _landing.State.Parameter = speedY;
 
         private void OnGUIStats()
         {

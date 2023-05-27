@@ -22,7 +22,7 @@ namespace Demo
         {
             base.Exit();
             
-            _character.Move(0);
+            _character.SetTargetSpeed(0);
         }
 
         public override void LogicUpdate()
@@ -30,6 +30,9 @@ namespace Demo
             base.LogicUpdate();
 
             _character.anim.UpdateAirBorneParam(_character.Velocity.y);
+            
+            // if (!_input.IsMoveInput)
+            //     _character.SetTargetSpeed(0);
             
             if (_character.IsGrounded)
                 _stateMachine.ChangeState(_player.landingState);

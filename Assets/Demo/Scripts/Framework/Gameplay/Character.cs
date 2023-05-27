@@ -17,7 +17,7 @@ namespace Demo.Framework.Gameplay
         public float acceleration = 15;
         public float angularTime = 0.1f;
         public float ledgeStuckAvoidForce = 0.5f;
-        private Vector3 _direction;
+        private Vector3 _moveDirection;
         
         [Header("Jump And Fall")]
         public float gravity = 20;
@@ -64,22 +64,23 @@ namespace Demo.Framework.Gameplay
             Fall();
             
             _curSpeed = Mathf.Lerp(_curSpeed, _targetSpeed, acceleration * Time.deltaTime);
-            _motion.x = _direction.x * _curSpeed;
-            _motion.z = _direction.z * _curSpeed;
+            _motion.x = _moveDirection.x * _curSpeed;
+            _motion.z = _moveDirection.z * _curSpeed;
             _controller.Move(_motion * Time.deltaTime);
         }
 
-        /// Move character in with angle and speed.
+        /// Move character in with target speed.
         /// <param name="speed"> Target move speed </param>
-        public virtual void Move(float speed)
+        public virtual void SetTargetSpeed(float speed)
         {
             _targetSpeed = speed;
 
             // 因为 forward 旋转有时间，所以不能用 forward 作为移动方向
             // _motion.x = _forward.x * _curSpeed;
             // _motion.z = _forward.z * _curSpeed;
-
-            _direction = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward;
+            
+            if (speed > 0)
+                _moveDirection = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward;
         }
     
         private float _rotationSpeedRef;
@@ -103,9 +104,7 @@ namespace Demo.Framework.Gameplay
         {
             if (_detection.IsGrounded)
             {
-                _motion.y = Mathf.Sqrt(2 * jumpHeight * gravity);
-                _isJump = true;
-                _fallSpeed = 0.0f;
+                Jump();
                 return true;
             }
             return false;

@@ -122,7 +122,7 @@ namespace Demo.Framework.Utils
             return res;
         }
 
-        public static bool NearlyEqual(float a, float b, float error = 0.5f) => Mathf.Abs(a - b) < error;
+        public static bool NearlyEqual(float a, float b, float error = 0.001f) => Mathf.Abs(a - b) < error;
 
         public static bool InRange(float value, float min, float max, float error = 0.0001f)
         {

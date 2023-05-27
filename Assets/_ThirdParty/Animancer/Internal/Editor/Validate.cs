@@ -51,6 +51,7 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
+        // ReSharper disable Unity.PerformanceAnalysis
         /// <summary>[Assert-Conditional] Throws if the `node`'s <see cref="Playable"/> is invalid.</summary>
         /// <exception cref="InvalidOperationException"/>
         [System.Diagnostics.Conditional(Strings.Assertions)]

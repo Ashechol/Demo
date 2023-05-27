@@ -11,6 +11,5 @@ namespace Demo.Framework.Animation
         public ClipTransition jumpStart;
         public LinearMixerTransition airBorne;
         public LinearMixerTransition landing;
-        public MixerTransition2D landing2D;
     }
 }

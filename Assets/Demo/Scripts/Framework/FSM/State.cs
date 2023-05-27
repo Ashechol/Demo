@@ -12,8 +12,10 @@ namespace Demo.Framework.FSM
             _stateMachine = stateMachine;
         }
         
+        // ReSharper disable Unity.PerformanceAnalysis
         public virtual void Enter() { }
         
+        // ReSharper disable Unity.PerformanceAnalysis
         public virtual void Exit() { }
         
         public virtual void LogicUpdate() { }

@@ -23,7 +23,7 @@ namespace Demo.Framework.Gameplay
         {
             base.Exit();
             
-            _character.Move(0);
+            _character.SetTargetSpeed(0);
         }
 
         public override void LogicUpdate()
@@ -47,7 +47,7 @@ namespace Demo.Framework.Gameplay
 
                 var targetSpeed = _character.runSpeed;
                 if (_input.DashInput) targetSpeed = _character.dashSpeed;
-                _character.Move(targetSpeed);
+                _character.SetTargetSpeed(targetSpeed);
             }
         }
     }
