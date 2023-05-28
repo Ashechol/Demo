@@ -1378,7 +1378,7 @@ MonoBehaviour:
   angularTime: 0.1
   ledgeStuckAvoidForce: 0.5
   gravity: 20
-  jumpHeight: 1.3
+  jumpHeight: 1.5
 --- !u!114 &988146246 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2645119930003473925, guid: 439b9c346e1be3147b951c0eadcc990d, type: 3}

@@ -35,6 +35,10 @@ namespace Demo.Framework.Animation
             _jumpStart = _holder.jumpStart;
             _airBorne = _holder.airBorne;
             _landing = _holder.landing;
+            
+            // 对全部动画开启 foot ik
+            // 只有 ClipState 是默认开启了的
+            _anim.Playable.ApplyFootIK = true;
         }
 
         private void OnEnable()
