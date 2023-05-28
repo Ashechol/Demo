@@ -55,19 +55,27 @@ MonoBehaviour:
     - {x: 5, y: -1}
     - {x: 5, y: 0}
     - {x: 5, y: 1}
-    - {x: 6, y: -1}
-    - {x: 6, y: 0}
-    - {x: 6, y: 1}
+    - {x: 9, y: -1}
+    - {x: 9, y: 0}
+    - {x: 9, y: 1}
     _DefaultParameter: {x: 0, y: 0}
     _Type: 0
-  jumpStart:
-    _FadeDuration: 0.25
+  jump:
+  - _FadeDuration: 0.25
     _Events:
       _NormalizedTimes: []
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 0b695f0a6a8efbd429742fa10563d700, type: 2}
     _Speed: 1
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 6f369640fb6148943a7201b99dc28301, type: 2}
+    _Speed: 1.2
     _NormalizedStartTime: NaN
   airBorne:
     _FadeDuration: 0.25
@@ -77,12 +85,14 @@ MonoBehaviour:
       _Names: []
     _Speed: 1
     _Animations:
+    - {fileID: 7400000, guid: 69b95ee7fea8217468945b2ffdcdf4ea, type: 2}
     - {fileID: 7400000, guid: 992bc470b14e0334589f3a71a52c5e06, type: 2}
     - {fileID: 7400000, guid: c95d784d3f85a2849b7a7bea17660fa3, type: 2}
     - {fileID: 7400000, guid: a71813d116c17bb4cb20c3646ba57c78, type: 2}
     _Speeds: []
     _SynchronizeChildren: 
     _Thresholds:
+    - -10
     - -5
     - 0
     - 5

@@ -10,12 +10,15 @@ namespace Demo.Framework.Gameplay
         {
         }
 
+        public override void Enter()
+        {
+            base.Enter();
+        }
+
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-
-            if (_input.JumpInput && _character.TryJump())
-                _stateMachine.ChangeState(_player.jumpState);
+            
             if (!_character.IsGrounded)
                 _stateMachine.ChangeState(_player.airBorneState);
         }

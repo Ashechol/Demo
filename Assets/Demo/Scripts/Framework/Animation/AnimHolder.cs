@@ -1,5 +1,6 @@
 using Animancer;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Demo.Framework.Animation
 {
@@ -8,7 +9,7 @@ namespace Demo.Framework.Animation
     {
         public ClipTransition[] idles;
         public MixerTransition2D move;
-        public ClipTransition jumpStart;
+        public ClipTransition[] jump;
         public LinearMixerTransition airBorne;
         public LinearMixerTransition landing;
     }

@@ -52,7 +52,10 @@ namespace Demo
                 var angle = Vector3.Angle(_jumpForward, curForward);
 
                 _targetSpeed = angle > 20f ? _character.airSpeed : _character.CurSpeed;
-
+                
+                // 确保原地起跳后能够移动
+                _targetSpeed = Mathf.Clamp(_targetSpeed, _character.airSpeed, _character.dashSpeed);
+                
                 var targetAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _player.cameraYaw;
                 _character.Turn(targetAngle);
             }

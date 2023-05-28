@@ -23,6 +23,7 @@ namespace Demo.Framework.Gameplay
         public float gravity = 20;
         public float airSpeed = 2.5f;
         public float jumpHeight = 1.8f;
+        public float secondJumpHeight = 0.5f;
         
         private bool _isJump;
 
@@ -67,6 +68,10 @@ namespace Demo.Framework.Gameplay
             _curSpeed = Mathf.Lerp(_curSpeed, _targetSpeed, acceleration * Time.deltaTime);
             _motion.x = _moveDirection.x * _curSpeed;
             _motion.z = _moveDirection.z * _curSpeed;
+            
+            if (_detection.IsLedgeStuck)
+                _motion += AvoidLedgeStuck();
+            
             _controller.Move(_motion * Time.deltaTime);
         }
 
@@ -93,19 +98,22 @@ namespace Demo.Framework.Gameplay
             transform.forward = Quaternion.AngleAxis(_smoothAngle, Vector3.up) * Vector3.forward;
         }
 
-        public virtual void Jump()
+
+        private int _jumpTime;
+        public virtual void Jump(float height)
         {
             // 跳跃
-            _motion.y = Mathf.Sqrt(2 * jumpHeight * gravity);
+            _motion.y = Mathf.Sqrt(2 * height * gravity);
             _isJump = true;
             _fallSpeed = 0.0f;
         }
         
         public virtual bool TryJump()
         {
-            if (_detection.IsGrounded)
+            if (_detection.IsGrounded || _jumpTime < 2)
             {
-                Jump();
+                Jump(_jumpTime == 0 ? jumpHeight : secondJumpHeight);
+                ++_jumpTime;
                 return true;
             }
             return false;
@@ -118,16 +126,31 @@ namespace Demo.Framework.Gameplay
             {
                 _motion.y = -2;
                 // _movement.stepOffset = _stepOffset;
+                _jumpTime = 0;
             }
             else
                 _motion.y -= gravity * Time.deltaTime;
             
             // 下落速度记录
-            if (!_detection.IsGrounded && Velocity.y < 0.2f)
+            if (!_detection.IsGrounded && Velocity.y < 0f)
             {
                 _fallSpeed = _prevSpeedY;
                 _prevSpeedY = Velocity.y;
             }
+        }
+        
+        private Vector3 AvoidLedgeStuck()
+        {
+            var avoidDirection = Vector3.zero;
+
+            foreach (var hit in _detection.Hits)
+            {
+                if (!hit.collider) continue;
+
+                avoidDirection += hit.normal;
+            }
+
+            return avoidDirection * ledgeStuckAvoidForce;
         }
     }
 }

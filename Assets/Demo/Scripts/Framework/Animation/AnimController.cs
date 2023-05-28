@@ -16,7 +16,7 @@ namespace Demo.Framework.Animation
 
         private ClipTransition[] _idles;
         private MixerTransition2D _move;
-        private ClipTransition _jumpStart;
+        private ClipTransition[] _jump;
         private LinearMixerTransition _airBorne;
         private LinearMixerTransition _landing;
 
@@ -32,7 +32,7 @@ namespace Demo.Framework.Animation
             _anim = GetComponent<AnimancerComponent>();
             _idles = _holder.idles;
             _move = _holder.move;
-            _jumpStart = _holder.jumpStart;
+            _jump = _holder.jump;
             _airBorne = _holder.airBorne;
             _landing = _holder.landing;
             
@@ -54,7 +54,8 @@ namespace Demo.Framework.Animation
 
         public void PlayIdle(int index = 0) => _anim.Play(_idles[index]);
         public void PlayMove() => _anim.Play(_move);
-        public void PlayJump() => _anim.Play(_jumpStart);
+        public void PlayJump() => _anim.Play(_jump[0]);
+        public void PlaySecondJump() => _anim.Play(_jump[1]);
         public void PlayAirBorne() => _anim.Play(_airBorne);
         public void PlayLanding() => _anim.Play(_landing);
         
