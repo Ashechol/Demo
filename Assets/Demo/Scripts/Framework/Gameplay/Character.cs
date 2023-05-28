@@ -21,6 +21,7 @@ namespace Demo.Framework.Gameplay
         
         [Header("Jump And Fall")]
         public float gravity = 20;
+        public float airSpeed = 2.5f;
         public float jumpHeight = 1.8f;
         
         private bool _isJump;
