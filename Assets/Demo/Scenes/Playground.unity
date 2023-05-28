@@ -934,7 +934,7 @@ MonoBehaviour:
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 129046092}
-  m_AnimatedTarget: {fileID: 0}
+  m_AnimatedTarget: {fileID: 1574587192656977636}
   m_LayerIndex: 0
   m_ShowDebugText: 0
   m_ChildCameras:

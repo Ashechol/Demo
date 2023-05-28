@@ -27,6 +27,7 @@ namespace Demo.Framework.Gameplay
         internal PlayerJumpState jumpState;
         internal PlayerAirBorneState airBorneState;
         internal PlayerLandingState landingState;
+        internal PlayerTransitionState transitionState;
 
         private void Awake()
         {
@@ -40,6 +41,7 @@ namespace Demo.Framework.Gameplay
             jumpState = new PlayerJumpState(_stateMachine, this);
             airBorneState = new PlayerAirBorneState(_stateMachine, this);
             landingState = new PlayerLandingState(_stateMachine, this);
+            transitionState = new PlayerTransitionState(_stateMachine, this);
 
             // stateMachine.Init(idleState);
         }

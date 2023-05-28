@@ -9,6 +9,8 @@ namespace Demo.Framework.Animation
     {
         public ClipTransition[] idles;
         public MixerTransition2D move;
+        public ClipTransition runToStand;
+        public ClipTransition[] dashToStand;
         public ClipTransition[] jump;
         public LinearMixerTransition airBorne;
         public LinearMixerTransition landing;

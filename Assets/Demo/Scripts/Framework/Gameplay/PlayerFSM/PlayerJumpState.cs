@@ -30,11 +30,9 @@ namespace Demo.Framework.Gameplay
         {
             base.LogicUpdate();
 
-            // _character.Jump(_);
-            
-            if (!_character.IsGrounded && !_isSecondJump)
+            if (!_isSecondJump)
                 _stateMachine.ChangeState(_player.airBorneState);
-            else if (_character.anim.IsAnimExiting(0.5f))
+            else if (_character.anim.IsAnimExiting())
             {
                 _stateMachine.ChangeState(_player.airBorneState);
                 _isSecondJump = false;

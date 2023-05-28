@@ -60,6 +60,34 @@ MonoBehaviour:
     - {x: 9, y: 1}
     _DefaultParameter: {x: 0, y: 0}
     _Type: 0
+  runToStand:
+    _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes:
+      - 0.25
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 2b2e673fd72a4c340b1be4a101eb1ae3, type: 2}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  dashToStand:
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 7a749e040aa330446b32a0a8d2c16bcc, type: 2}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes:
+      - 0.45
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: e8e69a614019f27429c0607e4cc33548, type: 2}
+    _Speed: 1
+    _NormalizedStartTime: NaN
   jump:
   - _FadeDuration: 0.25
     _Events:
@@ -74,7 +102,7 @@ MonoBehaviour:
       _NormalizedTimes: []
       _Callbacks: []
       _Names: []
-    _Clip: {fileID: 7400000, guid: 6f369640fb6148943a7201b99dc28301, type: 2}
+    _Clip: {fileID: 7400000, guid: a1d003986d660a245bea42da6674b69d, type: 2}
     _Speed: 1.2
     _NormalizedStartTime: NaN
   airBorne:
@@ -85,7 +113,7 @@ MonoBehaviour:
       _Names: []
     _Speed: 1
     _Animations:
-    - {fileID: 7400000, guid: 69b95ee7fea8217468945b2ffdcdf4ea, type: 2}
+    - {fileID: 7400000, guid: 52dc4409792e13942b8feb6f863e2c4d, type: 2}
     - {fileID: 7400000, guid: 992bc470b14e0334589f3a71a52c5e06, type: 2}
     - {fileID: 7400000, guid: c95d784d3f85a2849b7a7bea17660fa3, type: 2}
     - {fileID: 7400000, guid: a71813d116c17bb4cb20c3646ba57c78, type: 2}
@@ -101,8 +129,7 @@ MonoBehaviour:
   landing:
     _FadeDuration: 0.1
     _Events:
-      _NormalizedTimes:
-      - 0.5869563
+      _NormalizedTimes: []
       _Callbacks: []
       _Names: []
     _Speed: 1

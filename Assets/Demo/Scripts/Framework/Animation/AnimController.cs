@@ -16,6 +16,8 @@ namespace Demo.Framework.Animation
 
         private ClipTransition[] _idles;
         private MixerTransition2D _move;
+        private ClipTransition _runToStand;
+        private ClipTransition[] _dashToStand;
         private ClipTransition[] _jump;
         private LinearMixerTransition _airBorne;
         private LinearMixerTransition _landing;
@@ -23,10 +25,17 @@ namespace Demo.Framework.Animation
         [SerializeField] private float _leanNormalizeAmount = 300;
         private float _leanAmount;
         
-        /// <param name="exitTime"></param>
-        /// <returns></returns>
-        public bool IsAnimExiting(float exitTime) => _anim.States.Current.Time >= exitTime;
-        
+        // ReSharper disable Unity.PerformanceAnalysis
+        /// Check whether current animation is in exiting transition.
+        /// <param name="exitTime">Set exit time or use state normalized time</param>
+        public bool IsAnimExiting(float exitTime = -1)
+        {
+            if (exitTime < 0)
+                return _anim.States.Current.NormalizedTime >= _anim.States.Current.NormalizedEndTime;
+
+            return _anim.States.Current.Time >= exitTime;
+        }
+
         private void Awake()
         {
             _anim = GetComponent<AnimancerComponent>();
@@ -35,7 +44,9 @@ namespace Demo.Framework.Animation
             _jump = _holder.jump;
             _airBorne = _holder.airBorne;
             _landing = _holder.landing;
-            
+            _runToStand = _holder.runToStand;
+            _dashToStand = _holder.dashToStand;
+
             // 对全部动画开启 foot ik
             // 只有 ClipState 是默认开启了的
             _anim.Playable.ApplyFootIK = true;
@@ -58,8 +69,10 @@ namespace Demo.Framework.Animation
         public void PlaySecondJump() => _anim.Play(_jump[1]);
         public void PlayAirBorne() => _anim.Play(_airBorne);
         public void PlayLanding() => _anim.Play(_landing);
-        
-        
+        public void PlayRunToStand() => _anim.Play(_runToStand);
+        public void PlayDashToStand(int index = 0) => _anim.Play(_dashToStand[index]);
+
+
         /// 根运动速度
         public float AnimDesiredSpeed => _animDesiredSpeed;
 

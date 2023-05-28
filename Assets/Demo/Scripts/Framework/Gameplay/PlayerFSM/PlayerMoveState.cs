@@ -32,8 +32,16 @@ namespace Demo.Framework.Gameplay
             
             Locomotion();
             
+            // if (!_input.IsMoveInput)
+            //     _stateMachine.ChangeState(_player.idleState);
+
             if (!_input.IsMoveInput)
-                _stateMachine.ChangeState(_player.idleState);
+            {
+                var type = _character.CurSpeed is > 2 and < 5.01f
+                    ? PlayerTransitionType.RunToStand : PlayerTransitionType.DashToStand;
+                
+                _stateMachine.ChangeState(_player.transitionState.SetType(type));
+            }
 
             _character.anim.UpdateMoveParam(_character.CurSpeed, _character.RotationSpeedRef);
         }

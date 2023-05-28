@@ -125,7 +125,6 @@ namespace Demo.Framework.Gameplay
             if (_detection.IsGrounded && _motion.y < 0)
             {
                 _motion.y = -2;
-                // _movement.stepOffset = _stepOffset;
                 _jumpTime = 0;
             }
             else

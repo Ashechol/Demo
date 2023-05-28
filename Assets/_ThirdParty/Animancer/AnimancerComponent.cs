@@ -524,6 +524,7 @@ namespace Animancer
         // Transition.
         /************************************************************************************************************************/
 
+        // ReSharper disable Unity.PerformanceAnalysis
         /// <summary>
         /// Creates a state for the `transition` if it didn't already exist, then calls
         /// <see cref="Play(AnimancerState)"/> or <see cref="Play(AnimancerState, float, FadeMode)"/>
