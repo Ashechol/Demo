@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Demo.Framework.FSM;
-using Demo.Framework.Gameplay;
 using UnityEngine;
 
 namespace Demo.Framework.Gameplay

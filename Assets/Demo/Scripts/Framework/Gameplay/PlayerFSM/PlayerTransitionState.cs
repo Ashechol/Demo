@@ -10,6 +10,8 @@ namespace Demo.Framework.Gameplay
     {
         RunToStand,
         DashToStand,
+        UnarmedToArmed,
+        ArmedToUnArmed,
         Default,
     }
     

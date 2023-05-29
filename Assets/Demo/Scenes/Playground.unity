@@ -3508,7 +3508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8635e0e75705bc94fa4ec85dea02ec1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _holder: {fileID: 11400000, guid: 12922f92e656911499d777967d9ddd5a, type: 2}
+  _unarmedAnimations: {fileID: 11400000, guid: 12922f92e656911499d777967d9ddd5a, type: 2}
+  _greatSwordAnimations: {fileID: 0}
   _leanNormalizeAmount: 300
 --- !u!4 &1851721683478179419
 Transform:

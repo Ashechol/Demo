@@ -4,6 +4,7 @@ using Animancer;
 using Demo.Framework.Debug;
 using Demo.Framework.Utils;
 using DG.Tweening;
+using UnityEngine.Serialization;
 
 namespace Demo.Framework.Animation
 {
@@ -11,7 +12,10 @@ namespace Demo.Framework.Animation
     public class AnimController : MonoBehaviour
     {
         private AnimancerComponent _anim;
-        [SerializeField] private AnimHolder _holder;
+        
+        [SerializeField] private AnimHolder _unarmedAnimations;
+        [SerializeField] private AnimHolder _greatSwordAnimations;
+        
         private readonly DebugLabel _dbLabel = new DebugLabel("AnimController");
 
         private ClipTransition[] _idles;
@@ -39,13 +43,13 @@ namespace Demo.Framework.Animation
         private void Awake()
         {
             _anim = GetComponent<AnimancerComponent>();
-            _idles = _holder.idles;
-            _move = _holder.move;
-            _jump = _holder.jump;
-            _airBorne = _holder.airBorne;
-            _landing = _holder.landing;
-            _runToStand = _holder.runToStand;
-            _dashToStand = _holder.dashToStand;
+            _idles = _unarmedAnimations.idles;
+            _move = _unarmedAnimations.move;
+            _jump = _unarmedAnimations.jump;
+            _airBorne = _unarmedAnimations.airBorne;
+            _landing = _unarmedAnimations.landing;
+            _runToStand = _unarmedAnimations.runToStand;
+            _dashToStand = _unarmedAnimations.dashToStand;
 
             // 对全部动画开启 foot ik
             // 只有 ClipState 是默认开启了的
