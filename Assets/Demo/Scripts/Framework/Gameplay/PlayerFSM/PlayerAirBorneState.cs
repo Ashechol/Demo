@@ -37,7 +37,7 @@ namespace Demo
 
             AirBorneLocomotion();
                 
-            if (_character.IsGrounded && _character.Velocity.y < 0)
+            if (_character.IsGrounded && !_character.IsJumping)
                 _stateMachine.ChangeState(_player.landingState);
             else
                 _character.anim.UpdateAirBorneParam(_character.Velocity.y);

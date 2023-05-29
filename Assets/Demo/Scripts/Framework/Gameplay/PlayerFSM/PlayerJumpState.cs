@@ -8,7 +8,8 @@ namespace Demo.Framework.Gameplay
     public class PlayerJumpState : PlayerState
     {
         private bool _isSecondJump;
-        
+        private float _speed;
+
         public PlayerJumpState(PlayerStateMachine stateMachine, PlayerController player) : base(stateMachine, player)
         {
         }
@@ -22,6 +23,7 @@ namespace Demo.Framework.Gameplay
             else
             {
                 _character.anim.PlaySecondJump();
+                _speed = _character.CurSpeed + 6;
                 _isSecondJump = true;
             }    
         }
@@ -39,9 +41,13 @@ namespace Demo.Framework.Gameplay
             }
             else if (_isSecondJump)
             {
-                var targetAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _player.cameraYaw;
-                _character.Turn(targetAngle);
-                _character.SetTargetSpeed(_input.IsMoveInput ? 12 : 0);
+                if (_input.IsMoveInput)
+                {
+                    var targetAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _player.cameraYaw;
+                    _character.Turn(targetAngle);
+                }
+                
+                _character.SetTargetSpeed(_input.IsMoveInput ? _speed : 0);
             }
         }
     }

@@ -26,11 +26,13 @@ namespace Demo.Framework.Gameplay
         public float airSpeed = 2.5f;
         public float jumpHeight = 1.8f;
         public float secondJumpHeight = 0.5f;
-
+        
         private float _curSpeed;
         private float _targetYaw;
 
         private float _smoothYaw;
+        
+        private bool _isJumping;
         
         private Vector3 _motion;
         private float _prevSpeedY;
@@ -44,7 +46,8 @@ namespace Demo.Framework.Gameplay
         public float FallSpeed => -_fallSpeed;
         public Vector3 Velocity => _controller.velocity;
         public bool IsGrounded => _detection.IsGrounded;
-        
+        public bool IsJumping => _isJumping;
+
         #region Mono Events
 
         protected void Awake()
@@ -73,6 +76,9 @@ namespace Demo.Framework.Gameplay
                 _motion += AvoidLedgeStuck();
             
             _controller.Move(_motion * Time.deltaTime);
+
+            if (!_detection.IsGrounded)
+                _isJumping = false;
         }
 
         /// Move character in with target speed.
@@ -113,6 +119,7 @@ namespace Demo.Framework.Gameplay
             {
                 Jump(_jumpTime == 0 ? jumpHeight : secondJumpHeight);
                 ++_jumpTime;
+                _isJumping = true;
                 return true;
             }
             return false;

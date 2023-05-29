@@ -25,10 +25,23 @@ namespace Demo.Framework.Gameplay
 
             if (!_input.IsMoveInput)
             {
-                var type = _character.CurSpeed is > 2 and < 5.01f
-                    ? PlayerTransitionType.RunToStand : PlayerTransitionType.DashToStand;
-                _character.SetTargetSpeed(0);
-                _stateMachine.ChangeState(_player.transitionState.SetType(type));
+                switch (_character.CurSpeed)
+                {
+                    case <= 4.5f:
+                        _character.SetTargetSpeed(0);
+                        _stateMachine.ChangeState(_player.idleState);
+                        break;
+                    case <= 10:
+                        _character.SetTargetSpeed(0);
+                        _stateMachine.ChangeState(_player.transitionState.SetType(PlayerTransitionType.RunToStand));
+                        break;
+                    case <= 12:
+                        _stateMachine.ChangeState(_player.transitionState.SetType(PlayerTransitionType.DashToStand));
+                        break;
+                    default:
+                        _stateMachine.ChangeState(_player.transitionState.SetType(PlayerTransitionType.DashToStand));
+                        break;
+                }
             }
 
             _character.anim.UpdateMoveParam(_character.CurSpeed, _character.RotationSpeedRef);
