@@ -12,6 +12,7 @@ namespace Demo
 
         public PlayerAirBorneState(PlayerStateMachine stateMachine, PlayerController player) : base(stateMachine, player)
         {
+            
         }
 
         public override void Enter()
@@ -36,7 +37,7 @@ namespace Demo
 
             AirBorneLocomotion();
                 
-            if (_character.IsGrounded)
+            if (_character.IsGrounded && _character.Velocity.y < 0)
                 _stateMachine.ChangeState(_player.landingState);
             else
                 _character.anim.UpdateAirBorneParam(_character.Velocity.y);
@@ -51,8 +52,8 @@ namespace Demo
                 var curForward = _character.transform.forward;
                 var angle = Vector3.Angle(_jumpForward, curForward);
 
-                _targetSpeed = angle > 20f ? _character.airSpeed : _character.CurSpeed;
-                
+                _targetSpeed = angle > 30f ? _character.airSpeed : _character.CurSpeed;
+
                 // 确保原地起跳后能够移动
                 _targetSpeed = Mathf.Clamp(_targetSpeed, _character.airSpeed, _character.dashSpeed);
                 
@@ -62,5 +63,7 @@ namespace Demo
 
             _character.SetTargetSpeed(_targetSpeed);
         }
+        
+        
     }
 }

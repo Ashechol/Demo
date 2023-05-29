@@ -37,6 +37,12 @@ namespace Demo.Framework.Gameplay
                 _stateMachine.ChangeState(_player.airBorneState);
                 _isSecondJump = false;
             }
+            else if (_isSecondJump)
+            {
+                var targetAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _player.cameraYaw;
+                _character.Turn(targetAngle);
+                _character.SetTargetSpeed(_input.IsMoveInput ? 12 : 0);
+            }
         }
     }
 }

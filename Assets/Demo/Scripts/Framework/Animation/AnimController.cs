@@ -27,7 +27,7 @@ namespace Demo.Framework.Animation
         
         // ReSharper disable Unity.PerformanceAnalysis
         /// Check whether current animation is in exiting transition.
-        /// <param name="exitTime">Set exit time or use state normalized time</param>
+        /// <param name="exitTime">Set exit time or use state normalized end time</param>
         public bool IsAnimExiting(float exitTime = -1)
         {
             if (exitTime < 0)
@@ -70,6 +70,9 @@ namespace Demo.Framework.Animation
         public void PlayAirBorne() => _anim.Play(_airBorne);
         public void PlayLanding() => _anim.Play(_landing);
         public void PlayRunToStand() => _anim.Play(_runToStand);
+
+        /// <param name="index">0: slide loop</param>
+        /// <param name="index">1: slide to stand</param>
         public void PlayDashToStand(int index = 0) => _anim.Play(_dashToStand[index]);
 
 

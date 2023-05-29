@@ -14,6 +14,8 @@ namespace Demo.Framework.Gameplay
         public float walkSpeed = 1.8f;
         public float runSpeed = 5;
         public float dashSpeed = 12;
+        public float dashStopSpeed = 2;
+        public float dashStopTime = 0.5f;
         public float acceleration = 15;
         public float angularTime = 0.1f;
         public float ledgeStuckAvoidForce = 0.5f;
@@ -24,8 +26,6 @@ namespace Demo.Framework.Gameplay
         public float airSpeed = 2.5f;
         public float jumpHeight = 1.8f;
         public float secondJumpHeight = 0.5f;
-        
-        private bool _isJump;
 
         private float _curSpeed;
         private float _targetYaw;
@@ -104,7 +104,6 @@ namespace Demo.Framework.Gameplay
         {
             // 跳跃
             _motion.y = Mathf.Sqrt(2 * height * gravity);
-            _isJump = true;
             _fallSpeed = 0.0f;
         }
         

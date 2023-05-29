@@ -42,8 +42,6 @@ namespace Demo.Framework.Gameplay
             airBorneState = new PlayerAirBorneState(_stateMachine, this);
             landingState = new PlayerLandingState(_stateMachine, this);
             transitionState = new PlayerTransitionState(_stateMachine, this);
-
-            // stateMachine.Init(idleState);
         }
 
         private void Start()
@@ -66,22 +64,6 @@ namespace Demo.Framework.Gameplay
             Look();
             _camera.OnLateUpdate();
         }
-
-        // private void Move()
-        // {
-        //     float targetSpeed = 0;
-        //     
-        //     if (input.IsMoveInput)
-        //     {
-        //         var targetAngle = Mathf.Atan2(input.MoveInputX, input.MoveInputY) * Mathf.Rad2Deg + _camera.yaw;
-        //         character.Turn(targetAngle);
-        //
-        //         targetSpeed = character.runSpeed;
-        //         if (input.DashInput) targetSpeed = character.dashSpeed;
-        //     }
-        //     
-        //     character.Move(targetSpeed);
-        // }
 
         private void Look()
         {

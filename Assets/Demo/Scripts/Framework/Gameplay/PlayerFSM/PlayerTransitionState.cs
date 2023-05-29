@@ -20,7 +20,7 @@ namespace Demo.Framework.Gameplay
 
         private int _dashToStandIndex;
 
-        private readonly DebugLabel _dbLabel = new DebugLabel("PlayerTransitionState");
+        private readonly DebugLabel _dbLabel = new("PlayerTransitionState");
 
         public PlayerTransitionState(PlayerStateMachine stateMachine, PlayerController player) : base(stateMachine, player)
         {
@@ -68,6 +68,8 @@ namespace Demo.Framework.Gameplay
                 case PlayerTransitionType.RunToStand:
                     if (_character.anim.IsAnimExiting())
                         _stateMachine.ChangeState(_player.idleState);
+                    if (_input.IsMoveInput)
+                        _stateMachine.ChangeState(_player.moveState);
                     break;
                 
                 case PlayerTransitionType.DashToStand:
@@ -82,7 +84,7 @@ namespace Demo.Framework.Gameplay
 
         private void DashToStand()
         {
-            if (_dashToStandIndex == 0 && _character.anim.IsAnimExiting(0.35f))
+            if (_dashToStandIndex == 0 && _character.anim.IsAnimExiting(_character.dashStopTime))
             {
                 _character.SetTargetSpeed(0);
                 _character.anim.PlayDashToStand(++_dashToStandIndex);
@@ -92,7 +94,7 @@ namespace Demo.Framework.Gameplay
                 _stateMachine.ChangeState(_player.idleState);
             }
             else if (_dashToStandIndex == 0)
-                _character.SetTargetSpeed(2.5f);
+                _character.SetTargetSpeed(_character.dashStopSpeed);
         }
 
         public override void Exit()

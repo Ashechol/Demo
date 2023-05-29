@@ -8,9 +8,7 @@ namespace Demo.Framework.Gameplay
 {
     public class PlayerMoveState : PlayerGroundState
     {
-        public PlayerMoveState(PlayerStateMachine stateMachine, PlayerController player) : base(stateMachine, player)
-        {
-        }
+        public PlayerMoveState(PlayerStateMachine stateMachine, PlayerController player) : base(stateMachine, player) { }
 
         public override void Enter()
         {
@@ -19,34 +17,24 @@ namespace Demo.Framework.Gameplay
             _character.anim.PlayMove();
         }
 
-        public override void Exit()
-        {
-            base.Exit();
-            
-            _character.SetTargetSpeed(0);
-        }
-
         public override void LogicUpdate()
         {
             base.LogicUpdate();
             
             Locomotion();
-            
-            // if (!_input.IsMoveInput)
-            //     _stateMachine.ChangeState(_player.idleState);
 
             if (!_input.IsMoveInput)
             {
                 var type = _character.CurSpeed is > 2 and < 5.01f
                     ? PlayerTransitionType.RunToStand : PlayerTransitionType.DashToStand;
-                
+                _character.SetTargetSpeed(0);
                 _stateMachine.ChangeState(_player.transitionState.SetType(type));
             }
 
             _character.anim.UpdateMoveParam(_character.CurSpeed, _character.RotationSpeedRef);
         }
 
-        internal void Locomotion()
+        private void Locomotion()
         {
             if (_input.IsMoveInput)
             {

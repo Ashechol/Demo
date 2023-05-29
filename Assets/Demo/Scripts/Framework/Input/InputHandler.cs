@@ -16,8 +16,6 @@ namespace Demo.Framework.Input
         public event Action<bool> OnDash;
 
         public event Action OnMovePerformed;
-        public event Action OnLook;
-        public event Action OnJump;
 
         #region Values
 
