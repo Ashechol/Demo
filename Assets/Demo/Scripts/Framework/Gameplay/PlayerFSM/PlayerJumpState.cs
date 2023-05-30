@@ -23,7 +23,7 @@ namespace Demo.Framework.Gameplay
             else
             {
                 _character.anim.PlaySecondJump();
-                _speed = _character.CurSpeed + 6;
+                _speed = _character.CurSpeed + 3.5f;
                 _isSecondJump = true;
             }    
         }

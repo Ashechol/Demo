@@ -9,7 +9,7 @@ namespace Demo.Framework.Gameplay
         private CharacterController _controller;
         private Detection _detection;
         [HideInInspector] public AnimController anim;
-
+        
         [Header("Movement")] 
         public float walkSpeed = 1.8f;
         public float runSpeed = 5;
@@ -17,6 +17,7 @@ namespace Demo.Framework.Gameplay
         public float dashStopSpeed = 2;
         public float dashStopTime = 0.5f;
         public float acceleration = 15;
+        public float dashAcceleration = 3;
         public float angularTime = 0.1f;
         public float ledgeStuckAvoidForce = 0.5f;
         private Vector3 _moveDirection;
@@ -40,6 +41,7 @@ namespace Demo.Framework.Gameplay
         private Vector3 _rotation;
 
         private float _targetSpeed;
+        private float _targetAcc;
         private float _smoothAngle;
 
         public float CurSpeed => _curSpeed;
@@ -68,7 +70,7 @@ namespace Demo.Framework.Gameplay
         {
             Fall();
             
-            _curSpeed = Mathf.Lerp(_curSpeed, _targetSpeed, acceleration * Time.deltaTime);
+            _curSpeed = Mathf.Lerp(_curSpeed, _targetSpeed, _targetAcc * Time.deltaTime);
             _motion.x = _moveDirection.x * _curSpeed;
             _motion.z = _moveDirection.z * _curSpeed;
             
@@ -83,10 +85,11 @@ namespace Demo.Framework.Gameplay
 
         /// Move character in with target speed.
         /// <param name="speed"> Target move speed </param>
-        public virtual void SetTargetSpeed(float speed)
+        /// <param name="acc"> Acceleration, leave it null to use default acceleration </param>
+        public virtual void SetTargetSpeed(float speed, float? acc = null)
         {
             _targetSpeed = speed;
-
+            _targetAcc = acc ?? acceleration;
             // 因为 forward 旋转有时间，所以不能用 forward 作为移动方向
             // _motion.x = _forward.x * _curSpeed;
             // _motion.z = _forward.z * _curSpeed;
@@ -94,7 +97,7 @@ namespace Demo.Framework.Gameplay
             if (speed > 0)
                 _moveDirection = Quaternion.AngleAxis(_targetYaw, transform.up) * Vector3.forward;
         }
-    
+
         private float _rotationSpeedRef;
         public float RotationSpeedRef => _rotationSpeedRef;
         public virtual void Turn(float targetAngle)

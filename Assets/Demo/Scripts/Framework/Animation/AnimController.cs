@@ -1,10 +1,6 @@
-using System;
 using UnityEngine;
 using Animancer;
 using Demo.Framework.Debug;
-using Demo.Framework.Utils;
-using DG.Tweening;
-using UnityEngine.Serialization;
 
 namespace Demo.Framework.Animation
 {
@@ -13,18 +9,13 @@ namespace Demo.Framework.Animation
     {
         private AnimancerComponent _anim;
         
-        [SerializeField] private AnimHolder _unarmedAnimations;
-        [SerializeField] private AnimHolder _greatSwordAnimations;
-        
-        private readonly DebugLabel _dbLabel = new DebugLabel("AnimController");
+        [SerializeField] private AnimHolder _holder;
+        [SerializeField] private AvatarMask _upperBodyMask;
 
-        private ClipTransition[] _idles;
-        private MixerTransition2D _move;
-        private ClipTransition _runToStand;
-        private ClipTransition[] _dashToStand;
-        private ClipTransition[] _jump;
-        private LinearMixerTransition _airBorne;
-        private LinearMixerTransition _landing;
+        private AnimancerLayer _base;
+        private AnimancerLayer _upperBody;
+
+        private readonly DebugLabel _dbLabel = new("AnimController");
 
         [SerializeField] private float _leanNormalizeAmount = 300;
         private float _leanAmount;
@@ -43,17 +34,14 @@ namespace Demo.Framework.Animation
         private void Awake()
         {
             _anim = GetComponent<AnimancerComponent>();
-            _idles = _unarmedAnimations.idles;
-            _move = _unarmedAnimations.move;
-            _jump = _unarmedAnimations.jump;
-            _airBorne = _unarmedAnimations.airBorne;
-            _landing = _unarmedAnimations.landing;
-            _runToStand = _unarmedAnimations.runToStand;
-            _dashToStand = _unarmedAnimations.dashToStand;
 
             // 对全部动画开启 foot ik
             // 只有 ClipState 是默认开启了的
             _anim.Playable.ApplyFootIK = true;
+
+            _base = _anim.Layers[0];
+            _upperBody = _anim.Layers[1];
+            _upperBody.SetMask(_upperBodyMask);
         }
 
         private void OnEnable()
@@ -67,17 +55,41 @@ namespace Demo.Framework.Animation
             _animDesiredSpeed = _anim.Animator.velocity.magnitude / _anim.Animator.humanScale;
         }
 
-        public void PlayIdle(int index = 0) => _anim.Play(_idles[index]);
-        public void PlayMove() => _anim.Play(_move);
-        public void PlayJump() => _anim.Play(_jump[0]);
-        public void PlaySecondJump() => _anim.Play(_jump[1]);
-        public void PlayAirBorne() => _anim.Play(_airBorne);
-        public void PlayLanding() => _anim.Play(_landing);
-        public void PlayRunToStand() => _anim.Play(_runToStand);
+        # region Basic Motions
+        
+        public void PlayIdle(int index = 0) => _base.Play(_holder.idles[index]);
+        public void PlayMove() => _base.Play(_holder.move);
+        public void PlayJump() => _base.Play(_holder.jump[0]);
+        public void PlaySecondJump() => _base.Play(_holder.jump[1]);
+        public void PlayAirBorne() => _base.Play(_holder.airBorne);
+        public void PlayLanding() => _base.Play(_holder.landing);
+        public void PlayRunToStand() => _base.Play(_holder.runToStand);
 
         /// <param name="index">0: slide loop</param>
         /// <param name="index">1: slide to stand</param>
-        public void PlayDashToStand(int index = 0) => _anim.Play(_dashToStand[index]);
+        public void PlayDashToStand(int index = 0) => _anim.Play(_holder.dashToStand[index]);
+        
+        # endregion
+
+        #region Battle Motions
+        
+        /// <param name="index">0: Stand draw</param>
+        /// <param name="index">1: Walk draw</param>
+        public void PlayDrawWeapon(int index)
+        {
+            _holder.drawWeapon[index].State.Speed = 1;
+            _upperBody.Play(_holder.drawWeapon[index]);
+        }
+        
+        /// <param name="index">0: Stand sheath</param>
+        /// <param name="index">1: Walk sheath</param>
+        public void PlaySheathWeapon(int index)
+        {
+            _holder.drawWeapon[index].State.Speed = -1;
+            _upperBody.Play(_holder.drawWeapon[index]);
+        }
+
+        #endregion
 
 
         /// 根运动速度
@@ -86,7 +98,7 @@ namespace Demo.Framework.Animation
         // ReSharper disable Unity.PerformanceAnalysis
         public void UpdateMoveParam(float speed, float rotationSpeedRef)
         {
-            var moveState = _anim.States[_move.Key] as MixerState<Vector2>;
+            var moveState = _anim.States[_holder.move.Key] as MixerState<Vector2>;
             _leanAmount = rotationSpeedRef / _leanNormalizeAmount;
 
             if (moveState != null) 
@@ -96,9 +108,9 @@ namespace Demo.Framework.Animation
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        public void UpdateAirBorneParam(float speedY) => _airBorne.State.Parameter = speedY;
+        public void UpdateAirBorneParam(float speedY) => _holder.airBorne.State.Parameter = speedY;
 
-        public void UpdateLandingParam(float speedY) => _landing.State.Parameter = speedY;
+        public void UpdateLandingParam(float speedY) => _holder.landing.State.Parameter = speedY;
 
         private void OnGUIStats()
         {

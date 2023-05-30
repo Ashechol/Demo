@@ -23,6 +23,7 @@ namespace Demo.Framework.Input
         private Vector2 _rawLookInput;
         private bool _jumpInput;
         private bool _dashInput;
+        private bool _drawSheathInput;
 
         public Vector2 MoveInput => _rawMoveInput;
         public bool IsMoveInput => _rawMoveInput != Vector2.zero;
@@ -41,6 +42,16 @@ namespace Demo.Framework.Input
             {
                 var tmp = _jumpInput;
                 if (_jumpInput) _jumpInput = false; // Consume jump input
+                return tmp;
+            }
+        }
+
+        public bool DrawSheathInput
+        {
+            get
+            {
+                var tmp = _drawSheathInput;
+                if (_drawSheathInput) _drawSheathInput = false;
                 return tmp;
             }
         }
@@ -80,6 +91,7 @@ namespace Demo.Framework.Input
             _playerInput.onActionTriggered += OnLookAction;
             _playerInput.onActionTriggered += OnJumpAction;
             _playerInput.onActionTriggered += OnDashAction;
+            _playerInput.actions["DrawSheath"].started += OnDrawSheathAction;
         }
 
         private void ActionUnBinding()
@@ -88,6 +100,7 @@ namespace Demo.Framework.Input
             _playerInput.onActionTriggered -= OnMoveAction;
             _playerInput.onActionTriggered -= OnJumpAction;
             _playerInput.onActionTriggered -= OnDashAction;
+            _playerInput.actions["DrawSheath"].started -= OnDrawSheathAction;
         }
 
         private void OnMoveAction(InputAction.CallbackContext context)
@@ -124,6 +137,11 @@ namespace Demo.Framework.Input
             _dashInput = context.performed;
             
             OnDash?.Invoke(context.performed);
+        }
+        
+        private void OnDrawSheathAction(InputAction.CallbackContext obj)
+        {
+            _drawSheathInput = true;
         }
         
     }

@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DrawSheathWeapon",
+                    "name": "DrawSheath",
                     "type": "Button",
                     "id": "d27b22c0-2482-488d-91bc-f50466a6dbd9",
                     "expectedControlType": "Button",
@@ -191,7 +191,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "DrawSheathWeapon",
+                    "action": "DrawSheath",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e6973da-682a-4d9f-b6ce-af1aabdcd216",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DrawSheath",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -7,9 +7,11 @@ AvatarMask:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: UnityChanUpperBody
-  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000001000000010000000100000001000000
+  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
   m_Elements:
   - m_Path: 
+    m_Weight: 1
+  - m_Path: Accessory_00
     m_Weight: 1
   - m_Path: Costume_01
     m_Weight: 1
@@ -17,7 +19,11 @@ AvatarMask:
     m_Weight: 1
   - m_Path: Eye_00
     m_Weight: 1
+  - m_Path: Hair_00
+    m_Weight: 1
   - m_Path: info
+    m_Weight: 1
+  - m_Path: Manteau_00
     m_Weight: 1
   - m_Path: Root
     m_Weight: 1
@@ -128,6 +134,8 @@ AvatarMask:
   - m_Path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_R/Upper_Arm_R/Lower_Arm_R/Hand_R/Finger_R_Thumb_Proximal/Finger_R_Thumb_Intermediate/Finger_R_Thumb_Distal
     m_Weight: 1
   - m_Path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_R/Upper_Arm_R/Lower_Arm_R/Hand_R/Prop_R
+    m_Weight: 1
+  - m_Path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_R/Upper_Arm_R/Lower_Arm_R/Hand_R/Prop_R/Prop_03_greatsword
     m_Weight: 1
   - m_Path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_R/Upper_Arm_R/Lower_Arm_R/Lower_Arm_R_twist_00
     m_Weight: 1

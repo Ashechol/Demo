@@ -21,22 +21,17 @@ namespace Demo.Framework.Gameplay
 
             if (!_input.IsMoveInput)
             {
-                switch (_character.CurSpeed)
+                if (_character.CurSpeed > 7)
+                    _stateMachine.ChangeState(_player.transitionState.SetType(PlayerTransitionType.DashToStand));
+                else if (_character.CurSpeed > 4)
                 {
-                    case <= 4.5f:
-                        _character.SetTargetSpeed(0);
-                        _stateMachine.ChangeState(_player.idleState);
-                        break;
-                    case <= 10:
-                        _character.SetTargetSpeed(0);
-                        _stateMachine.ChangeState(_player.transitionState.SetType(PlayerTransitionType.RunToStand));
-                        break;
-                    case <= 12:
-                        _stateMachine.ChangeState(_player.transitionState.SetType(PlayerTransitionType.DashToStand));
-                        break;
-                    default:
-                        _stateMachine.ChangeState(_player.transitionState.SetType(PlayerTransitionType.DashToStand));
-                        break;
+                    _stateMachine.ChangeState(_player.transitionState.SetType(PlayerTransitionType.RunToStand));
+                    _character.SetTargetSpeed(0);
+                }
+                else
+                {
+                    _stateMachine.ChangeState(_player.idleState);
+                    _character.SetTargetSpeed(0);
                 }
             }
 
@@ -50,9 +45,13 @@ namespace Demo.Framework.Gameplay
                 var targetAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _player.cameraYaw;
                 _character.Turn(targetAngle);
 
-                var targetSpeed = _character.runSpeed;
-                if (_input.DashInput) targetSpeed = _character.dashSpeed;
-                _character.SetTargetSpeed(targetSpeed);
+                if (_input.DashInput)
+                    _character.SetTargetSpeed(_character.dashSpeed, _character.dashAcceleration);
+                else
+                {
+                    var acc = _character.CurSpeed > _character.runSpeed ? _character.dashAcceleration : _character.acceleration;
+                    _character.SetTargetSpeed(_character.runSpeed, acc);
+                }
             }
         }
     }

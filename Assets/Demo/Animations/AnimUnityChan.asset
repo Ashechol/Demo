@@ -21,14 +21,6 @@ MonoBehaviour:
     _Clip: {fileID: 7400000, guid: 53262de56a88e8e4ba35f4ef17068c2b, type: 2}
     _Speed: 1
     _NormalizedStartTime: NaN
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 0}
-    _Speed: 1
-    _NormalizedStartTime: NaN
   move:
     _FadeDuration: 0.25
     _Events:
@@ -55,9 +47,9 @@ MonoBehaviour:
     - {x: 5, y: -1}
     - {x: 5, y: 0}
     - {x: 5, y: 1}
-    - {x: 9, y: -1}
-    - {x: 9, y: 0}
-    - {x: 9, y: 1}
+    - {x: 10, y: -1}
+    - {x: 10, y: 0}
+    - {x: 10, y: 1}
     _DefaultParameter: {x: 0, y: 0}
     _Type: 0
   runToStand:
@@ -103,7 +95,7 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: a1d003986d660a245bea42da6674b69d, type: 2}
-    _Speed: 1.2
+    _Speed: 1.5
     _NormalizedStartTime: NaN
   airBorne:
     _FadeDuration: 0.25
@@ -143,3 +135,20 @@ MonoBehaviour:
     - 12
     _DefaultParameter: 12
     _ExtrapolateSpeed: 1
+  drawWeapon:
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: c896ea8aec028b641a99b037dcdd28a6, type: 2}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: f58a5811a8e789d41ac3b3a69e6ecc63, type: 2}
+    _Speed: 1
+    _NormalizedStartTime: NaN

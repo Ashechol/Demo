@@ -19,6 +19,7 @@ MonoBehaviour:
     _SceneEnvironment: {fileID: 0}
     _Models:
     - {fileID: 7746984342729668437, guid: b1a369efbb5f862499220fdf4ecdd6b2, type: 3}
+    - {fileID: 873117782837067298, guid: 439b9c346e1be3147b951c0eadcc990d, type: 3}
   _AnimationTimeFields:
     showApproximations: 1
     showNormalized: 1
