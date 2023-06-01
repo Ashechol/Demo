@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Animancer;
 using Demo.Framework.Debug;
@@ -23,12 +24,14 @@ namespace Demo.Framework.Animation
         // ReSharper disable Unity.PerformanceAnalysis
         /// Check whether current animation is in exiting transition.
         /// <param name="exitTime">Set exit time or use state normalized end time</param>
-        public bool IsAnimExiting(float exitTime = -1)
+        public bool IsAnimExiting(float exitTime = -1, int index = 0)
         {
-            if (exitTime < 0)
-                return _anim.States.Current.NormalizedTime >= _anim.States.Current.NormalizedEndTime;
+            var layer = index == 0 ? _base : _upperBody;
 
-            return _anim.States.Current.Time >= exitTime;
+            if (exitTime < 0)
+                return layer.CurrentState.NormalizedTime >= _anim.States.Current.NormalizedEndTime;
+
+            return layer.CurrentState.Time >= exitTime;
         }
 
         private void Awake()
@@ -72,20 +75,25 @@ namespace Demo.Framework.Animation
         # endregion
 
         #region Battle Motions
+
+        public Action weaponCallback;
         
         /// <param name="index">0: Stand draw</param>
         /// <param name="index">1: Walk draw</param>
         public void PlayDrawWeapon(int index)
         {
-            _holder.drawWeapon[index].State.Speed = 1;
-            _upperBody.Play(_holder.drawWeapon[index]);
+            _holder.drawWeapon[index].Events.SetCallback(0, OnWeapon);
+            _holder.drawWeapon[index].Speed = -1;
+            _base.Play(_holder.drawWeapon[index]);
         }
+
+        public void OnWeapon() => weaponCallback?.Invoke();
         
         /// <param name="index">0: Stand sheath</param>
         /// <param name="index">1: Walk sheath</param>
         public void PlaySheathWeapon(int index)
         {
-            _holder.drawWeapon[index].State.Speed = -1;
+            _holder.drawWeapon[index].State.Speed = 1;
             _upperBody.Play(_holder.drawWeapon[index]);
         }
 

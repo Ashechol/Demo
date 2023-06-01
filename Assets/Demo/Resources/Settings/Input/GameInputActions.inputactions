@@ -190,7 +190,7 @@
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "DrawSheath",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -201,7 +201,7 @@
                     "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "DrawSheath",
                     "isComposite": false,
                     "isPartOfComposite": false

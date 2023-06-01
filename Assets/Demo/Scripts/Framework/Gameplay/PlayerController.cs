@@ -10,6 +10,7 @@ namespace Demo.Framework.Gameplay
     public class PlayerController : MonoBehaviour
     {
         internal Character character;
+        internal Combat combat;
         private CameraHandler _camera;
         internal InputHandler input;
 
@@ -32,6 +33,7 @@ namespace Demo.Framework.Gameplay
         private void Awake()
         {
             character = GetComponentInChildren<Character>();
+            combat = GetComponentInChildren<Combat>();
             input = this.GetComponentSafe<InputHandler>();
             _camera = GetComponent<CameraHandler>();
 

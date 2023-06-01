@@ -24,6 +24,9 @@ namespace Demo.Framework.Gameplay
             
             if (_player.input.IsMoveInput)
                 _stateMachine.ChangeState(_player.moveState);
+            
+            if (_player.input.DrawSheathInput)
+                _stateMachine.ChangeState(_player.transitionState.SetType(PlayerTransitionType.DrawSheathStand));
         }
     }
 }

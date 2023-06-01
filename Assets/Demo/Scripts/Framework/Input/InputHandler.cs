@@ -66,12 +66,7 @@ namespace Demo.Framework.Input
             _actions = Resources.Load("Settings/Input/GameInputActions") as InputActionAsset;
         }
 
-        private void OnEnable()
-        {
-            ActionBinding();
-        }
-
-        private void OnDisable()
+        private void OnDestroy()
         {
             ActionUnBinding();
         }
@@ -83,6 +78,8 @@ namespace Demo.Framework.Input
             _playerInput.defaultActionMap = _actions.actionMaps[0].name;
             // 设置了 defaultActionMap 必须调用一次 ActivateInput
             _playerInput.ActivateInput();
+            
+            ActionBinding();
         }
 
         private void ActionBinding()

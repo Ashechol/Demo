@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using Demo.Framework.Debug;
-using Demo.Framework.Gameplay;
-using UnityEngine;
 
 namespace Demo.Framework.Gameplay
 {
@@ -10,8 +6,8 @@ namespace Demo.Framework.Gameplay
     {
         RunToStand,
         DashToStand,
-        UnarmedToArmed,
-        ArmedToUnArmed,
+        DrawSheathStand,
+        DrawSheathWalk,
         Default,
     }
     
@@ -56,6 +52,10 @@ namespace Demo.Framework.Gameplay
                     _character.anim.PlayDashToStand(_dashToStandIndex);
                     break;
                 
+                case PlayerTransitionType.DrawSheathStand:
+                    _character.anim.PlayDrawWeapon(0);
+                    break;
+                    
                 case PlayerTransitionType.Default:
                     break;
             }
@@ -76,6 +76,9 @@ namespace Demo.Framework.Gameplay
                 
                 case PlayerTransitionType.DashToStand:
                     DashToStand();
+                    break;
+                
+                case PlayerTransitionType.DrawSheathStand:
                     break;
                 
                 case PlayerTransitionType.Default:
