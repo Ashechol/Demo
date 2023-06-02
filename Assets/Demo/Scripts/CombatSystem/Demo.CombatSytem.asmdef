@@ -1,0 +1,16 @@
+{
+    "name": "Demo.Combat",
+    "rootNamespace": "",
+    "references": [
+        "GUID:2c09f8c43f193244aa40d7e046cfe1d2"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

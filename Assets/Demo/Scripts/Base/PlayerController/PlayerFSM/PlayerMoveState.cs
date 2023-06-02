@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Demo.Framework.Gameplay
+namespace Demo.Base.PlayerController
 {
     public class PlayerMoveState : PlayerGroundState
     {

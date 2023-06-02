@@ -50,6 +50,7 @@ namespace Demo.Framework.Input
         {
             get
             {
+                //BUG: 连按两次然后长按会触发
                 var tmp = _drawSheathInput;
                 if (_drawSheathInput) _drawSheathInput = false;
                 return tmp;
@@ -88,7 +89,7 @@ namespace Demo.Framework.Input
             _playerInput.onActionTriggered += OnLookAction;
             _playerInput.onActionTriggered += OnJumpAction;
             _playerInput.onActionTriggered += OnDashAction;
-            _playerInput.actions["DrawSheath"].started += OnDrawSheathAction;
+            _playerInput.onActionTriggered += OnDrawSheathAction;
         }
 
         private void ActionUnBinding()
@@ -97,7 +98,7 @@ namespace Demo.Framework.Input
             _playerInput.onActionTriggered -= OnMoveAction;
             _playerInput.onActionTriggered -= OnJumpAction;
             _playerInput.onActionTriggered -= OnDashAction;
-            _playerInput.actions["DrawSheath"].started -= OnDrawSheathAction;
+            _playerInput.onActionTriggered -= OnDrawSheathAction;
         }
 
         private void OnMoveAction(InputAction.CallbackContext context)
@@ -136,9 +137,15 @@ namespace Demo.Framework.Input
             OnDash?.Invoke(context.performed);
         }
         
-        private void OnDrawSheathAction(InputAction.CallbackContext obj)
+        private void OnDrawSheathAction(InputAction.CallbackContext context)
         {
-            _drawSheathInput = true;
+            if (context.action.name != "DrawSheath") return;
+            
+            if (context.started)
+                _drawSheathInput = true;
+
+            if (context.canceled)
+                _drawSheathInput = false;
         }
         
     }

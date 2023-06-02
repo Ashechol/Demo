@@ -29,9 +29,17 @@ namespace Demo.Framework.Animation
             var layer = index == 0 ? _base : _upperBody;
 
             if (exitTime < 0)
-                return layer.CurrentState.NormalizedTime >= _anim.States.Current.NormalizedEndTime;
-
-            return layer.CurrentState.Time >= exitTime;
+            {
+                if (layer.CurrentState.Speed > 0)
+                    return layer.CurrentState.NormalizedTime >= _anim.States.Current.NormalizedEndTime;
+                
+                return layer.CurrentState.NormalizedTime <= 0;
+            }
+            
+            if (layer.CurrentState.Speed > 0)
+                return layer.CurrentState.Time >= exitTime;
+            
+            return layer.CurrentState.Time <= layer.CurrentState.Length - exitTime;
         }
 
         private void Awake()
@@ -50,12 +58,13 @@ namespace Demo.Framework.Animation
         private void OnEnable()
         {
             GUIStats.Instance.OnGUIStatsInfo.AddListener(OnGUIStats);
+
+            AnimEventRegister();
         }
 
-        private float _animDesiredSpeed;
-        private void OnAnimatorMove()
+        private void AnimEventRegister()
         {
-            _animDesiredSpeed = _anim.Animator.velocity.magnitude / _anim.Animator.humanScale;
+            _holder.drawWeapon[0].Events.SetCallback(0, OnWeaponDrawSheath);
         }
 
         # region Basic Motions
@@ -76,30 +85,39 @@ namespace Demo.Framework.Animation
 
         #region Battle Motions
 
-        public Action weaponCallback;
-        
         /// <param name="index">0: Stand draw</param>
         /// <param name="index">1: Walk draw</param>
         public void PlayDrawWeapon(int index)
         {
-            _holder.drawWeapon[index].Events.SetCallback(0, OnWeapon);
             _holder.drawWeapon[index].Speed = -1;
             _base.Play(_holder.drawWeapon[index]);
         }
 
-        public void OnWeapon() => weaponCallback?.Invoke();
-        
         /// <param name="index">0: Stand sheath</param>
         /// <param name="index">1: Walk sheath</param>
         public void PlaySheathWeapon(int index)
         {
-            _holder.drawWeapon[index].State.Speed = 1;
-            _upperBody.Play(_holder.drawWeapon[index]);
+            _holder.drawWeapon[index].Speed = 1;
+            _base.Play(_holder.drawWeapon[index]);
         }
 
+        public void PlayIdleWeapon(int index = 0) => _base.Play(_holder.idlesWeapon[index]);
+
         #endregion
-
-
+        
+        #region Animation Events
+        
+        public Action onWeaponDrawSheath;
+        public void OnWeaponDrawSheath() => onWeaponDrawSheath?.Invoke();
+        
+        #endregion
+        
+        private float _animDesiredSpeed;
+        private void OnAnimatorMove()
+        {
+            _animDesiredSpeed = _anim.Animator.velocity.magnitude / _anim.Animator.humanScale;
+        }
+        
         /// 根运动速度
         public float AnimDesiredSpeed => _animDesiredSpeed;
 

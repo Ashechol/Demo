@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Demo.Framework.FSM;
 using UnityEngine;
 
-namespace Demo.Framework.Gameplay
+namespace Demo.Base.PlayerController
 {
     public class PlayerIdleState : PlayerGroundState
     {
@@ -15,7 +15,10 @@ namespace Demo.Framework.Gameplay
         {
             base.Enter();
             
-            _character.anim.PlayIdle();
+            if (!_player.combat.IsWeaponDrawn)
+                _character.anim.PlayIdle();
+            else
+                _character.anim.PlayIdleWeapon();
         }
 
         public override void LogicUpdate()

@@ -2,14 +2,15 @@ using Demo.Framework.Camera;
 using Demo.Framework.Debug;
 using Demo.Framework.Input;
 using Demo.Framework.Utils;
+using Demo.Framework.Gameplay;
+using Demo.CombatSystem;
 using UnityEngine;
 
-namespace Demo.Framework.Gameplay
+namespace Demo.Base.PlayerController
 {
     [RequireComponent(typeof(CameraHandler))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : Controller
     {
-        internal Character character;
         internal Combat combat;
         private CameraHandler _camera;
         internal InputHandler input;
@@ -30,9 +31,10 @@ namespace Demo.Framework.Gameplay
         internal PlayerLandingState landingState;
         internal PlayerTransitionState transitionState;
 
-        private void Awake()
+        protected override void Awake()
         {
-            character = GetComponentInChildren<Character>();
+            base.Awake();
+            
             combat = GetComponentInChildren<Combat>();
             input = this.GetComponentSafe<InputHandler>();
             _camera = GetComponent<CameraHandler>();

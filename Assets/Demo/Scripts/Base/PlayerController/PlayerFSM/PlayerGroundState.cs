@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Demo.Framework.Gameplay
+namespace Demo.Base.PlayerController
 {
     public class PlayerGroundState : PlayerState
     {

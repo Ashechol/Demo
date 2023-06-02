@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Demo.Framework.Gameplay
+namespace Demo.Base.PlayerController
 {
     public class PlayerJumpState : PlayerState
     {

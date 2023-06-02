@@ -1,6 +1,6 @@
 using Demo.Framework.Debug;
 
-namespace Demo.Framework.Gameplay
+namespace Demo.Base.PlayerController
 {
     public enum PlayerTransitionType
     {
@@ -53,7 +53,10 @@ namespace Demo.Framework.Gameplay
                     break;
                 
                 case PlayerTransitionType.DrawSheathStand:
-                    _character.anim.PlayDrawWeapon(0);
+                    if (!_combat.IsWeaponDrawn)
+                        _character.anim.PlayDrawWeapon(0);
+                    else
+                        _character.anim.PlaySheathWeapon(0);
                     break;
                     
                 case PlayerTransitionType.Default:
@@ -79,6 +82,8 @@ namespace Demo.Framework.Gameplay
                     break;
                 
                 case PlayerTransitionType.DrawSheathStand:
+                    if (_character.anim.IsAnimExiting())
+                        _stateMachine.ChangeState(_player.idleState);
                     break;
                 
                 case PlayerTransitionType.Default:

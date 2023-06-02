@@ -4,7 +4,7 @@ using Demo.Framework.Gameplay;
 using DG.Tweening;
 using UnityEngine;
 
-namespace Demo
+namespace Demo.Base.PlayerController
 {
     public class PlayerLandingState : PlayerGroundState
     {

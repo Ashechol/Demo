@@ -817,6 +817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f11f77f933dc944888689af72182a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  character: {fileID: 0}
   _axisYSpeed: 5
   _axisXSpeed: 5
   _pitchMax: 60
@@ -913,9 +914,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca13788850a8d6146be49af9d059fd31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 4383197314561115591}
-  sheathSlot: {fileID: 565151240310568187}
-  handSlot: {fileID: 8861100046011058251}
+  weapon: {fileID: 5241590236918264131}
+  sheathSlot: {fileID: 4383197314561115591}
+  handSlot: {fileID: 1031601240486095621}
 --- !u!1 &1158832786
 GameObject:
   m_ObjectHideFlags: 0
@@ -3499,7 +3500,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!33 &894854159337209524
 MeshFilter:
   m_ObjectHideFlags: 0

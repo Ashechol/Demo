@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using Demo.Framework.Gameplay;
 using UnityEngine;
 
-namespace Demo
+namespace Demo.Base.PlayerController
 {
     public class PlayerAirBorneState : PlayerState
     {
