@@ -33,5 +33,10 @@ namespace Demo.Framework.Animation
         public ClipTransition[] jumpWeapon;
         public LinearMixerTransition airBorneWeapon;
         public LinearMixerTransition landingWeapon;
+
+        public ClipTransition[] comboAttacks;
+        public ClipTransition[] chargeAttack;
+        public ClipTransition[] skillAttackA;
+        public ClipTransition[] skillAttackB;
     }
 }
