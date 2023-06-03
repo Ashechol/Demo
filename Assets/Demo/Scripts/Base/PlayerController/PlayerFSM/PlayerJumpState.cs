@@ -19,7 +19,7 @@ namespace Demo.Base.PlayerController
             base.Enter();
             
             if (_character.IsGrounded)
-                _character.anim.PlayJump();
+                _character.anim.PlayJump(_combat.IsWeaponDraw);
             else
             {
                 _character.anim.PlaySecondJump();

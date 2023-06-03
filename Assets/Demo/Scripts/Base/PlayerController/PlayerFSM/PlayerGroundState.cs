@@ -21,6 +21,9 @@ namespace Demo.Base.PlayerController
             
             if (!_character.IsGrounded)
                 _stateMachine.ChangeState(_player.airBorneState);
+            
+            if (_player.input.DrawSheathInput)
+                _stateMachine.ChangeState(_player.transitionState.SetType(PlayerTransitionType.DrawSheath));
         }
     }
 }

@@ -50,7 +50,6 @@ namespace Demo.Framework.Input
         {
             get
             {
-                //BUG: 连按两次然后长按会触发
                 var tmp = _drawSheathInput;
                 if (_drawSheathInput) _drawSheathInput = false;
                 return tmp;

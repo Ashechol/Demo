@@ -17,7 +17,7 @@ namespace Demo.Base.PlayerController
         {
             base.Enter();
             
-            _character.anim.PlayAirBorne();
+            _character.anim.PlayAirBorne(_combat.IsWeaponDraw);
 
             _jumpForward = _character.transform.forward;
         }

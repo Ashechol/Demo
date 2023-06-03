@@ -914,6 +914,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca13788850a8d6146be49af9d059fd31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 1.8
+  runSpeed: 4.5
   weapon: {fileID: 5241590236918264131}
   sheathSlot: {fileID: 4383197314561115591}
   handSlot: {fileID: 1031601240486095621}

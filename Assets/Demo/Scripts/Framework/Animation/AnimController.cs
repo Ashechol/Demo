@@ -65,17 +65,22 @@ namespace Demo.Framework.Animation
         private void AnimEventRegister()
         {
             _holder.drawWeapon[0].Events.SetCallback(0, OnWeaponDrawSheath);
+            _holder.drawWeapon[1].Events.SetCallback(0, OnWeaponDrawSheath);
+            _holder.drawWeapon[1].Events.OnEnd += () => FadeOutUpperBody(_holder.drawWeapon[1].FadeDuration);
         }
 
         # region Basic Motions
-        
-        public void PlayIdle(int index = 0) => _base.Play(_holder.idles[index]);
-        public void PlayMove() => _base.Play(_holder.move);
-        public void PlayJump() => _base.Play(_holder.jump[0]);
+
+        public void PlayIdle(int index = 0, bool isWeaponDrawn = false)
+        {
+            _base.Play(isWeaponDrawn ? _holder.idlesWeapon[index] : _holder.idles[index]);
+        }
+        public void PlayMove(bool isWeaponDrawn = false) => _base.Play(isWeaponDrawn ? _holder.moveWeapon : _holder.move);
+        public void PlayJump(bool isWeaponDrawn = false) => _base.Play(isWeaponDrawn ? _holder.jumpWeapon[0] : _holder.jump[0]);
         public void PlaySecondJump() => _base.Play(_holder.jump[1]);
-        public void PlayAirBorne() => _base.Play(_holder.airBorne);
-        public void PlayLanding() => _base.Play(_holder.landing);
-        public void PlayRunToStand() => _base.Play(_holder.runToStand);
+        public void PlayAirBorne(bool isWeaponDrawn = false) => _base.Play(isWeaponDrawn ? _holder.airBorneWeapon : _holder.airBorne);
+        public void PlayLanding(bool isWeaponDrawn = false) => _base.Play(isWeaponDrawn ? _holder.landingWeapon : _holder.landing);
+        public void PlayRunToStand(bool isWeaponDrawn = false) => _base.Play(isWeaponDrawn ? _holder.runToStandWeapon : _holder.runToStand);
 
         /// <param name="index">0: slide loop</param>
         /// <param name="index">1: slide to stand</param>
@@ -84,24 +89,36 @@ namespace Demo.Framework.Animation
         # endregion
 
         #region Battle Motions
-
-        /// <param name="index">0: Stand draw</param>
-        /// <param name="index">1: Walk draw</param>
-        public void PlayDrawWeapon(int index)
+        
+        public void PlayDrawWeapon(bool isMoving = false)
         {
-            _holder.drawWeapon[index].Speed = -1;
-            _base.Play(_holder.drawWeapon[index]);
+            if (!isMoving)
+            {
+                _holder.drawWeapon[0].Speed = -1;
+                _base.Play(_holder.drawWeapon[0]);
+            }
+            else
+            {
+                _holder.drawWeapon[1].Speed = -1;
+                _holder.drawWeapon[1].NormalizedStartTime = 1;
+                _upperBody.Play(_holder.drawWeapon[1]);
+            }
         }
-
-        /// <param name="index">0: Stand sheath</param>
-        /// <param name="index">1: Walk sheath</param>
-        public void PlaySheathWeapon(int index)
+        
+        public void PlaySheathWeapon(bool isMoving = false)
         {
-            _holder.drawWeapon[index].Speed = 1;
-            _base.Play(_holder.drawWeapon[index]);
+            if (!isMoving)
+            {
+                _holder.drawWeapon[0].Speed = 1;
+                _base.Play(_holder.drawWeapon[0]);
+            }
+            else
+            {
+                _holder.drawWeapon[1].Speed = 1;
+                _holder.drawWeapon[1].NormalizedStartTime = 0;
+                _upperBody.Play(_holder.drawWeapon[1]);
+            }
         }
-
-        public void PlayIdleWeapon(int index = 0) => _base.Play(_holder.idlesWeapon[index]);
 
         #endregion
         
@@ -124,19 +141,36 @@ namespace Demo.Framework.Animation
         // ReSharper disable Unity.PerformanceAnalysis
         public void UpdateMoveParam(float speed, float rotationSpeedRef)
         {
-            var moveState = _anim.States[_holder.move.Key] as MixerState<Vector2>;
-            _leanAmount = rotationSpeedRef / _leanNormalizeAmount;
-
-            if (moveState != null) 
+            if (_base.CurrentState is MixerState<Vector2> moveState)
+            {
+                _leanAmount = rotationSpeedRef / _leanNormalizeAmount;
                 moveState.Parameter = new Vector2(speed, _leanAmount);
-            else
-                DebugLog.LabelLog(_dbLabel, "Missing move state!", Verbose.Warning);
+            }
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        public void UpdateAirBorneParam(float speedY) => _holder.airBorne.State.Parameter = speedY;
+        public void UpdateAirBorneParam(float speedY)
+        {
+            if (_base.CurrentState.Key != _holder.airBorneWeapon.Key &&
+                _base.CurrentState.Key != _holder.airBorne.Key)
+                return;
+            
+            if (_base.CurrentState is LinearMixerState state)
+                state.Parameter = speedY;
+        }
 
-        public void UpdateLandingParam(float speedY) => _holder.landing.State.Parameter = speedY;
+        public void UpdateLandingParam(float speedY)
+        {
+            if (_base.CurrentState.Key != _holder.landingWeapon.Key &&
+                _base.CurrentState.Key != _holder.landing.Key)
+                return;
+            
+            if (_base.CurrentState is LinearMixerState state)
+                state.Parameter = speedY;
+        }
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        public void FadeOutUpperBody(float duration) => _upperBody.StartFade(0, duration);
 
         private void OnGUIStats()
         {

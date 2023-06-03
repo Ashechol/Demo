@@ -1,4 +1,5 @@
 using Demo.Framework.Debug;
+using UnityEngine;
 
 namespace Demo.Base.PlayerController
 {
@@ -6,8 +7,7 @@ namespace Demo.Base.PlayerController
     {
         RunToStand,
         DashToStand,
-        DrawSheathStand,
-        DrawSheathWalk,
+        DrawSheath,
         Default,
     }
     
@@ -44,7 +44,7 @@ namespace Demo.Base.PlayerController
             switch (_type)
             {
                 case PlayerTransitionType.RunToStand:
-                    _character.anim.PlayRunToStand();
+                    _character.anim.PlayRunToStand(_combat.IsWeaponDraw);
                     break;
                 
                 case PlayerTransitionType.DashToStand:
@@ -52,11 +52,11 @@ namespace Demo.Base.PlayerController
                     _character.anim.PlayDashToStand(_dashToStandIndex);
                     break;
                 
-                case PlayerTransitionType.DrawSheathStand:
-                    if (!_combat.IsWeaponDrawn)
-                        _character.anim.PlayDrawWeapon(0);
+                case PlayerTransitionType.DrawSheath:
+                    if (!_combat.IsWeaponDraw)
+                        _character.anim.PlayDrawWeapon(_character.CurSpeed > 1);
                     else
-                        _character.anim.PlaySheathWeapon(0);
+                        _character.anim.PlaySheathWeapon(_character.CurSpeed > 1);
                     break;
                     
                 case PlayerTransitionType.Default:
@@ -75,21 +75,35 @@ namespace Demo.Base.PlayerController
                         _stateMachine.ChangeState(_player.idleState);
                     if (_input.IsMoveInput)
                         _stateMachine.ChangeState(_player.moveState);
+                    if (_input.DrawSheathInput)
+                    {
+                        _type = PlayerTransitionType.DrawSheath;
+                        _stateMachine.ResetState();
+                    }
                     break;
                 
                 case PlayerTransitionType.DashToStand:
                     DashToStand();
                     break;
                 
-                case PlayerTransitionType.DrawSheathStand:
-                    if (_character.anim.IsAnimExiting())
+                case PlayerTransitionType.DrawSheath:
+                    if (_input.IsMoveInput)
+                    {
+                        _combat.DrawSheathSwitch();
+                        _stateMachine.ChangeState(_player.moveState);
+                    }
+                    else if (_character.anim.IsAnimExiting())
+                    {
+                        _combat.DrawSheathSwitch();
                         _stateMachine.ChangeState(_player.idleState);
+                    }
                     break;
                 
                 case PlayerTransitionType.Default:
                     _stateMachine.ChangeState(_player.idleState);
                     break;
             }
+
         }
 
         private void DashToStand()

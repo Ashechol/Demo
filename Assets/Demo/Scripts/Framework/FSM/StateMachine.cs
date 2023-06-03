@@ -31,6 +31,11 @@ namespace Demo.Framework.FSM
             _currentState?.Enter();
         }
 
+        public void ResetState()
+        {
+            _currentState.Enter();
+        }
+
         public void LogicUpdate()
         {
             _currentState?.LogicUpdate();

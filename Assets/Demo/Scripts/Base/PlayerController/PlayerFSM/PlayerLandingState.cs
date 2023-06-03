@@ -14,7 +14,7 @@ namespace Demo.Base.PlayerController
         {
             base.Enter();
             
-            _character.anim.PlayLanding(); // Play 后才会创建 State
+            _character.anim.PlayLanding(_combat.IsWeaponDraw); // Play 后才会创建 State
             
             _character.anim.UpdateLandingParam(_character.FallSpeed);
         }
@@ -23,7 +23,7 @@ namespace Demo.Base.PlayerController
         {
             base.LogicUpdate();
             
-            var exitTime = _input.IsMoveInput ? 0.15f : 0.45f;
+            var exitTime = _input.IsMoveInput ? 0.1f : 0.45f;
             if (_character.anim.IsAnimExiting(exitTime))
                 _stateMachine.ChangeState(_player.idleState);
         }

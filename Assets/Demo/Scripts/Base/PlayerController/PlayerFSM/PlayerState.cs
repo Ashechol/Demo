@@ -28,7 +28,7 @@ namespace Demo.Base.PlayerController
             
             if (_input.JumpInput && _character.TryJump())
                 _stateMachine.ChangeState(_player.jumpState);
-            
+
             _character.OnUpdate();
         }
     }

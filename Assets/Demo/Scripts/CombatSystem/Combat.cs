@@ -7,14 +7,19 @@ namespace Demo.CombatSystem
     public class Combat : MonoBehaviour
     {
         private Character _character;
+
+        public float walkSpeed = 2;
+        public float runSpeed = 4.5f;
         
         public Transform weapon;
         public Transform sheathSlot;
         public Transform handSlot;
 
         private bool _isWeaponDrawn;
+        private bool _isWeaponDraw;
 
-        public bool IsWeaponDrawn => _isWeaponDrawn;
+        public bool IsWeaponDraw => _isWeaponDraw;
+        public void DrawSheathSwitch() => _isWeaponDraw = !_isWeaponDraw;
         
         private void Awake()
         {
@@ -30,6 +35,7 @@ namespace Demo.CombatSystem
             weapon.localRotation = Quaternion.Euler(Vector3.zero);
 
             weapon.DOScale(_isWeaponDrawn ? Vector3.one * 0.8f : Vector3.one, 0.3f);
+
             _isWeaponDrawn = !_isWeaponDrawn;
         }
     }

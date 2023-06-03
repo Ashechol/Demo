@@ -15,10 +15,7 @@ namespace Demo.Base.PlayerController
         {
             base.Enter();
             
-            if (!_player.combat.IsWeaponDrawn)
-                _character.anim.PlayIdle();
-            else
-                _character.anim.PlayIdleWeapon();
+            _character.anim.PlayIdle(0, _combat.IsWeaponDraw);
         }
 
         public override void LogicUpdate()
@@ -27,9 +24,6 @@ namespace Demo.Base.PlayerController
             
             if (_player.input.IsMoveInput)
                 _stateMachine.ChangeState(_player.moveState);
-            
-            if (_player.input.DrawSheathInput)
-                _stateMachine.ChangeState(_player.transitionState.SetType(PlayerTransitionType.DrawSheathStand));
         }
     }
 }

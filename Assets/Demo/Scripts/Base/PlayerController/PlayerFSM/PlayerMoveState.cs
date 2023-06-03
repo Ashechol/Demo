@@ -10,7 +10,7 @@ namespace Demo.Base.PlayerController
         {
             base.Enter();
             
-            _character.anim.PlayMove();
+            _character.anim.PlayMove(_combat.IsWeaponDraw);
         }
 
         public override void LogicUpdate()
@@ -40,11 +40,13 @@ namespace Demo.Base.PlayerController
 
         private void Locomotion()
         {
-            if (_input.IsMoveInput)
-            {
-                var targetAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _player.cameraYaw;
-                _character.Turn(targetAngle);
+            if (!_input.IsMoveInput) return;
+            
+            var targetAngle = Mathf.Atan2(_input.MoveInputX, _input.MoveInputY) * Mathf.Rad2Deg + _player.cameraYaw;
+            _character.Turn(targetAngle);
 
+            if (!_combat.IsWeaponDraw)
+            {
                 if (_input.DashInput)
                     _character.SetTargetSpeed(_character.dashSpeed, _character.dashAcceleration);
                 else
@@ -52,6 +54,10 @@ namespace Demo.Base.PlayerController
                     var acc = _character.CurSpeed > _character.runSpeed ? _character.dashAcceleration : _character.acceleration;
                     _character.SetTargetSpeed(_character.runSpeed, acc);
                 }
+            }
+            else
+            {
+                _character.SetTargetSpeed(_combat.runSpeed, _character.acceleration);
             }
         }
     }
