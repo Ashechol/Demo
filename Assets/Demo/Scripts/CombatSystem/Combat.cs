@@ -17,6 +17,7 @@ namespace Demo.CombatSystem
 
         private bool _isWeaponDrawn;
         private bool _isWeaponDraw;
+        private int _comboIndex;
 
         public bool IsWeaponDraw => _isWeaponDraw;
         public void DrawSheathSwitch() => _isWeaponDraw = !_isWeaponDraw;
@@ -37,6 +38,13 @@ namespace Demo.CombatSystem
             weapon.DOScale(_isWeaponDrawn ? Vector3.one * 0.8f : Vector3.one, 0.3f);
 
             _isWeaponDrawn = !_isWeaponDrawn;
+        }
+
+        public bool TryAttack()
+        {
+            
+            
+            return false;
         }
     }
 }

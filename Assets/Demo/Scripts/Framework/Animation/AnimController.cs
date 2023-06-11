@@ -120,6 +120,15 @@ namespace Demo.Framework.Animation
             }
         }
 
+        public void PlayComboAttack(int index) => _base.Play(_holder.comboAttacks[index]);
+
+        public bool CanCombo()
+        {
+            
+            
+            return false;
+        }
+
         #endregion
         
         #region Animation Events

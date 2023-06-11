@@ -6,8 +6,13 @@ namespace Demo.Base.PlayerController
 {
     public class PlayerCombatState : PlayerState
     {
-        protected PlayerCombatState(PlayerStateMachine stateMachine, PlayerController player) : base(stateMachine, player)
+        protected PlayerCombatState(PlayerStateMachine stateMachine, PlayerController player) : base(stateMachine, player) {}
+
+        public override void Enter()
         {
+            base.Enter();
+            
+            
         }
     }
 }
